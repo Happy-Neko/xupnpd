@@ -1,6 +1,8 @@
 #ifndef __MEM_H
 #define __MEM_H
 
+#include <stdlib.h>
+
 #ifndef DEBUG
 #define MALLOC(S) malloc(S)
 #define FREE(P) free(P)

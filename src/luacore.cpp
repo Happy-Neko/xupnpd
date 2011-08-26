@@ -13,9 +13,21 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/wait.h>
+#include "mem.h"
+#include <time.h>
 
 namespace core
 {
+    struct timer_event
+    {
+        time_t tv;
+        const char* name;
+        int sec;
+        timer_event* next;
+    };
+
+    timer_event* beg_timer=0;
+
     int detached=0;
 
     volatile int __sig_quit=0;
@@ -57,6 +69,70 @@ namespace core
 
         errno=e;
     }
+
+    void add_timer(int sec,const char* name)
+    {
+        if(!name || !*name)
+            return;
+
+        timer_event* e=(timer_event*)MALLOC(sizeof(timer_event)+strlen(name)+1);
+        e->next=0;
+        e->tv=time(0)+sec;
+        e->name=(char*)(e+1);
+        strcpy((char*)e->name,name);
+        e->sec=sec;
+        if(!beg_timer || e->tv<=beg_timer->tv)
+        {
+            e->next=beg_timer;
+            beg_timer=e;
+        }else
+        {
+            for(timer_event* tmp=beg_timer;tmp;tmp=tmp->next)
+            {
+                if(!tmp->next)
+                {
+                    tmp->next=e;
+                    break;
+                }else
+                {
+                    if(tmp->next->tv>=e->tv)
+                    {
+                        e->next=tmp->next;
+                        tmp->next=e;
+                        break;
+                    }
+                }                
+            }
+        }
+    }
+
+    void reset_timer(void)
+    {
+        int sec=0;
+
+        if(beg_timer)
+        {
+            sec=beg_timer->tv-time(0);
+            if(sec<1)
+                sec=1;
+        }
+
+        alarm(sec);
+    }
+
+    void clear_timer(void)
+    {
+        alarm(0);
+
+        while(beg_timer)
+        {
+            timer_event* tmp=beg_timer;
+            beg_timer=beg_timer->next;
+            FREE(tmp);
+        }
+        beg_timer=0;
+    }
+
 
     void process_event(lua_State* L,const char* name,int arg1)
     {
@@ -148,6 +224,21 @@ namespace core
         if(__sig_alarm)
         {
             __sig_alarm=0;
+
+            time_t t=time(0);
+
+            while(core::beg_timer && core::beg_timer->tv<=t)
+            {
+                core::timer_event* tmp=core::beg_timer;
+
+                process_event(L,core::beg_timer->name,core::beg_timer->sec);
+
+                core::beg_timer=core::beg_timer->next;
+
+                FREE(tmp);
+            }
+
+            core::reset_timer();
         }
 
 //printf("%i\n",lua_gettop(L));
@@ -372,6 +463,29 @@ static int lua_core_spawn(lua_State* L)
     return 1;
 }
 
+static int lua_core_timer(lua_State* L)
+{
+    int sec=lua_tointeger(L,1);
+    const char* event=lua_tostring(L,2);
+
+    int rc=0;
+
+    if(!sec || !event)
+    {
+        lua_pushinteger(L,rc);
+        return 1;
+    }
+
+    core::add_timer(sec,event);
+
+    core::reset_timer();
+
+    lua_pushinteger(L,rc);
+
+    return 1;
+}
+
+
 static int lua_core_mainloop(lua_State* L)
 {
     using namespace core;
@@ -383,6 +497,7 @@ static int lua_core_mainloop(lua_State* L)
 
     if(socketpair(PF_LOCAL,SOCK_STREAM,0,__sig_pipe))
         return luaL_error(L,"socketpair fail, cna't create signal pipe");
+
 
     struct sigaction action;
     sigset_t full_sig_set;
@@ -443,6 +558,8 @@ static int lua_core_mainloop(lua_State* L)
     for(int i=0;i<sizeof(__sig_pipe)/sizeof(*__sig_pipe);i++)
         close(__sig_pipe[i]);
 
+    clear_timer();
+
     return 0;
 }
 
@@ -455,6 +572,7 @@ int luaopen_luacore(lua_State* L)
         {"log",lua_core_log},
         {"touchpid",lua_core_touchpid},
         {"spawn",lua_core_spawn},
+        {"timer",lua_core_timer},
         {"mainloop",lua_core_mainloop},
         {0,0}
     };
@@ -469,3 +587,4 @@ int luaopen_luacore(lua_State* L)
 
     return 0;
 }
+

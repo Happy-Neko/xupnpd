@@ -2,8 +2,6 @@
 
 #ifdef DEBUG
 
-#include <stdlib.h>
-
 namespace mem
 {
     size_t mem_total=0;

@@ -37,7 +37,7 @@ int main(int argc,char** argv)
             lua_pushstring(L,argv[i]);
             lua_rawset(L,-3);        
         }
-        lua_setglobal(L,"args");
+        lua_setglobal(L,"arg");
 
         char initfile[128];
         snprintf(initfile,sizeof(initfile),"%s.lua",argv[0]);
