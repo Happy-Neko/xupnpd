@@ -15,6 +15,7 @@
 #include <sys/wait.h>
 #include "mem.h"
 #include <time.h>
+#include "mcast.h"
 
 namespace core
 {
@@ -26,9 +27,14 @@ namespace core
         timer_event* next;
     };
 
+
     timer_event* beg_timer=0;
 
     int detached=0;
+
+    mcast::mcast_grp ssdp_mcast_grp;
+    int ssdp_upstream=-1;
+    int ssdp_downstream=-1;
 
     volatile int __sig_quit=0;
     volatile int __sig_alarm=0;
@@ -563,6 +569,28 @@ static int lua_core_mainloop(lua_State* L)
     return 0;
 }
 
+static int lua_ssdp_init(lua_State* L)
+{
+    const char* iface=lua_tostring(L,1);
+    int ttl=lua_tointeger(L,2);
+    int loop=lua_tointeger(L,3);
+
+    if(!iface)
+        iface="eth0";
+
+    if(ttl<1)
+        ttl=1;
+
+    if(!core::detached)
+        mcast::verb_fp=stderr;
+
+    int rc=core::ssdp_mcast_grp.init("239.255.255.250:1900",iface,ttl,loop);
+
+    lua_pushinteger(L,rc?0:1);    
+
+    return 1;
+}
+
 int luaopen_luacore(lua_State* L)
 {
     static const luaL_Reg lib_core[]=
@@ -577,7 +605,14 @@ int luaopen_luacore(lua_State* L)
         {0,0}
     };
 
+    static const luaL_Reg lib_ssdp[]=
+    {
+        {"init",lua_ssdp_init},
+        {0,0}
+    };
+
     luaL_register(L,"core",lib_core);
+    luaL_register(L,"ssdp",lib_ssdp);
 
     lua_newtable(L);
     lua_setglobal(L,"events");
