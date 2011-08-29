@@ -63,8 +63,8 @@ namespace mcast
 
         int upstream(void) const;
 
-        int send(int sock,const char* buf,int len,sockaddr_in* sin=0) const;
-        int recv(int sock,char* buf,int len,sockaddr_in* sin,int flags=0) const;
+        int send(int sock,const char* buf,int len,const char* to) const;
+        int recv(int sock,char* buf,int len,char* from,int flags=0) const;
 
         static void close(int sock);
     };

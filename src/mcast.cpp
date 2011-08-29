@@ -361,14 +361,34 @@ void mcast::mcast_grp::close(int sock)
     ::close(sock);
 }
 
-int mcast::mcast_grp::send(int sock,const char* buf,int len,sockaddr_in* sin) const
+int mcast::mcast_grp::send(int sock,const char* buf,int len,const char* to) const
 {
-    int n=sendto(sock,buf,len,0,(sockaddr*)(sin?sin:&mcast_sin),sizeof(sockaddr_in));
+    if(to && !*to)
+        to=0;
+
+    sockaddr_in sin;
+
+    if(to)
+    {
+        char tmp[64];
+        strcpy(tmp,to);
+        char* p=strchr(tmp,':');
+        if(!p)
+            return 0;
+        *p=0;
+        p++;
+
+        sin.sin_family=AF_INET;
+        sin.sin_addr.s_addr=inet_addr(tmp);
+        sin.sin_port=htons(atoi(p));
+    }
+
+    int n=sendto(sock,buf,len,0,(sockaddr*)(to?&sin:&mcast_sin),sizeof(sockaddr_in));
 
     if(n>0 && verb_fp)
     {
-        if(sin)
-            fprintf(verb_fp,"send %i bytes to '%s:%i'\n",n,inet_ntoa(sin->sin_addr),ntohs(sin->sin_port));
+        if(to)
+            fprintf(verb_fp,"send %i bytes to '%s'\n",n,to);
         else
         {
             fprintf(verb_fp,"send %i bytes to multicast group '%s:%i' via ",n,inet_ntoa(mcast_sin.sin_addr),ntohs(mcast_sin.sin_port));
@@ -385,26 +405,30 @@ int mcast::mcast_grp::send(int sock,const char* buf,int len,sockaddr_in* sin) co
     return n;
 }
 
-int mcast::mcast_grp::recv(int sock,char* buf,int len,sockaddr_in* sin,int flags) const
+int mcast::mcast_grp::recv(int sock,char* buf,int len,char* from,int flags) const
 {
-    sockaddr_in ssin;
-    socklen_t sin_len=sizeof(sockaddr_in);
+    sockaddr_in sin;
+    socklen_t sin_len=sizeof(sin);
 
-    if(!sin)
-        sin=&ssin;
+    int n=recvfrom(sock,buf,len,flags,(sockaddr*)&sin,&sin_len);
 
-    int n=recvfrom(sock,buf,len,flags,(sockaddr*)sin,&sin_len);
-
-    if(n>0 && verb_fp)
+    if(n>0)
     {
-        fprintf(verb_fp,"recv %i bytes from '%s:%i'\n",n,inet_ntoa(sin->sin_addr),ntohs(sin->sin_port));
+        sprintf(from,"%s:%i",inet_ntoa(sin.sin_addr),ntohs(sin.sin_port));
 
-        if(debug)
+        if(verb_fp)
         {
-            fwrite(buf,n,1,verb_fp);
-            fprintf(verb_fp,"\n");
+            fprintf(verb_fp,"recv %i bytes from '%s'\n",n,from);
+
+            if(debug)
+            {
+                fwrite(buf,n,1,verb_fp);
+                fprintf(verb_fp,"\n");
+            }
         }
-    }
+
+    }else
+        *from=0;
 
     return n;
 }

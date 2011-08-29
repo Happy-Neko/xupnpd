@@ -16,6 +16,9 @@
 #include "mem.h"
 #include <time.h>
 #include "mcast.h"
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netinet/tcp.h>
 
 namespace core
 {
@@ -28,13 +31,98 @@ namespace core
     };
 
 
-    timer_event* beg_timer=0;
+    timer_event* timers=0;
+
+    struct listener
+    {
+        int port;
+        int fd;
+        const char* name;
+        listener* next;
+    };
+
+    listener* listeners=0,*listeners_end=0;
 
     int detached=0;
 
     mcast::mcast_grp ssdp_mcast_grp;
     int ssdp_upstream=-1;
     int ssdp_downstream=-1;
+
+    int listener_add(const char* host,int port,const char* name,int backlog)
+    {
+        if(!name || !*name || port<1)
+            return -1;
+
+        if(!host || !*host)
+        {
+            if(*ssdp_mcast_grp.interface)
+                host=ssdp_mcast_grp.interface;
+            else
+                host="*";
+        }
+
+        if(backlog<1)
+            backlog=5;
+
+        sockaddr_in sin;
+        sin.sin_family=AF_INET;
+        sin.sin_addr.s_addr=INADDR_ANY;
+        sin.sin_port=htons(port);
+
+        if(strcmp(host,"*") && strcmp(host,"any"))
+            sin.sin_addr.s_addr=inet_addr(host);
+
+        int fd=socket(sin.sin_family,SOCK_STREAM,0);
+        if(fd==-1)
+            return -2;
+
+        int reuse=1;
+        setsockopt(fd,SOL_SOCKET,SO_REUSEADDR,&reuse,sizeof(reuse));
+
+        if(bind(fd,(sockaddr*)&sin,sizeof(sin)) || listen(fd,backlog))
+        {
+            close(fd);
+            return -3;
+        }
+
+        fcntl(fd,F_SETFL,fcntl(fd,F_GETFL,0)|O_NONBLOCK);
+
+        int n=strlen(name);
+
+        listener* l=(listener*)MALLOC(sizeof(listener)+n+1);
+
+        l->port=port;
+        l->fd=fd;
+        l->name=(char*)(l+1);
+        l->next=0;
+        strcpy((char*)l->name,name);
+
+        if(!listeners)
+            listeners=listeners_end=l;
+        else
+        {
+            listeners_end->next=l;
+            listeners_end=l;
+        }        
+
+        return 0;
+    }
+
+    void listener_clear(void)
+    {
+        while(listeners)
+        {
+            listener* tmp=listeners;
+            listeners=listeners->next;
+
+            if(tmp->fd!=-1)
+                close(tmp->fd);
+            FREE(tmp);
+        }
+
+        listeners=listeners_end=0;
+    }
 
     volatile int __sig_quit=0;
     volatile int __sig_alarm=0;
@@ -76,7 +164,7 @@ namespace core
         errno=e;
     }
 
-    void add_timer(int sec,const char* name)
+    void timer_add(int sec,const char* name)
     {
         if(!name || !*name)
             return;
@@ -87,13 +175,13 @@ namespace core
         e->name=(char*)(e+1);
         strcpy((char*)e->name,name);
         e->sec=sec;
-        if(!beg_timer || e->tv<=beg_timer->tv)
+        if(!timers || e->tv<=timers->tv)
         {
-            e->next=beg_timer;
-            beg_timer=e;
+            e->next=timers;
+            timers=e;
         }else
         {
-            for(timer_event* tmp=beg_timer;tmp;tmp=tmp->next)
+            for(timer_event* tmp=timers;tmp;tmp=tmp->next)
             {
                 if(!tmp->next)
                 {
@@ -112,13 +200,13 @@ namespace core
         }
     }
 
-    void reset_timer(void)
+    void timer_reset(void)
     {
         int sec=0;
 
-        if(beg_timer)
+        if(timers)
         {
-            sec=beg_timer->tv-time(0);
+            sec=timers->tv-time(0);
             if(sec<1)
                 sec=1;
         }
@@ -126,19 +214,74 @@ namespace core
         alarm(sec);
     }
 
-    void clear_timer(void)
+    void timer_clear(void)
     {
         alarm(0);
 
-        while(beg_timer)
+        while(timers)
         {
-            timer_event* tmp=beg_timer;
-            beg_timer=beg_timer->next;
+            timer_event* tmp=timers;
+            timers=timers->next;
             FREE(tmp);
         }
-        beg_timer=0;
+        timers=0;
     }
 
+    void ssdp_done(void)
+    {
+        if(ssdp_upstream!=-1)
+        {
+            ssdp_mcast_grp.close(ssdp_upstream);
+            ssdp_upstream=-1;
+        }
+
+        if(core::ssdp_downstream!=-1)
+        {
+            ssdp_mcast_grp.leave(ssdp_downstream);
+            ssdp_downstream=-1;
+        }
+    }
+
+    void ssdp_clear(void)
+    {
+        if(ssdp_upstream!=-1)
+        {
+            ssdp_mcast_grp.close(ssdp_upstream);
+            ssdp_upstream=-1;
+        }
+
+        if(core::ssdp_downstream!=-1)
+        {
+            ssdp_mcast_grp.close(ssdp_downstream);
+            ssdp_downstream=-1;
+        }
+    }
+
+    pid_t fork_process(void)
+    {
+        pid_t pid=fork();
+
+        if(!pid)
+        {
+            alarm(0);
+
+            for(int i=0;i<sizeof(core::__sig_pipe)/sizeof(*core::__sig_pipe);i++)
+                close(core::__sig_pipe[i]);
+
+            core::ssdp_clear();
+            core::listener_clear();
+
+            int fd=open("/dev/null",O_RDWR);
+            if(fd>=0)
+            {
+                for(int i=0;i<3;i++)
+                    dup2(fd,i);
+                close(fd);
+            }else
+                for(int i=0;i<3;i++)
+                    close(i);
+        }
+    }
 
     void process_event(lua_State* L,const char* name,int arg1)
     {
@@ -233,22 +376,185 @@ namespace core
 
             time_t t=time(0);
 
-            while(core::beg_timer && core::beg_timer->tv<=t)
+            while(core::timers && core::timers->tv<=t)
             {
-                core::timer_event* tmp=core::beg_timer;
+                core::timer_event* tmp=core::timers;
 
-                process_event(L,core::beg_timer->name,core::beg_timer->sec);
+                process_event(L,core::timers->name,core::timers->sec);
 
-                core::beg_timer=core::beg_timer->next;
+                core::timers=core::timers->next;
 
                 FREE(tmp);
             }
 
-            core::reset_timer();
+            core::timer_reset();
         }
 
 //printf("%i\n",lua_gettop(L));
     }
+
+
+    void process_ssdp(lua_State* L)
+    {
+//printf("%i\n",lua_gettop(L));
+        char buf[4096];
+        int nbuf=0;
+
+        char from[64]="";
+
+        lua_getglobal(L,"events");
+        
+        while((nbuf=core::ssdp_mcast_grp.recv(ssdp_downstream,buf,sizeof(buf)-1,from,MSG_DONTWAIT))>0)
+        {
+            buf[nbuf]=0;
+
+            static const char ssdp_tag[]="SSDP";
+
+            lua_getfield(L,-1,ssdp_tag);
+
+            if(lua_type(L,-1)==LUA_TFUNCTION)
+            {
+                lua_pushstring(L,ssdp_tag);
+                lua_pushstring(L,from);
+
+                lua_newtable(L);
+
+                int idx=0;
+
+                for(char* p1=buf,*p2;p1;p1=p2)
+                {
+                    while(*p1 && (*p1==' ' || *p1=='\r' || *p1=='\n' || *p1=='\t'))
+                        p1++;
+
+                    p2=strpbrk(p1,"\r\n");
+                    if(p2)
+                        { *p2=0; p2++; }
+
+                    if(*p1)
+                    {
+                        if(!idx)
+                        {
+                            lua_pushstring(L,"REQ");
+                            lua_newtable(L);
+
+                            int nn=1;
+                            for(char* pp1=p1,*pp2;pp1;pp1=pp2)
+                            {
+                                pp2=strchr(pp1,' ');
+                                if(pp2)
+                                {
+                                    *pp2=0;
+                                    pp2++;
+                                    while(*pp2 && *pp2==' ')
+                                        pp2++;
+                                }
+                                if(*pp1)
+                                {
+                                    lua_pushinteger(L,nn++);
+                                    lua_pushstring(L,pp1);
+                                    lua_rawset(L,-3);
+                                }                                
+                            }
+
+                            lua_rawset(L,-3);
+                        }else
+                        {
+                            char* p3=strchr(p1,':');
+                            if(p3)
+                            {
+                                *p3=0;
+                                p3++;
+                                while(*p3 && *p3==' ')
+                                    p3++;
+
+                                if(*p3=='\"')
+                                {
+                                    p3++;
+                                    char* p=strchr(p3,'\"');
+                                    if(p)
+                                        *p=0;
+                                }
+
+                                if(*p1 && *p3)
+                                {
+                                    lua_pushstring(L,p1);
+                                    lua_pushstring(L,p3);
+                                    lua_rawset(L,-3);
+                                }
+                                
+                            }
+                        }
+
+                        idx++;
+                    }
+
+                }
+
+                if(lua_pcall(L,3,0,0))
+                {
+                    if(!detached)
+                        fprintf(stderr,"%s\n",lua_tostring(L,-1));
+                    else
+                        syslog(LOG_INFO,"%s",lua_tostring(L,-1));
+                    lua_pop(L,1);
+                }
+            }else
+                lua_pop(L,1);
+
+
+        }
+
+        lua_pop(L,1);
+
+//printf("%i\n",lua_gettop(L));
+
+    }
+
+    void process_http(lua_State* L,listener* l)
+    {
+        int fd;
+        sockaddr_in sin;
+        socklen_t sin_len=sizeof(sin);
+
+        while((fd=accept(l->fd,(sockaddr*)&sin,&sin_len))>=0)
+        {
+            char name[128];
+            snprintf(name,sizeof(name),"%s",l->name);
+            int port=l->port;
+
+            pid_t pid=fork_process();
+
+            if(!pid)
+            {
+                signal(SIGHUP,SIG_IGN);
+                signal(SIGPIPE,SIG_IGN);
+                signal(SIGINT,SIG_DFL);
+                signal(SIGQUIT,SIG_DFL);
+                signal(SIGTERM,SIG_DFL);
+                signal(SIGALRM,SIG_DFL);
+                signal(SIGUSR1,SIG_DFL);
+                signal(SIGUSR2,SIG_DFL);
+                signal(SIGCHLD,SIG_DFL);
+
+                sigset_t full_sig_set;
+                sigfillset(&full_sig_set);
+                sigprocmask(SIG_UNBLOCK,&full_sig_set,0);
+
+                int on=1;
+                setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,&on,sizeof(on));
+                        
+
+
+
+
+                close(fd);
+                exit(0);
+            }
+
+            close(fd);
+        }
+    }
+
 
 }
 
@@ -403,6 +709,7 @@ char* core::parse_command_line(const char* cmd,char** dst,int n)
     return s;
 }
 
+
 static int lua_core_spawn(lua_State* L)
 {
     const char* cmd=lua_tostring(L,1);
@@ -416,25 +723,12 @@ static int lua_core_spawn(lua_State* L)
         return 1;
     }
 
-    pid_t pid=fork();
+    pid_t pid=core::fork_process();
 
     if(pid!=-1)
     {
         if(!pid)
         {
-            for(int i=0;i<sizeof(core::__sig_pipe)/sizeof(*core::__sig_pipe);i++)
-                close(core::__sig_pipe[i]);
-
-            int fd=open("/dev/null",O_RDWR);
-            if(fd>=0)
-            {
-                for(int i=0;i<3;i++)
-                    dup2(fd,i);
-                close(fd);
-            }else
-                for(int i=0;i<3;i++)
-                    close(i);
-
             char* argv[128];
             core::parse_command_line(cmd,argv,sizeof(argv)/sizeof(*argv));
             if(argv[0])
@@ -463,7 +757,6 @@ static int lua_core_spawn(lua_State* L)
         }
     }
 
-
     lua_pushinteger(L,rc);
 
     return 1;
@@ -482,15 +775,24 @@ static int lua_core_timer(lua_State* L)
         return 1;
     }
 
-    core::add_timer(sec,event);
+    core::timer_add(sec,event);
 
-    core::reset_timer();
+    core::timer_reset();
 
     lua_pushinteger(L,rc);
 
     return 1;
 }
 
+static int lua_core_uuid(lua_State* L)
+{
+    char buf[64];
+    mcast::uuid_gen(buf);
+
+    lua_pushstring(L,buf);
+
+    return 1;
+}
 
 static int lua_core_mainloop(lua_State* L)
 {
@@ -530,7 +832,22 @@ static int lua_core_mainloop(lua_State* L)
         fd_set fdset;
         FD_ZERO(&fdset);
         FD_SET(__sig_pipe[0],&fdset);
-        int nfd=__sig_pipe[0]+1;
+
+        int nfd=__sig_pipe[0];
+
+        if(ssdp_downstream!=-1)
+        {
+            FD_SET(ssdp_downstream,&fdset);
+            nfd=nfd<ssdp_downstream?ssdp_downstream:nfd;
+        }
+
+        for(listener* ll=listeners;ll;ll=ll->next)
+        {
+            FD_SET(ll->fd,&fdset);
+            nfd=nfd<ll->fd?ll->fd:nfd;
+        }
+
+        nfd++;
 
         sigprocmask(SIG_UNBLOCK,&full_sig_set,0);
 
@@ -552,10 +869,18 @@ static int lua_core_mainloop(lua_State* L)
         if(FD_ISSET(__sig_pipe[0],&fdset))
             process_signals(L);
 
+        if(ssdp_downstream!=-1 && FD_ISSET(ssdp_downstream,&fdset))
+            process_ssdp(L);
+
+        for(listener* ll=listeners;ll;ll=ll->next)
+            if(FD_ISSET(ll->fd,&fdset))
+                process_http(L,ll);
     }
 
     sigprocmask(SIG_UNBLOCK,&full_sig_set,0);
 
+    ssdp_done();
+    listener_clear();
 
     signal(SIGTERM,SIG_IGN);
     signal(SIGCHLD,SIG_IGN);
@@ -564,7 +889,7 @@ static int lua_core_mainloop(lua_State* L)
     for(int i=0;i<sizeof(__sig_pipe)/sizeof(*__sig_pipe);i++)
         close(__sig_pipe[i]);
 
-    clear_timer();
+    timer_clear();
 
     return 0;
 }
@@ -584,15 +909,72 @@ static int lua_ssdp_init(lua_State* L)
     if(!core::detached)
         mcast::verb_fp=stderr;
 
-    int rc=core::ssdp_mcast_grp.init("239.255.255.250:1900",iface,ttl,loop);
+    core::ssdp_done();
 
-    lua_pushinteger(L,rc?0:1);    
+    int rc=0;
+
+    if(!core::ssdp_mcast_grp.init("239.255.255.250:1900",iface,ttl,loop))
+    {
+        core::ssdp_upstream=core::ssdp_mcast_grp.upstream();
+        if(core::ssdp_upstream!=-1)
+        {
+            core::ssdp_downstream=core::ssdp_mcast_grp.join();
+            if(core::ssdp_downstream!=-1)
+                rc=1;
+            else
+                core::ssdp_done();
+        }
+    }
+
+    lua_pushinteger(L,rc);    
 
     return 1;
 }
 
+static int lua_ssdp_send(lua_State* L)
+{
+    size_t l=0;
+    const char* s=lua_tolstring(L,1,&l);
+
+    const char* to=lua_tostring(L,2);
+
+    if(core::ssdp_upstream==-1 || !s || l<1)
+        return 0;
+
+    core::ssdp_mcast_grp.send(core::ssdp_upstream,s,l,to);
+
+    return 0;
+}
+
+static int lua_ssdp_interface(lua_State* L)
+{
+    if(core::ssdp_downstream!=-1)
+    {
+        lua_pushstring(L,core::ssdp_mcast_grp.interface);
+        return 1;
+    }
+    return 0;
+}
+
+static int lua_http_listen(lua_State* L)
+{
+    int port=lua_tointeger(L,1);
+    const char* name=lua_tostring(L,2);
+    const char* host=lua_tostring(L,3);
+    int backlog=lua_tointeger(L,4);
+
+    int rc=core::listener_add(host,port,name,backlog);
+    
+    lua_pushinteger(L,rc?0:1);
+
+    return 1;
+}
+
+
 int luaopen_luacore(lua_State* L)
 {
+    mcast::uuid_init();
+
     static const luaL_Reg lib_core[]=
     {
         {"detach",lua_core_detach},
@@ -601,6 +983,7 @@ int luaopen_luacore(lua_State* L)
         {"touchpid",lua_core_touchpid},
         {"spawn",lua_core_spawn},
         {"timer",lua_core_timer},
+        {"uuid",lua_core_uuid},
         {"mainloop",lua_core_mainloop},
         {0,0}
     };
@@ -608,11 +991,20 @@ int luaopen_luacore(lua_State* L)
     static const luaL_Reg lib_ssdp[]=
     {
         {"init",lua_ssdp_init},
+        {"send",lua_ssdp_send},
+        {"interface",lua_ssdp_interface},
+        {0,0}
+    };
+
+    static const luaL_Reg lib_http[]=
+    {
+        {"listen",lua_http_listen},
         {0,0}
     };
 
     luaL_register(L,"core",lib_core);
     luaL_register(L,"ssdp",lib_ssdp);
+    luaL_register(L,"http",lib_http);
 
     lua_newtable(L);
     lua_setglobal(L,"events");
