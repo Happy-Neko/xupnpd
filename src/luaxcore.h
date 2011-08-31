@@ -1,5 +1,5 @@
-#ifndef __LUACORE_H
-#define __LUACORE_H
+#ifndef __LUAXCORE_H
+#define __LUAXCORE_H
 
 extern "C"
 {
@@ -13,7 +13,7 @@ namespace core
     extern int detached;
 }
 
-extern "C" int luaopen_luacore(lua_State* L);
+extern "C" int luaopen_luaxcore(lua_State* L);
 
 
 #endif

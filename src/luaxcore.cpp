@@ -1,4 +1,4 @@
-#include "luacore.h"
+#include "luaxcore.h"
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -43,7 +43,8 @@ namespace core
 
     listener* listeners=0,*listeners_end=0;
 
-    int detached=0;
+    int detached=0;             // daemon
+    FILE* http_client_fp=0;     // for HTTP workers only
 
     mcast::mcast_grp ssdp_mcast_grp;
     int ssdp_upstream=-1;
@@ -257,7 +258,7 @@ namespace core
         }
     }
 
-    pid_t fork_process(void)
+    pid_t fork_process(int detach)
     {
         pid_t pid=fork();
 
@@ -271,16 +272,21 @@ namespace core
             core::ssdp_clear();
             core::listener_clear();
 
-            int fd=open("/dev/null",O_RDWR);
-            if(fd>=0)
+            if(detach)
             {
-                for(int i=0;i<3;i++)
-                    dup2(fd,i);
-                close(fd);
-            }else
-                for(int i=0;i<3;i++)
-                    close(i);
+                int fd=open("/dev/null",O_RDWR);
+                if(fd>=0)
+                {
+                    for(int i=0;i<3;i++)
+                        dup2(fd,i);
+                    close(fd);
+                }else
+                    for(int i=0;i<3;i++)
+                        close(i);
+            }
         }
+
+        return pid;
     }
 
     void process_event(lua_State* L,const char* name,int arg1)
@@ -394,6 +400,67 @@ namespace core
     }
 
 
+    void add_http_hdr_to_table(lua_State* L,char* p1,int idx)
+    {
+        if(!idx)
+        {
+            lua_pushstring(L,"reqline");
+            lua_newtable(L);
+
+            int nn=1;
+            for(char* pp1=p1,*pp2;pp1;pp1=pp2)
+            {
+                pp2=strchr(pp1,' ');
+                if(pp2)
+                {
+                    *pp2=0;
+                    pp2++;
+                    while(*pp2 && *pp2==' ')
+                        pp2++;
+                }
+                if(*pp1)
+                {
+                    lua_pushinteger(L,nn++);
+                    lua_pushstring(L,pp1);
+                    lua_rawset(L,-3);
+                }                                
+            }
+            lua_rawset(L,-3);
+        }else
+        {
+            char* p3=strchr(p1,':');
+            if(p3)
+            {
+                *p3=0;
+                p3++;
+                while(*p3 && *p3==' ')
+                    p3++;
+
+                if(*p3=='\"')
+                {
+                    p3++;
+                    char* p=strchr(p3,'\"');
+                    if(p)
+                        *p=0;
+                }
+
+                if(*p1 && *p3)
+                {
+                    if(!strcasecmp(p1,"Content-Length"))
+                    {
+                        lua_pushstring(L,"length");
+                        lua_pushstring(L,p3);
+                        lua_rawset(L,-3);
+                    }
+
+                    lua_pushstring(L,p1);
+                    lua_pushstring(L,p3);
+                    lua_rawset(L,-3);
+                }
+            }
+        }
+    }
+
     void process_ssdp(lua_State* L)
     {
 //printf("%i\n",lua_gettop(L));
@@ -431,62 +498,7 @@ namespace core
                         { *p2=0; p2++; }
 
                     if(*p1)
-                    {
-                        if(!idx)
-                        {
-                            lua_pushstring(L,"REQ");
-                            lua_newtable(L);
-
-                            int nn=1;
-                            for(char* pp1=p1,*pp2;pp1;pp1=pp2)
-                            {
-                                pp2=strchr(pp1,' ');
-                                if(pp2)
-                                {
-                                    *pp2=0;
-                                    pp2++;
-                                    while(*pp2 && *pp2==' ')
-                                        pp2++;
-                                }
-                                if(*pp1)
-                                {
-                                    lua_pushinteger(L,nn++);
-                                    lua_pushstring(L,pp1);
-                                    lua_rawset(L,-3);
-                                }                                
-                            }
-
-                            lua_rawset(L,-3);
-                        }else
-                        {
-                            char* p3=strchr(p1,':');
-                            if(p3)
-                            {
-                                *p3=0;
-                                p3++;
-                                while(*p3 && *p3==' ')
-                                    p3++;
-
-                                if(*p3=='\"')
-                                {
-                                    p3++;
-                                    char* p=strchr(p3,'\"');
-                                    if(p)
-                                        *p=0;
-                                }
-
-                                if(*p1 && *p3)
-                                {
-                                    lua_pushstring(L,p1);
-                                    lua_pushstring(L,p3);
-                                    lua_rawset(L,-3);
-                                }
-                                
-                            }
-                        }
-
-                        idx++;
-                    }
+                        add_http_hdr_to_table(L,p1,idx++);
 
                 }
 
@@ -522,7 +534,10 @@ namespace core
             snprintf(name,sizeof(name),"%s",l->name);
             int port=l->port;
 
-            pid_t pid=fork_process();
+            char from[64]="";
+            sprintf(from,"%s:%i",inet_ntoa(sin.sin_addr),ntohs(sin.sin_port));
+
+            pid_t pid=fork_process(0);
 
             if(!pid)
             {
@@ -542,12 +557,89 @@ namespace core
 
                 int on=1;
                 setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,&on,sizeof(on));
-                        
 
+                FILE* fp=fdopen(fd,"a+");
+                if(fp)
+                {
+//printf("%i\n",lua_gettop(L));
+                    http_client_fp=fp;
 
+                    lua_getglobal(L,"events");
 
+                    lua_getfield(L,-1,name);
 
-                close(fd);
+                    if(lua_type(L,-1)==LUA_TFUNCTION)
+                    {
+                        lua_pushstring(L,name);
+                        lua_pushstring(L,from);
+                        lua_pushinteger(L,port);
+
+                        lua_newtable(L);
+
+                        char tmp[512];
+
+                        int idx=0;
+
+                        alarm(15);                              // 15 seconds for read request from client
+
+                        while(fgets(tmp,sizeof(tmp),fp))
+                        {
+                            char* p=strpbrk(tmp,"\r\n");
+                            if(p)
+                                *p=0;
+                            if(!*tmp)
+                                break;
+                            add_http_hdr_to_table(L,tmp,idx++);
+                        }
+
+                        lua_getfield(L,-1,"length");
+                        if(lua_type(L,-1)!=LUA_TNIL)
+                        {
+                            int len=lua_tointeger(L,-1);
+                            lua_pop(L,1);
+
+                            if(len>0)
+                            {
+                                luaL_Buffer B;
+                                luaL_buffinit(L,&B);
+                                
+                                int n=0;
+                                while((n=fread(tmp,1,sizeof(tmp)>len?len:sizeof(tmp),fp))>0 && len>0)
+                                {
+                                    luaL_addlstring(&B,tmp,n);
+                                    len-=n;
+                                }
+
+                                lua_pushstring(L,"data");
+                                luaL_pushresult(&B);
+                                lua_rawset(L,-3);
+                            }
+
+                        }else
+                            lua_pop(L,1);
+
+                        alarm(0);                               // reset read timer
+
+                        if(lua_pcall(L,4,0,0))
+                        {
+                            if(!detached)
+                                fprintf(stderr,"%s\n",lua_tostring(L,-1));
+                            else
+                                syslog(LOG_INFO,"%s",lua_tostring(L,-1));
+                            lua_pop(L,1);
+                        }
+
+                    }else
+                        lua_pop(L,1);
+
+                    lua_pop(L,1);
+
+                    fclose(fp);
+                }else
+                    close(fd);
+
+//printf("%i\n",lua_gettop(L));
+
                 exit(0);
             }
 
@@ -723,7 +815,7 @@ static int lua_core_spawn(lua_State* L)
         return 1;
     }
 
-    pid_t pid=core::fork_process();
+    pid_t pid=core::fork_process(1);
 
     if(pid!=-1)
     {
@@ -793,6 +885,7 @@ static int lua_core_uuid(lua_State* L)
 
     return 1;
 }
+
 
 static int lua_core_mainloop(lua_State* L)
 {
@@ -970,8 +1063,27 @@ static int lua_http_listen(lua_State* L)
     return 1;
 }
 
+static int lua_http_send(lua_State* L)
+{
+    size_t l=0;
+    const char* s=lua_tolstring(L,1,&l);
 
-int luaopen_luacore(lua_State* L)
+    if(core::http_client_fp)
+        fwrite(s,1,l,core::http_client_fp);
+
+    return 0;
+}
+
+static int lua_http_flush(lua_State* L)
+{
+    if(core::http_client_fp)
+        fflush(core::http_client_fp);
+
+    return 0;
+}
+
+
+int luaopen_luaxcore(lua_State* L)
 {
     mcast::uuid_init();
 
@@ -999,6 +1111,8 @@ int luaopen_luacore(lua_State* L)
     static const luaL_Reg lib_http[]=
     {
         {"listen",lua_http_listen},
+        {"send",lua_http_send},
+        {"flush",lua_http_flush},
         {0,0}
     };
 

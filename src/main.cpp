@@ -2,8 +2,8 @@
 #include <syslog.h>
 #include <string.h>
 #include <unistd.h>
-#include "luaupnp.h"
-#include "luacore.h"
+#include "luaxlib.h"
+#include "luaxcore.h"
 
 int main(int argc,char** argv)
 {
@@ -27,8 +27,8 @@ int main(int argc,char** argv)
     if(L)
     {
         luaL_openlibs(L);
-        luaopen_luaupnp(L);
-        luaopen_luacore(L);
+        luaopen_luaxlib(L);
+        luaopen_luaxcore(L);
 
         lua_newtable(L);
         for(int i=0;i<argc;i++)

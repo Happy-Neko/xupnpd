@@ -1,4 +1,4 @@
-#include "luaupnp.h"
+#include "luaxlib.h"
 #include <string.h>
 #include <stdio.h>
 #include "soap.h"
@@ -224,7 +224,7 @@ static int lua_m3u_parse(lua_State* L)
 }
 
 
-int luaopen_luaupnp(lua_State* L)
+int luaopen_luaxlib(lua_State* L)
 {
     static const luaL_Reg lib_soap[]=
     {
