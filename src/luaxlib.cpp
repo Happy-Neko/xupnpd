@@ -2,6 +2,10 @@
 #include <string.h>
 #include <stdio.h>
 #include "soap.h"
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+                    
 
 static void lua_push_soap_node(lua_State* L,soap::node* node)
 {
@@ -224,6 +228,121 @@ static int lua_m3u_parse(lua_State* L)
 }
 
 
+static int lua_util_geturlinfo(lua_State* L)
+{
+    const char* www_root=lua_tostring(L,1);
+    const char* www_url=lua_tostring(L,2);
+
+    if(!www_root)
+        www_root="./";
+
+    if(!www_url)
+        return 0;
+
+    char url[512];
+    int n=snprintf(url,sizeof(url),"%s",www_url);
+    if(n<0 || n>=sizeof(url))
+        return 0;
+
+    for(char* p=url;*p;p++)
+        if(*p=='\\')
+            *p='/';
+
+    if(strstr(url,"/../"))
+        return 0;
+
+    char* args=strchr(url,'?');
+    if(args)
+    {
+        *args=0;
+        args++;
+    }else
+        args=(char*)"";
+
+    char path[512];
+
+    char* p=url; while(*p=='/') p++;
+    int l=strlen(www_root);
+    if(l>0 && www_root[l-1]!='/')
+        n=snprintf(path,sizeof(path),"%s/%s",www_root,p);
+    else
+        n=snprintf(path,sizeof(path),"%s%s",www_root,p);
+    if(n<0 || n>=sizeof(path))
+        return 0;
+
+    lua_newtable(L);
+
+    lua_pushstring(L,url);
+    lua_setfield(L,-2,"url");
+
+    lua_pushstring(L,"args");
+    lua_newtable(L);
+    for(char* p1=args,*p2;p1;p1=p2)
+    {
+        p2=strchr(p1,'&');
+        if(p2)
+        {
+            *p2=0;
+            p2++;
+        }
+        p=strchr(p1,'=');
+        if(p)
+        {
+            *p=0;
+            p++;
+        }
+        if(*p1 && *p)
+        {
+            lua_pushstring(L,p1);
+            lua_pushstring(L,p);        // URLDecode!!!!!!!!!!!
+            lua_rawset(L,-3);
+        }
+    }
+    lua_rawset(L,-3);
+
+    lua_pushstring(L,path);
+    lua_setfield(L,-2,"path");
+
+
+    struct stat st;
+    int rc=stat(path,&st);
+
+    lua_pushstring(L,"type");
+    if(rc)
+        lua_pushstring(L,"none");
+    else
+    {
+        if(S_ISREG(st.st_mode))
+            lua_pushstring(L,"file");
+        else if(S_ISDIR(st.st_mode))
+            lua_pushstring(L,"dir");
+        else
+            lua_pushstring(L,"unk");
+    }
+    lua_rawset(L,-3);
+
+    if(!rc)
+    {
+        if(S_ISREG(st.st_mode))
+        {
+            lua_pushstring(L,"length");
+            lua_pushinteger(L,st.st_size);
+            lua_rawset(L,-3);
+        }
+    }
+
+    p=strrchr(url,'.');
+    if(p)
+    {
+        lua_pushstring(L,"ext");
+        lua_pushstring(L,p+1);
+        lua_rawset(L,-3);
+    }
+
+    return 1;
+}
+
+
 int luaopen_luaxlib(lua_State* L)
 {
     static const luaL_Reg lib_soap[]=
@@ -239,8 +358,15 @@ int luaopen_luaxlib(lua_State* L)
         {0,0}
     };
 
+    static const luaL_Reg lib_util[]=
+    {
+        {"geturlinfo",lua_util_geturlinfo},
+        {0,0}
+    };
+
     luaL_register(L,"soap",lib_soap);
     luaL_register(L,"m3u",lib_m3u);
+    luaL_register(L,"util",lib_util);
 
     return 0;
 }

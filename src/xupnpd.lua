@@ -1,43 +1,23 @@
 cfg={}
 
-cfg.pid_file="/home/shocker/staff/tsdemuxer/xupnpd/src/xupnpd.pid"
 cfg.log_ident=arg[1] or "xupnpd"
+cfg.pid_file="/home/shocker/staff/tsdemuxer/xupnpd/src/"..cfg.log_ident..".pid"
 cfg.log_facility="local0"
+cfg.mcast_if="eth0"
+cfg.www_root="./"
+cfg.http_port=4044
 
 --core.detach()
 core.openlog(cfg.log_ident,cfg.log_facility)
 core.touchpid(cfg.pid_file)
 
+dofile('xupnpd_ssdp.lua')
+dofile('xupnpd_http.lua')
 
-function ssdp_handler(what,from,msg)
-    print(what,from,msg.reqline[1])
---    ssdp.send("test",req["FROM"])
-end
-
-function http_handler(what,from,port,msg)
-    print(what..'-'..port,from,msg.reqline[1])
-    print(msg.data)
-    http.send("Hello\n");
-    http.flush()
-end
-
-events["SIGUSR1"]=function (what) print(what) end
-events["SSDP"]=ssdp_handler
-events["www_event"]=http_handler                -- after fork
-events["spawn_event"]=function (what,status) print(what,status) end
-events["timer_event"]=function (what,sec) core.spawn("bash -c 'echo hi > /dev/null'","spawn_event") core.timer(sec,what) end
-
---ssdp.init("eth0",1,1)
-
-http.listen(4044,"www_event")
-http.listen(4045,"www_event")
-
---core.timer(3,"timer_event")
-
-print("start")
+print("start "..cfg.log_ident)
 
 core.mainloop()
 
-print("stop")
+print("stop "..cfg.log_ident)
 
 os.remove(cfg.pid_file)

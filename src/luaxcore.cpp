@@ -530,8 +530,10 @@ namespace core
 
         while((fd=accept(l->fd,(sockaddr*)&sin,&sin_len))>=0)
         {
-            char name[128];
-            snprintf(name,sizeof(name),"%s",l->name);
+            char name[64];
+            int n=snprintf(name,sizeof(name),"%s",l->name);
+            if(n<0 || n>=sizeof(name))
+                name[sizeof(name)-1]=0;
             int port=l->port;
 
             char from[64]="";
@@ -972,6 +974,25 @@ static int lua_core_mainloop(lua_State* L)
 
     sigprocmask(SIG_UNBLOCK,&full_sig_set,0);
 
+    lua_getglobal(L,"atexit");
+    lua_pushnil(L);
+    while(lua_next(L,-2))
+    {
+        if(lua_type(L,-1)==LUA_TFUNCTION)
+        {
+            if(lua_pcall(L,0,0,0))
+            {
+                if(!detached)
+                    fprintf(stderr,"%s\n",lua_tostring(L,-1));
+                else
+                    syslog(LOG_INFO,"%s",lua_tostring(L,-1));
+                lua_pop(L,1);
+            }
+        }else
+            lua_pop(L,1);
+    }
+    lua_pop(L,1);
+
     ssdp_done();
     listener_clear();
 
@@ -992,6 +1013,7 @@ static int lua_ssdp_init(lua_State* L)
     const char* iface=lua_tostring(L,1);
     int ttl=lua_tointeger(L,2);
     int loop=lua_tointeger(L,3);
+    int debug=lua_tointeger(L,4);
 
     if(!iface)
         iface="eth0";
@@ -999,8 +1021,13 @@ static int lua_ssdp_init(lua_State* L)
     if(ttl<1)
         ttl=1;
 
-    if(!core::detached)
+    if(!core::detached && debug>0)
+    {
         mcast::verb_fp=stderr;
+
+        if(debug>1)
+            mcast::debug=1;
+    }
 
     core::ssdp_done();
 
@@ -1125,6 +1152,9 @@ int luaopen_luaxcore(lua_State* L)
 
     lua_newtable(L);
     lua_setglobal(L,"childs");
+
+    lua_newtable(L);
+    lua_setglobal(L,"atexit");
 
     return 0;
 }
