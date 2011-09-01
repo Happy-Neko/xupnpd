@@ -1,13 +1,18 @@
 http_mime={}
 http_err={}
+http_vars={}
 
 -- http_mime types
 http_mime['html']='text/html'
 http_mime['htm']='text/html'
 http_mime['xml']='text/xml'
 http_mime['txt']='text/plain'
+http_mime['cpp']='text/plain'
+http_mime['h']='text/plain'
+http_mime['lua']='text/plain'
 http_mime['jpg']='image/jpeg'
 http_mime['png']='image/png'
+http_mime['ico']='image/vnd.microsoft.icon'
 
 -- http http_error list
 http_err[100]='Continue'
@@ -48,6 +53,22 @@ http_err[503]='Out of Resources'
 http_err[504]='Gateway Time-Out'
 http_err[505]='HTTP Version not supported'
 
+http_vars['fname']=ssdp_server
+http_vars['manufacturer']='Anton Burdinuk'
+http_vars['manufacturer_url']=''
+http_vars['description']=ssdp_server
+http_vars['name']='xupnpd'
+http_vars['version']='0.0.1'
+http_vars['url']=''
+http_vars['uuid']=ssdp_uuid
+http_vars['interface']=ssdp.interface()
+http_vars['port']=cfg.http_port
+
+http_templ=
+{
+    '/dev.xml',
+    '/wmc.xml'
+}
 
 function http_send_headers(err,ext,len)
     http.send(
@@ -77,8 +98,19 @@ function http_handler(what,from,port,msg)
         if f.type=='none' then http_send_headers(404) return end
         if f.type~='file' then http_send_headers(403) return end
 
-        http_send_headers(200,f.ext,f.length)
-        http.sendfile(f.path)
+        local tmpl=false
+
+        for i,fname in ipairs(http_templ) do
+            if f.url==fname then tmpl=true break end
+        end
+
+        if tmpl then
+            http_send_headers(200,f.ext)
+            http.sendtfile(f.path,http_vars)
+        else
+            http_send_headers(200,f.ext,f.length)
+            http.sendfile(f.path)
+        end
         http.flush()
     end
 

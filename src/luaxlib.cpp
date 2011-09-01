@@ -395,12 +395,13 @@ static int lua_util_geturlinfo(lua_State* L)
         {
             *p=0;
             p++;
-        }
-        if(*p1 && *p)
-        {
-            lua_pushstring(L,p1);
-            lua_pushstring(L,util::url_decode(p));
-            lua_rawset(L,-3);
+
+            if(*p1 && *p)
+            {
+                lua_pushstring(L,p1);
+                lua_pushstring(L,util::url_decode(p));
+                lua_rawset(L,-3);
+            }
         }
     }
     lua_rawset(L,-3);

@@ -1260,6 +1260,82 @@ static int lua_http_sendfile(lua_State* L)
     return 0;
 }
 
+static int lua_http_sendtfile(lua_State* L)
+{
+    const char* s=lua_tostring(L,1);
+
+    if(!s || !core::http_client_fp)
+        return 0;
+
+    FILE* fp=fopen(s,"r");
+    if(!fp)
+        return 0;
+
+    int st=0;
+
+    char var[64]="";
+    int nvar=0;
+
+    for(;;)
+    {
+        int ch=fgetc(fp);
+
+        if(ch==EOF)
+            break;
+
+        switch(st)
+        {
+        case 0:
+            if(ch=='$')
+                st=1;
+            else
+                fputc(ch,core::http_client_fp);
+            break;
+        case 1:
+            if(ch=='{')
+                st=2;
+            else
+            {
+                fputc('$',core::http_client_fp);
+                if(ch!='$')
+                {
+                    fputc(ch,core::http_client_fp);
+                    st=0;
+                }
+            }
+            break;
+        case 2:
+            if(ch=='}')
+            {
+                var[nvar]=0;
+
+                lua_getfield(L,2,var);
+
+                const char* p=lua_tostring(L,-1);
+                if(!p)
+                    p="";
+
+                fprintf(core::http_client_fp,"%s",p);
+
+                lua_pop(L,1);
+
+                nvar=0;
+                st=0;
+            }else
+            {
+                if(nvar<sizeof(var)-1)
+                    var[nvar++]=ch;
+            }
+            break;
+        }
+    }
+
+    fclose(fp);
+
+    return 0;
+}
+
+
 static int lua_http_flush(lua_State* L)
 {
     if(core::http_client_fp)
@@ -1301,6 +1377,7 @@ int luaopen_luaxcore(lua_State* L)
         {"listen",lua_http_listen},
         {"send",lua_http_send},
         {"sendfile",lua_http_sendfile},
+        {"sendtfile",lua_http_sendtfile},
         {"flush",lua_http_flush},
         {0,0}
     };
