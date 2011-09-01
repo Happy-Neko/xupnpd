@@ -20,6 +20,12 @@
 #include <arpa/inet.h>
 #include <netinet/tcp.h>
 
+/* TODO:
+- fork for async io
+- HTTP client
+- child to parent events over SOCK_DGRAM socket
+*/
+
 namespace core
 {
     struct timer_event
@@ -544,7 +550,7 @@ namespace core
             if(!pid)
             {
                 signal(SIGHUP,SIG_IGN);
-                signal(SIGPIPE,SIG_IGN);
+                signal(SIGPIPE,SIG_DFL);
                 signal(SIGINT,SIG_DFL);
                 signal(SIGQUIT,SIG_DFL);
                 signal(SIGTERM,SIG_DFL);
