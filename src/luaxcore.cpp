@@ -21,9 +21,7 @@
 #include <netinet/tcp.h>
 
 /* TODO:
-- fork for async io
 - HTTP client
-- child to parent events over SOCK_DGRAM socket
 */
 
 namespace core
@@ -138,6 +136,7 @@ namespace core
     volatile int __sig_usr2=0;
 
     int __sig_pipe[2]={-1,-1};
+    int __event_pipe[2]={-1,-1};
 
     char* parse_command_line(const char* cmd,char** dst,int n);
 
@@ -275,6 +274,8 @@ namespace core
             for(int i=0;i<sizeof(core::__sig_pipe)/sizeof(*core::__sig_pipe);i++)
                 close(core::__sig_pipe[i]);
 
+            close(core::__event_pipe[0]);
+
             core::ssdp_clear();
             core::listener_clear();
 
@@ -401,6 +402,55 @@ namespace core
 
             core::timer_reset();
         }
+
+//printf("%i\n",lua_gettop(L));
+    }
+
+    void process_events(lua_State* L)
+    {
+//printf("%i\n",lua_gettop(L));
+
+        lua_getglobal(L,"events");
+
+        unsigned char buf[2048];
+
+        while(recv(__event_pipe[0],buf,sizeof(buf),MSG_DONTWAIT)>0)
+        {
+            int num=0;
+
+            for(unsigned char* p=buf;p<buf+sizeof(buf)-1;)
+            {
+                int len=*p;
+                p++;
+                if(!len || len>sizeof(buf)-(p-buf))
+                    break;
+                if(!num)
+                    lua_getfield(L,-1,(char*)p);
+                else
+                    lua_pushlstring(L,(char*)p,len-1);
+
+                p+=len;
+                num++;
+            }
+
+            if(num>0)
+            {
+                if(lua_type(L,-num)==LUA_TFUNCTION)
+                {
+                    if(lua_pcall(L,num-1,0,0))
+                    {
+                        if(!detached)
+                            fprintf(stderr,"%s\n",lua_tostring(L,-1));
+                        else
+                            syslog(LOG_INFO,"%s",lua_tostring(L,-1));
+                        lua_pop(L,1);
+                    }
+                }else
+                    lua_pop(L,num);
+            }
+        }
+
+        lua_pop(L,1);
 
 //printf("%i\n",lua_gettop(L));
     }
@@ -656,6 +706,8 @@ namespace core
     }
 
 
+
+
 }
 
 static int lua_core_openlog(lua_State* L)
@@ -862,6 +914,44 @@ static int lua_core_spawn(lua_State* L)
     return 1;
 }
 
+static int lua_core_fspawn(lua_State* L)
+{
+    if(lua_type(L,1)!=LUA_TFUNCTION)
+        return 0;
+
+    int args=lua_gettop(L)-1;
+
+    pid_t pid=core::fork_process(0);
+    if(!pid)
+    {
+        signal(SIGHUP,SIG_IGN);
+        signal(SIGPIPE,SIG_DFL);
+        signal(SIGINT,SIG_DFL);
+        signal(SIGQUIT,SIG_DFL);
+        signal(SIGTERM,SIG_DFL);
+        signal(SIGALRM,SIG_DFL);
+        signal(SIGUSR1,SIG_DFL);
+        signal(SIGUSR2,SIG_DFL);
+        signal(SIGCHLD,SIG_DFL);
+
+        sigset_t full_sig_set;
+        sigfillset(&full_sig_set);
+        sigprocmask(SIG_UNBLOCK,&full_sig_set,0);
+
+        if(lua_pcall(L,args,0,0))
+        {
+            if(!core::detached)
+                fprintf(stderr,"%s\n",lua_tostring(L,-1));
+            else
+                syslog(LOG_INFO,"%s",lua_tostring(L,-1));
+            lua_pop(L,1);
+        }
+        exit(0);
+    }
+
+    return 0;
+}
+
 static int lua_core_timer(lua_State* L)
 {
     int sec=lua_tointeger(L,1);
@@ -894,6 +984,36 @@ static int lua_core_uuid(lua_State* L)
     return 1;
 }
 
+static int lua_core_sendevent(lua_State* L)
+{
+    unsigned char buf[2048],*p=buf;
+
+    int num=lua_gettop(L);
+
+    for(int i=1;i<=num;i++)
+    {
+        size_t l=0;
+        const char* s=lua_tolstring(L,i,&l);
+
+        if(!s)
+            s="";
+
+        size_t ll=l+3;
+
+        if(ll>sizeof(buf)-(p-buf))
+            break;
+
+        *p=l+1; p++; strcpy((char*)p,s); p+=l+1;
+    }
+
+    *p=0;
+    p++;
+
+    send(core::__event_pipe[1],buf,p-buf,0);
+
+    return 0;
+}
+
 
 static int lua_core_mainloop(lua_State* L)
 {
@@ -906,6 +1026,8 @@ static int lua_core_mainloop(lua_State* L)
 
     if(socketpair(PF_LOCAL,SOCK_STREAM,0,__sig_pipe))
         return luaL_error(L,"socketpair fail, cna't create signal pipe");
+    if(socketpair(PF_LOCAL,SOCK_DGRAM,0,__event_pipe))
+        return luaL_error(L,"socketpair fail, cna't create event pipe");
 
 
     struct sigaction action;
@@ -933,8 +1055,9 @@ static int lua_core_mainloop(lua_State* L)
         fd_set fdset;
         FD_ZERO(&fdset);
         FD_SET(__sig_pipe[0],&fdset);
+        FD_SET(__event_pipe[0],&fdset);
 
-        int nfd=__sig_pipe[0];
+        int nfd=__sig_pipe[0]>__event_pipe[0]?__sig_pipe[0]:__event_pipe[0];
 
         if(ssdp_downstream!=-1)
         {
@@ -969,6 +1092,9 @@ static int lua_core_mainloop(lua_State* L)
 
         if(FD_ISSET(__sig_pipe[0],&fdset))
             process_signals(L);
+
+        if(FD_ISSET(__event_pipe[0],&fdset))
+            process_events(L);
 
         if(ssdp_downstream!=-1 && FD_ISSET(ssdp_downstream,&fdset))
             process_ssdp(L);
@@ -1008,6 +1134,8 @@ static int lua_core_mainloop(lua_State* L)
                         
     for(int i=0;i<sizeof(__sig_pipe)/sizeof(*__sig_pipe);i++)
         close(__sig_pipe[i]);
+    for(int i=0;i<sizeof(__event_pipe)/sizeof(*__event_pipe);i++)
+        close(__event_pipe[i]);
 
     timer_clear();
 
@@ -1127,8 +1255,10 @@ int luaopen_luaxcore(lua_State* L)
         {"log",lua_core_log},
         {"touchpid",lua_core_touchpid},
         {"spawn",lua_core_spawn},
+        {"fspawn",lua_core_fspawn},
         {"timer",lua_core_timer},
         {"uuid",lua_core_uuid},
+        {"sendevent",lua_core_sendevent},
         {"mainloop",lua_core_mainloop},
         {0,0}
     };
