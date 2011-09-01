@@ -341,7 +341,7 @@ static int lua_util_geturlinfo(lua_State* L)
     if(!www_root)
         www_root="./";
 
-    if(!www_url)
+    if(!www_url || *www_url!='/')
         return 0;
 
     char url[512];

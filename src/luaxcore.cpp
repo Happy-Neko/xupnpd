@@ -1235,6 +1235,31 @@ static int lua_http_send(lua_State* L)
     return 0;
 }
 
+static int lua_http_sendfile(lua_State* L)
+{
+    const char* s=lua_tostring(L,1);
+
+    if(!s || !core::http_client_fp)
+        return 0;
+
+    fflush(core::http_client_fp);
+
+    int fd=open(s,O_RDONLY);
+    if(fd==-1)
+        return 0;
+
+    char buf[512];
+
+    ssize_t n;
+    while((n=read(fd,buf,sizeof(buf)))>0)
+        if(write(fileno(core::http_client_fp),buf,n)!=n)
+            break;
+
+    close(fd);
+
+    return 0;
+}
+
 static int lua_http_flush(lua_State* L)
 {
     if(core::http_client_fp)
@@ -1275,6 +1300,7 @@ int luaopen_luaxcore(lua_State* L)
     {
         {"listen",lua_http_listen},
         {"send",lua_http_send},
+        {"sendfile",lua_http_sendfile},
         {"flush",lua_http_flush},
         {0,0}
     };
