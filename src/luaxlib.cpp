@@ -116,7 +116,7 @@ static void lua_push_soap_node(lua_State* L,soap::node* node)
 {
     lua_pushstring(L,node->name?node->name:"???");
 
-    if(node->len>0)
+    if(!node->beg)
         lua_pushlstring(L,node->data,node->len);
     else
     {

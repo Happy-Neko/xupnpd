@@ -70,6 +70,8 @@ http_templ=
     '/wmc.xml'
 }
 
+dofile('xupnpd_soap.lua')
+
 function http_send_headers(err,ext,len)
     http.send(
         string.format(
@@ -79,6 +81,13 @@ function http_send_headers(err,ext,len)
     if len then http.send(string.format("Content-Length: %i\r\n",len)) end
     http.send("\r\n",len)
 end
+
+function get_soap_method(s)
+    local i=string.find(s,'#',1)
+    if not i then return s end
+    return string.sub(s,i+1)
+end
+
 
 function http_handler(what,from,port,msg)
 
@@ -91,10 +100,18 @@ function http_handler(what,from,port,msg)
 
     print(from..' '..msg.reqline[1]..' '..msg.reqline[2])
 
-    if f.url=='soap' then
-        -- process SOAP request
-    else
-        -- send static file
+    if msg.reqline[1]=='SUBSCRIBE' then
+        http.send(
+            string.format(
+                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nSID: uuid:%s\r\nTIMEOUT: Second-1800\r\n\r\n",ssdp_server,
+                os.date('!%a, %d %b %Y %H:%M:%S GMT'),core.uuid()))
+
+    elseif msg.reqline[1]=='UNSUBSCRIBE' then
+        http.send(
+            string.format(
+                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nEXT:\r\n\r\n",ssdp_server,os.date('!%a, %d %b %Y %H:%M:%S GMT')))
+
+    elseif msg.reqline[1]=='GET' then
         if f.type=='none' then http_send_headers(404) return end
         if f.type~='file' then http_send_headers(403) return end
 
@@ -104,16 +121,42 @@ function http_handler(what,from,port,msg)
             if f.url==fname then tmpl=true break end
         end
 
-        if tmpl then
-            http_send_headers(200,f.ext)
-            http.sendtfile(f.path,http_vars)
+        local len=nil
+
+        if not tmpl then len=f.length end
+
+        http_send_headers(200,f.ext,len)
+
+        if tmpl then http.sendtfile(f.path,http_vars) else  http.sendfile(f.path) end
+
+    elseif msg.reqline[1]=='POST' then
+        if f.url=='/soap' then
+
+            local s=services[ f.args['s'] ]
+
+            if not s then http_send_headers(404) return end     -- interface is not found
+
+            local func_name=get_soap_method(msg.soapaction)
+            local func=s[func_name]
+
+            if not func then http_send_headers(404) return end  -- method is not found
+
+            local r=soap.find('Envelope/Body/'..func_name,soap.parse(msg.data))
+
+            if not r then http_send_headers(400) return end
+
+            http_send_headers(200,'xml')
+
+            func(r)
+
         else
-            http_send_headers(200,f.ext,f.length)
-            http.sendfile(f.path)
+            http_send_headers(404)
         end
-        http.flush()
+    else
+        http_send_headers(405)
     end
 
+    http.flush()
 end
 
 events["http"]=http_handler

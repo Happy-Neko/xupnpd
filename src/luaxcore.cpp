@@ -19,9 +19,12 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netinet/tcp.h>
+#include <netdb.h>
+#include <ctype.h>
 
 /* TODO:
-- HTTP client
+- HTTP client for notify
+- XML Escape (vars for template)
 */
 
 namespace core
@@ -49,6 +52,8 @@ namespace core
 
     int detached=0;             // daemon
     FILE* http_client_fp=0;     // for HTTP workers only
+
+    FILE* connect(const char* s,int port);
 
     mcast::mcast_grp ssdp_mcast_grp;
     int ssdp_upstream=-1;
@@ -502,12 +507,8 @@ namespace core
 
                 if(*p1 && *p3)
                 {
-                    if(!strcasecmp(p1,"Content-Length"))
-                    {
-                        lua_pushstring(L,"length");
-                        lua_pushstring(L,p3);
-                        lua_rawset(L,-3);
-                    }
+                    for(char* pp=p1;*pp;pp++)
+                        *pp=tolower(*pp);
 
                     lua_pushstring(L,p1);
                     lua_pushstring(L,p3);
@@ -650,7 +651,7 @@ namespace core
                             add_http_hdr_to_table(L,tmp,idx++);
                         }
 
-                        lua_getfield(L,-1,"length");
+                        lua_getfield(L,-1,"content-length");
                         if(lua_type(L,-1)!=LUA_TNIL)
                         {
                             int len=lua_tointeger(L,-1);
@@ -1335,6 +1336,153 @@ static int lua_http_sendtfile(lua_State* L)
     return 0;
 }
 
+FILE* core::connect(const char* s,int port)
+{
+    sockaddr_in sin;
+    sin.sin_family=AF_INET;
+    sin.sin_port=htons(port);
+    sin.sin_addr.s_addr=inet_addr(s);
+    if(sin.sin_addr.s_addr==INADDR_NONE)
+    {
+        hostent* he=gethostbyname(s);
+        if(he)
+            memcpy((char*)&sin.sin_addr.s_addr,he->h_addr,sizeof(sin.sin_addr.s_addr));
+    }
+
+    if(sin.sin_addr.s_addr==INADDR_NONE)
+        return 0;
+
+    int fd=socket(sin.sin_family,SOCK_STREAM,0);
+    if(fd==-1)
+        return 0;
+
+    if(connect(fd,(sockaddr*)&sin,sizeof(sin)))
+    {
+        close(fd);
+        return 0;
+    }
+
+    int on=1;
+    setsockopt(fd,IPPROTO_TCP,TCP_NODELAY,&on,sizeof(on));
+
+    FILE* fp=fdopen(fd,"a+");
+    if(!fp)
+    {
+        close(fd);
+        return 0;
+    }
+
+    return fp;
+}
+
+static int lua_http_sendurl(lua_State* L)
+{
+    const char* s=lua_tostring(L,1);
+
+    if(!s || !core::http_client_fp)
+        return 0;
+
+
+    char tmp[256];
+    int n=snprintf(tmp,sizeof(tmp),"%s",s);
+    if(n<0 || n>=sizeof(tmp))
+        return 0;
+
+    char* host=tmp;
+    int port=0;
+
+    static const char proto_tag[]="://";
+
+    char* p=strstr(host,proto_tag);
+    if(p)
+    {
+        *p=0;
+
+        if(strcasecmp(host,"http"))
+            return 0;
+
+        host=p+sizeof(proto_tag)-1;
+
+        port=80;
+    }
+
+    char* uri=strchr(host,'/');
+
+    if(uri)
+        { *uri=0; uri++; }
+
+    if(!uri || !*uri)
+        uri=(char*)"/";
+
+    p=strchr(host,':');
+
+    if(p)
+        { *p=0; p++; port=atoi(p); }
+
+    if(!port)
+        return 0;
+
+    alarm(15);
+    FILE* fp=core::connect(host,port);
+    if(!fp)
+        return 0;
+    alarm(0);
+
+    fflush(core::http_client_fp);
+
+    fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\n\r\n",uri,host);
+    fflush(fp);
+
+    int idx=0;
+
+    int status=0;
+
+    char buf[512];
+    while(fgets(buf,sizeof(buf),fp))
+    {
+        char* p=strpbrk(buf,"\r\n");
+        if(p)
+            *p=0;
+
+        if(!*buf)
+            break;
+
+        if(!idx)
+        {
+            p=strchr(buf,' ');
+            if(p)
+            {
+                *p=0;
+                p++;
+                if(!strcmp(buf,"HTTP/1.1") || !strcmp(buf,"HTTP/1.0"))
+                {
+                    char* p2=strchr(p,' ');
+                    if(p2)
+                    {
+                        *p2=0;
+                        status=atoi(p);
+                    }
+                }
+            }
+        }
+        idx++;
+    }
+
+    if(status!=200)
+    {
+        fclose(fp);
+        return 0;
+    }
+    
+    while((n=fread(buf,1,sizeof(buf),fp))>0)
+        if(write(fileno(core::http_client_fp),buf,n)!=n)
+            break;
+
+    fclose(fp);
+
+    return 0;
+}
+
 
 static int lua_http_flush(lua_State* L)
 {
@@ -1378,6 +1526,7 @@ int luaopen_luaxcore(lua_State* L)
         {"send",lua_http_send},
         {"sendfile",lua_http_sendfile},
         {"sendtfile",lua_http_sendtfile},
+        {"sendurl",lua_http_sendurl},
         {"flush",lua_http_flush},
         {0,0}
     };
