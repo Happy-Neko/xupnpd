@@ -193,6 +193,63 @@ static int lua_soap_find(lua_State* L)
     return 1;    
 }
 
+static void lua_serialize_soap_node(lua_State* L,int idx,soap::string_builder* b)
+{
+    if(lua_type(L,idx)==LUA_TTABLE)
+    {
+        lua_pushnil(L);
+        while(lua_next(L,idx))
+        {
+            int tt=lua_gettop(L);
+
+            size_t l=0;
+            const char* s=lua_tolstring(L,tt-1,&l);
+
+            b->add('<'); b->add(s,l); b->add('>');
+
+            lua_serialize_soap_node(L,tt,b);
+
+            b->add("</",2); b->add(s,l); b->add('>');
+
+            lua_pop(L,1);
+        }
+    }else
+    {
+        const unsigned char* s=(unsigned char*)lua_tostring(L,idx);
+        while(*s)
+        {
+            switch(*s)
+            {
+            case '<':  b->add("&lt;",4);   break;
+            case '>':  b->add("&gt;",4);   break;
+            case '&':  b->add("&amp;",5);  break;
+            case '\"': b->add("&quot;",6); break;
+            case '\'': b->add("&apos;",6); break;
+            default:   b->add(*s);         break;
+            }
+            *s++;
+        }
+    }    
+}
+
+static int lua_soap_serialize(lua_State* L)
+{
+    soap::string_builder b;
+
+    int n=lua_gettop(L);
+
+    for(int i=1;i<=n;i++)
+        lua_serialize_soap_node(L,i,&b);
+
+    soap::string s;
+    b.swap(s);
+
+    lua_pushlstring(L,s.c_str(),s.length());
+
+    return 1;
+}
+
+
 
 /*
 t.name - name of playlist
@@ -462,6 +519,7 @@ int luaopen_luaxlib(lua_State* L)
     {
         {"parse",lua_soap_parse},
         {"find" ,lua_soap_find},
+        {"serialize",lua_soap_serialize},
         {0,0}
     };
 
