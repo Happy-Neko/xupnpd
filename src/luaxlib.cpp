@@ -533,6 +533,84 @@ static int lua_util_xmlencode(lua_State* L)
     return 1;
 }
 
+static const char* lua_search_object_type(const char* exp)
+{
+    static const char class_tag[]     = "upnp:class";
+    static const char derived_tag[]   = "derivedfrom";
+
+    static const char video_tag[]     = "object.item.videoItem";
+    static const char audio_tag[]     = "object.item.audioItem";
+    static const char image_tag[]     = "object.item.imageItem";
+
+    while(*exp && *exp==' ')
+        exp++;
+
+    if(!*exp || !strcmp(exp,"*"))
+        return "*";
+
+    const char* p=strstr(exp,class_tag);
+
+    if(p)
+    {
+        p+=sizeof(class_tag)-1;
+
+        while(*p && (*p==' ' || *p=='\t'))
+            p++;
+
+        int ok=1;
+        
+        if(!strncmp(p,derived_tag,sizeof(derived_tag)-1))
+            p+=sizeof(derived_tag)-1;
+        else if(*p=='=')
+            p++;
+        else
+            ok=0;
+
+        if(ok)
+        {
+            while(*p && (*p==' ' || *p=='\t'))
+                p++;
+            if(*p=='\"')
+            {
+                p++;
+
+                const char* p2=strchr(p,'\"');
+
+                if(p2)
+                {
+                    char tmp[64];
+
+                    int n=p2-p;
+
+                    if(n>=sizeof(tmp))
+                        n=sizeof(tmp)-1;
+
+                    strncpy(tmp,p,n);
+                    tmp[n]=0;
+
+                    if(!strncmp(tmp,video_tag,sizeof(video_tag)-1))
+                        return video_tag;
+                    else if(!strncmp(tmp,audio_tag,sizeof(audio_tag)-1))
+                        return audio_tag;
+                }
+            }
+        }
+    }
+
+    return "";
+}
+
+static int lua_util_upnp_search_object_type(lua_State* L)
+{
+    const char* s=lua_tostring(L,1);
+    if(!s)
+        s="";
+
+    lua_pushstring(L,lua_search_object_type(s));
+    return 1;
+}
+
+
 int luaopen_luaxlib(lua_State* L)
 {
     static const luaL_Reg lib_soap[]=
@@ -554,6 +632,7 @@ int luaopen_luaxlib(lua_State* L)
         {"geturlinfo",lua_util_geturlinfo},
         {"getfext",lua_util_getfext},
         {"xmlencode",lua_util_xmlencode},
+        {"upnp_search_object_type",lua_util_upnp_search_object_type},
         {0,0}
     };
 

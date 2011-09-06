@@ -1,5 +1,5 @@
 playlist_data={}
-playlist_data.name="root"
+playlist_data.name='root'
 playlist_data.size=0
 playlist_data.elements={}
 
@@ -20,6 +20,7 @@ function find_playlist_object(s)
         if not pls then
             if i~='0' then return nil else pls=playlist_data end
         else
+            if not pls.elements then return nil end            
             pls=pls.elements[tonumber(i)]
         end
     end

@@ -22,8 +22,9 @@ dofile('xupnpd_http.lua')
 
 print("start "..cfg.log_ident)
 
---services.cds.Browse({['ObjectID']='0', ['BrowseFlag']='BrowseDirectChildren', ['StartingIndex']='0', ['RequestedCount']='3'})
+--services.cds.Browse({['ObjectID']='0/1', ['BrowseFlag']='BrowseDirectChildren', ['StartingIndex']='0', ['RequestedCount']='3'})
 --services.cds.Browse({['ObjectID']='0/1/1', ['BrowseFlag']='BrowseMetadata', ['StartingIndex']='0', ['RequestedCount']='0'})
+services.cds.Search({['ObjectID']='0', ['StartingIndex']='0', ['RequestedCount']='3'})
 
 core.mainloop()
 

@@ -24,7 +24,6 @@
 
 /* TODO:
 - HTTP client for notify
-- XML Escape (vars for template)
 */
 
 namespace core
