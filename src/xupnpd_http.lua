@@ -141,13 +141,43 @@ function http_handler(what,from,port,msg)
 
             if not func then http_send_headers(404) return end  -- method is not found
 
+--print(msg.data)
+
             local r=soap.find('Envelope/Body/'..func_name,soap.parse(msg.data))
 
             if not r then http_send_headers(400) return end
 
             http_send_headers(200,'xml')
 
-            func(r)
+            r=func(r)
+
+            if not r then
+                http.send(
+                '<?xml version=\"1.0\" encoding=\"utf-8\"?>'..
+                '<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">'..
+                   '<s:Body>'..
+                      '<s:Fault>'..
+                         '<faultcode>s:Client</faultcode>'..
+                         '<faultstring>UPnPError</faultstring>'..
+                         '<detail>'..
+                            '<u:UPnPError xmlns:u=\"urn:schemas-upnp-org:control-1-0\">'..
+                               '<u:errorCode>501</u:errorCode>'..
+                               '<u:errorDescription>Action Failed</u:errorDescription>'..
+                            '</u:UPnPError>'..
+                         '</detail>'..
+                      '</s:Fault>'..
+                   '</s:Body>'..
+                '</s:Envelope>'
+                )
+            else
+                http.send(
+                    string.format(
+                        '<?xml version=\"1.0\" encoding=\"utf-8\"?>'..
+                        '<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">'..
+                        '<s:Body><u:%sResponse xmlns:u=\"%s\">%s</u:%sResponse></s:Body></s:Envelope>',                                                            
+                            func_name,s.schema,soap.serialize(r),func_name)
+                        )
+            end
 
         else
             http_send_headers(404)

@@ -193,6 +193,23 @@ static int lua_soap_find(lua_State* L)
     return 1;    
 }
 
+static void lua_xml_enc(const unsigned char* s,soap::string_builder* b)
+{
+    while(*s)
+    {
+        switch(*s)
+        {
+        case '<':  b->add("&lt;",4);   break;
+        case '>':  b->add("&gt;",4);   break;
+        case '&':  b->add("&amp;",5);  break;
+        case '\"': b->add("&quot;",6); break;
+        case '\'': b->add("&apos;",6); break;
+        default:   b->add(*s);         break;
+        }
+        *s++;
+    }
+}
+
 static void lua_serialize_soap_node(lua_State* L,int idx,soap::string_builder* b)
 {
     if(lua_type(L,idx)==LUA_TTABLE)
@@ -214,22 +231,7 @@ static void lua_serialize_soap_node(lua_State* L,int idx,soap::string_builder* b
             lua_pop(L,1);
         }
     }else
-    {
-        const unsigned char* s=(unsigned char*)lua_tostring(L,idx);
-        while(*s)
-        {
-            switch(*s)
-            {
-            case '<':  b->add("&lt;",4);   break;
-            case '>':  b->add("&gt;",4);   break;
-            case '&':  b->add("&amp;",5);  break;
-            case '\"': b->add("&quot;",6); break;
-            case '\'': b->add("&apos;",6); break;
-            default:   b->add(*s);         break;
-            }
-            *s++;
-        }
-    }    
+        lua_xml_enc((unsigned char*)lua_tostring(L,idx),b);
 }
 
 static int lua_soap_serialize(lua_State* L)
@@ -513,6 +515,24 @@ static int lua_util_getfext(lua_State* L)
     return 1;
 }
 
+static int lua_util_xmlencode(lua_State* L)
+{
+    const char* s=lua_tostring(L,1);
+
+    if(!s)
+        s="";
+
+    soap::string_builder b;
+
+    lua_xml_enc((unsigned char*)s,&b);
+
+    soap::string tmp;
+    b.swap(tmp);
+
+    lua_pushlstring(L,tmp.c_str(),tmp.length());
+    return 1;
+}
+
 int luaopen_luaxlib(lua_State* L)
 {
     static const luaL_Reg lib_soap[]=
@@ -533,6 +553,7 @@ int luaopen_luaxlib(lua_State* L)
     {
         {"geturlinfo",lua_util_geturlinfo},
         {"getfext",lua_util_getfext},
+        {"xmlencode",lua_util_xmlencode},
         {0,0}
     };
 
