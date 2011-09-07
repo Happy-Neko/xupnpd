@@ -112,23 +112,26 @@ function http_handler(what,from,port,msg)
                 "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nEXT:\r\n\r\n",ssdp_server,os.date('!%a, %d %b %Y %H:%M:%S GMT')))
 
     elseif msg.reqline[1]=='GET' then
-        if f.type=='none' then http_send_headers(404) return end
-        if f.type~='file' then http_send_headers(403) return end
+        if f.url=='/proxy' then
+--            f.args['s']
+        else
+            if f.type=='none' then http_send_headers(404) return end
+            if f.type~='file' then http_send_headers(403) return end
 
-        local tmpl=false
+            local tmpl=false
 
-        for i,fname in ipairs(http_templ) do
-            if f.url==fname then tmpl=true break end
+            for i,fname in ipairs(http_templ) do
+                if f.url==fname then tmpl=true break end
+            end
+
+            local len=nil
+
+            if not tmpl then len=f.length end
+
+            http_send_headers(200,f.ext,len)
+
+            if tmpl then http.sendtfile(f.path,http_vars) else  http.sendfile(f.path) end
         end
-
-        local len=nil
-
-        if not tmpl then len=f.length end
-
-        http_send_headers(200,f.ext,len)
-
-        if tmpl then http.sendtfile(f.path,http_vars) else  http.sendfile(f.path) end
-
     elseif msg.reqline[1]=='POST' then
         if f.url=='/soap' then
 
