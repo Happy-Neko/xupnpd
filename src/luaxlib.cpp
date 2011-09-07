@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <ctype.h>
 
 namespace util
 {
@@ -306,6 +307,7 @@ static int lua_m3u_parse(lua_State* L)
         int idx=1;
 
         char track_name[64]="";
+        char track_ext[256]="";
         char track_url[256]="";
 
         char buf[256];
@@ -349,6 +351,18 @@ static int lua_m3u_parse(lua_State* L)
                         *p2=0;
                         p2++;
 
+                        char* p3=strchr(p,' ');
+                        if(p3)
+                        {
+                            p3++;
+                            while(*p3 && *p3==' ')
+                                p3++;
+
+                            int n=snprintf(track_ext,sizeof(track_ext),"%s",p3);
+                            if(n==-1 || n>=sizeof(track_ext))
+                                track_ext[sizeof(track_ext)-1]=0;
+                        }
+
                         int n=snprintf(track_name,sizeof(track_name),"%s",p2);
                         if(n==-1 || n>=sizeof(track_name))
                             track_name[sizeof(track_name)-1]=0;
@@ -372,9 +386,37 @@ static int lua_m3u_parse(lua_State* L)
                 lua_pushstring(L,track_url);
                 lua_rawset(L,-3);
 
+                for(char* p1=track_ext,*p2;p1;p1=p2)
+                {
+                    while(*p1 && *p1==' ')
+                        p1++;
+
+                    p2=strchr(p1,' ');
+                    if(p2)
+                    {
+                        *p2=0;
+                        p2++;
+                    }
+
+                    char* p3=strchr(p1,'=');
+                    if(p3)
+                    {
+                        *p3=0;
+                        p3++;
+
+                        if(*p1 && *p3)
+                        {
+                            lua_pushstring(L,p1);
+                            lua_pushstring(L,p3);
+                            lua_rawset(L,-3);
+                        }
+                    }                    
+                }
+
                 lua_rawset(L,-3);
 
                 *track_name=0;
+                *track_ext=0;
                 *track_url=0;
             }
         }
@@ -533,7 +575,33 @@ static int lua_util_xmlencode(lua_State* L)
     return 1;
 }
 
-static const char* lua_search_object_type(const char* exp)
+static int lua_util_urlencode(lua_State* L)
+{
+    const unsigned char* s=(unsigned char*)lua_tostring(L,1);
+
+    if(!s)
+        s=(unsigned char*)"";
+
+    soap::string_builder b;
+
+    while(*s)
+    {
+        if(!isalnum(*s))
+            { char tmp[8]; int n=sprintf(tmp,"%%%.2X",(int)*s); b.add(tmp,n); }
+        else
+            b.add(*s);
+        s++;
+    }
+
+    soap::string tmp;
+    b.swap(tmp);
+
+    lua_pushlstring(L,tmp.c_str(),tmp.length());
+    return 1;
+}
+
+// 0 - all, 1 - video, 2 - audio, 3 - images
+static int lua_search_object_type(const char* exp)
 {
     static const char class_tag[]     = "upnp:class";
     static const char derived_tag[]   = "derivedfrom";
@@ -546,7 +614,7 @@ static const char* lua_search_object_type(const char* exp)
         exp++;
 
     if(!*exp || !strcmp(exp,"*"))
-        return "*";
+        return 0;
 
     const char* p=strstr(exp,class_tag);
 
@@ -589,15 +657,17 @@ static const char* lua_search_object_type(const char* exp)
                     tmp[n]=0;
 
                     if(!strncmp(tmp,video_tag,sizeof(video_tag)-1))
-                        return video_tag;
+                        return 1;
                     else if(!strncmp(tmp,audio_tag,sizeof(audio_tag)-1))
-                        return audio_tag;
+                        return 2;
+                    else if(!strncmp(tmp,image_tag,sizeof(image_tag)-1))
+                        return 3;
                 }
             }
         }
     }
 
-    return "";
+    return -1;
 }
 
 static int lua_util_upnp_search_object_type(lua_State* L)
@@ -606,7 +676,7 @@ static int lua_util_upnp_search_object_type(lua_State* L)
     if(!s)
         s="";
 
-    lua_pushstring(L,lua_search_object_type(s));
+    lua_pushinteger(L,lua_search_object_type(s));
     return 1;
 }
 
@@ -632,6 +702,7 @@ int luaopen_luaxlib(lua_State* L)
         {"geturlinfo",lua_util_geturlinfo},
         {"getfext",lua_util_getfext},
         {"xmlencode",lua_util_xmlencode},
+        {"urlencode",lua_util_urlencode},
         {"upnp_search_object_type",lua_util_upnp_search_object_type},
         {0,0}
     };

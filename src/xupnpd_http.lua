@@ -141,8 +141,6 @@ function http_handler(what,from,port,msg)
 
             if not func then http_send_headers(404) return end  -- method is not found
 
---print(msg.data)
-
             local r=soap.find('Envelope/Body/'..func_name,soap.parse(msg.data))
 
             if not r then http_send_headers(400) return end

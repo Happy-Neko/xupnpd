@@ -2,38 +2,29 @@ services={}
 services.cds={}
 services.cms={}
 services.msr={}
+protocols={}
 
 update_id=1
 
-protocols=
-{
-    'http-get:*:video/avi:*',
-    'http-get:*:video/x-ms-asf:*',
-    'http-get:*:video/x-ms-wmv:*',
-    'http-get:*:video/mp4:*',
-    'http-get:*:video/mpeg:*',
-    'http-get:*:video/mpeg2:*',
-    'http-get:*:video/mp2t:*',
-    'http-get:*:video/mp2p:*',
-    'http-get:*:video/quicktime:*',
-    'http-get:*:audio/x-aac:*',
-    'http-get:*:audio/x-ac3:*',
-    'http-get:*:audio/mpeg:*',
-    'http-get:*:audio/x-ogg:*',
-    'http-get:*:audio/x-ms-wma:*'
-}
+for i,j in pairs(upnp_proto) do table.insert(protocols,j..'*') end
 
 function playlist_item_to_xml(id,parent_id,pls)
     if pls.elements then
         return string.format(
             '<container id=\"%s\" childCount=\"%i\" parentID=\"%s\" restricted=\"true\"><dc:title>%s</dc:title><upnp:class>object.container</upnp:class></container>',
-            id,pls.size or 0,parent_id,util.xmlencode(pls.name)
-            )
+            id,pls.size or 0,parent_id,util.xmlencode(pls.name))
     else
+        local logo=''
+        local url=pls.url or ''
+
+        if pls.logo then logo=string.format('<upnp:albumArtURI dlna:profileID=\"JPEG_TN\">%s</upnp:albumArtURI>',pls.logo) end
+
+        if cfg.proxy then url=www_location..'/proxy?s='..util.urlencode(url) end
+
         return string.format(
-            '<item restricted=\"true\" id=\"%s" parentID=\"%s\"><dc:title>%s</dc:title><res protocolInfo=\"http-get:*:video/avi:DLNA.ORG_OP=01\" size=\"0\">%s</res><upnp:class>object.item.videoItem</upnp:class></item>',
-            id,parent_id,util.xmlencode(pls.name),pls.url or ''
-            )
+            '<item restricted=\"true\" id=\"%s" parentID=\"%s\"><dc:title>%s</dc:title><res protocolInfo=\"%s%s\" size=\"0\">%s</res><upnp:class>%s</upnp:class>%s</item>',
+            id,parent_id,util.xmlencode(pls.name),pls.mime[4],pls.mime[5],url,pls.mime[2],logo)
+
     end
 end
 
@@ -107,6 +98,7 @@ function services.cds.Search(args)
 
     local from=tonumber(args.StartingIndex)
     local to=from+tonumber(args.RequestedCount)
+    local what=util.upnp_search_object_type(args.SearchCriteria)
 
     if to==from then to=from+10000 end
 
@@ -121,18 +113,18 @@ function services.cds.Search(args)
                     __search(id..'/'..i,id,j)
                 end
             else
--- if filter then
-                total=total+1
+                if what==0 or p.mime[1]==what then
+                    total=total+1
 
-                if total>from and total<=to then
-                    table.insert(items,playlist_item_to_xml(id,parent_id,p))
-                    count=count+1
+                    if total>from and total<=to then
+                        table.insert(items,playlist_item_to_xml(id,parent_id,p))
+                        count=count+1
+                    end
                 end
-
             end
         end
 
-        __search(args.ObjectID,get_playlist_item_parent(args.ObjectID),pls)
+        __search(args.ContainerID,get_playlist_item_parent(args.ContainerID),pls)
     end
 
     table.insert(items,'</DIDL-Lite>')
