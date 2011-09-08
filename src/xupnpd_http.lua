@@ -13,6 +13,7 @@ http_mime['lua']='text/plain'
 http_mime['jpg']='image/jpeg'
 http_mime['png']='image/png'
 http_mime['ico']='image/vnd.microsoft.icon'
+http_mime['mpeg']='video/mpeg'
 
 -- http http_error list
 http_err[100]='Continue'
@@ -190,8 +191,8 @@ function http_handler(what,from,port,msg)
             http.sendurl(pls.url)
 
         elseif f.url=='/reload' then
-            http_send_headers(200,'txt')
             core.sendevent('reload')
+            http_send_headers(200,'txt')
             http.send('OK')
         else
             if f.type=='none' then http_send_headers(404) return end
@@ -208,6 +209,8 @@ function http_handler(what,from,port,msg)
             if not tmpl then len=f.length end
 
             if cfg.debug>0 then print(from..' FILE '..f.path) end
+
+            if f.url=='/reload.mpeg' then core.sendevent('reload') end
 
             http_send_headers(200,f.ext,len)
 
