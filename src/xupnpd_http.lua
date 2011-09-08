@@ -55,7 +55,7 @@ http_err[505]='HTTP Version not supported'
 
 http_vars['fname']=ssdp_server
 http_vars['manufacturer']='Anton Burdinuk'
-http_vars['manufacturer_url']=''
+http_vars['manufacturer_url']='clark15b@gmail.com'
 http_vars['description']=ssdp_server
 http_vars['name']='xupnpd'
 http_vars['version']='0.0.1'
@@ -67,7 +67,8 @@ http_vars['port']=cfg.http_port
 http_templ=
 {
     '/dev.xml',
-    '/wmc.xml'
+    '/wmc.xml',
+    '/index.html'
 }
 
 dofile('xupnpd_soap.lua')
@@ -91,6 +92,8 @@ end
 
 function http_handler(what,from,port,msg)
 
+    if msg.reqline[2]=='/' then msg.reqline[2]='/index.html' end
+
     local f=util.geturlinfo(cfg.www_root,msg.reqline[2])
 
     if not f or (msg.reqline[3]~='HTTP/1.0' and msg.reqline[3]~='HTTP/1.1') then
@@ -98,42 +101,12 @@ function http_handler(what,from,port,msg)
         return
     end
 
-    print(from..' '..msg.reqline[1]..' '..msg.reqline[2])
+    if cfg.debug>0 then print(from..' '..msg.reqline[1]..' '..msg.reqline[2]) end
 
-    if msg.reqline[1]=='SUBSCRIBE' then
-        http.send(
-            string.format(
-                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nSID: uuid:%s\r\nTIMEOUT: Second-1800\r\n\r\n",ssdp_server,
-                os.date('!%a, %d %b %Y %H:%M:%S GMT'),core.uuid()))
-
-    elseif msg.reqline[1]=='UNSUBSCRIBE' then
-        http.send(
-            string.format(
-                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nEXT:\r\n\r\n",ssdp_server,os.date('!%a, %d %b %Y %H:%M:%S GMT')))
-
-    elseif msg.reqline[1]=='GET' then
-        if f.url=='/proxy' then
---            f.args['s']
-        else
-            if f.type=='none' then http_send_headers(404) return end
-            if f.type~='file' then http_send_headers(403) return end
-
-            local tmpl=false
-
-            for i,fname in ipairs(http_templ) do
-                if f.url==fname then tmpl=true break end
-            end
-
-            local len=nil
-
-            if not tmpl then len=f.length end
-
-            http_send_headers(200,f.ext,len)
-
-            if tmpl then http.sendtfile(f.path,http_vars) else  http.sendfile(f.path) end
-        end
-    elseif msg.reqline[1]=='POST' then
+    if msg.reqline[1]=='POST' then
         if f.url=='/soap' then
+
+            if cfg.debug>0 then print(from..' SOAP '..msg.soapaction or '') end
 
             local s=services[ f.args['s'] ]
 
@@ -143,6 +116,8 @@ function http_handler(what,from,port,msg)
             local func=s[func_name]
 
             if not func then http_send_headers(404) return end  -- method is not found
+
+            if cfg.debug>1 then print(msg.data) end
 
             local r=soap.find('Envelope/Body/'..func_name,soap.parse(msg.data))
 
@@ -179,9 +154,64 @@ function http_handler(what,from,port,msg)
                             func_name,s.schema,soap.serialize(r),func_name)
                         )
             end
-
         else
             http_send_headers(404)
+        end
+    elseif msg.reqline[1]=='SUBSCRIBE' then
+        http.send(
+            string.format(
+                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nSID: uuid:%s\r\nTIMEOUT: Second-1800\r\n\r\n",ssdp_server,
+                os.date('!%a, %d %b %Y %H:%M:%S GMT'),core.uuid()))
+
+    elseif msg.reqline[1]=='UNSUBSCRIBE' then
+        http.send(
+            string.format(
+                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nEXT:\r\n\r\n",ssdp_server,os.date('!%a, %d %b %Y %H:%M:%S GMT')))
+
+    elseif msg.reqline[1]=='GET' then
+        if f.url=='/proxy' then
+
+            local pls=find_playlist_object(f.args['s'] or '')
+
+            if not pls then http_send_headers(404) return end
+
+            if cfg.debug>0 then print(from..' PROXY '..pls.url..' <'..pls.mime[3]..'>') end
+
+            http.send(string.format(
+                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nPragma: no-cache\r\nCache-control: no-cache\r\nContent-Type: %s\r\nConnection: close\r\n"..
+                "TransferMode.DLNA.ORG: Streaming\r\nAccept-Ranges: none\r\nEXT:\r\n",ssdp_server,os.date('!%a, %d %b %Y %H:%M:%S GMT'),pls.mime[3]))
+
+            if pls.dlna_extras~='*' then
+                http.send('ContentFeatures.DLNA.ORG: '..pls.dlna_extras..'\r\n')
+            end
+
+            http.send('\r\n')
+            http.flush()
+            http.sendurl(pls.url)
+
+        elseif f.url=='/reload' then
+            http_send_headers(200,'txt')
+            core.sendevent('reload')
+            http.send('OK')
+        else
+            if f.type=='none' then http_send_headers(404) return end
+            if f.type~='file' then http_send_headers(403) return end
+
+            local tmpl=false
+
+            for i,fname in ipairs(http_templ) do
+                if f.url==fname then tmpl=true break end
+            end
+
+            local len=nil
+
+            if not tmpl then len=f.length end
+
+            if cfg.debug>0 then print(from..' FILE '..f.path) end
+
+            http_send_headers(200,f.ext,len)
+
+            if tmpl then http.sendtfile(f.path,http_vars) else  http.sendfile(f.path) end
         end
     else
         http_send_headers(405)

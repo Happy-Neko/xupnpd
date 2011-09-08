@@ -1,22 +1,51 @@
 cfg={}
 
-cfg.ssdp_interface="eth0"
-cfg.ssdp_debug=0
-cfg.ssdp_loop=1
-cfg.http_port=4044
-cfg.udpxy_url='http://192.168.1.1:4022'
-cfg.log_facility="local0"
-cfg.proxy=true
+-- multicast interface for SSDP exchange, 'eth0' or 'br0' for example
+cfg.ssdp_interface="lo"
 
+-- 'cfg.ssdp_loop' enables multicast loop (if player and server in one host)
+cfg.ssdp_loop=1
+
+-- HTTP port for incoming connections
+cfg.http_port=4044
+
+-- syslog facility (syslog,local0-local7)
+cfg.log_facility="local0"
+
+-- 'cfg.daemon' detach server from terminal
+cfg.daemon=false
+
+-- 'cfg.debug' enables SSDP debug output to stdout (if cfg.daemon=false)
+-- 0-off, 1-basic, 2-messages
+cfg.debug=1
+
+-- 'udpxy' url for multicast playlists (udp://@...)
+cfg.udpxy_url='http://192.168.1.1:4022'
+
+-- 'cfg.proxy' enables proxy for injection DLNA headers to stream
+-- 0-off, 1-radio, 2-radio/TV
+cfg.proxy=1
+
+-- 'cfg.dlna_extras' enables DLNA extras
+cfg.dlna_extras=false
+
+-- static device UUID, '60bd2fb3-dabe-cb14-c766-0e319b54c29a' for example or nil
+cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
+
+-- playlist (m3u file path or path with alias
+playlist=
+{
+    'example.m3u'
+--    { 'butovocom_iptv.m3u', 'Butovo.com' },
+--    { 'mozhay.m3u', 'Mozhay.tv' }
+}
+
+
+
+-- log ident, pid file end www root
 cfg.log_ident=arg[1] or "xupnpd"
 cfg.pid_file="/var/tmp/"..cfg.log_ident..".pid"
 cfg.www_root="./www/"
 
-playlist=
-{
-    'example.m3u',
---    'butovocom_iptv.m3u',
---    'mozhay.m3u'
-}
 
 dofile('xupnpd_main.lua')

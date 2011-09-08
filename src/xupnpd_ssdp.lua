@@ -79,11 +79,13 @@ end
 events["SSDP"]=ssdp_handler
 events["ssdp_timer"]=function (what,sec) ssdp_alive() core.timer(sec,what) end
 
-ssdp.init(cfg.ssdp_interface,1,cfg.ssdp_loop,cfg.ssdp_debug)   -- interface, ttl, allow_loop, debug (0,1 or 2)
+ssdp.init(cfg.ssdp_interface,1,cfg.ssdp_loop,cfg.debug)   -- interface, ttl, allow_loop, debug (0,1 or 2)
 
 www_location='http://'..ssdp.interface()..':'..cfg.http_port
 ssdp_location=www_location..'/dev.xml'
-ssdp_uuid=core.uuid()
+
+if not cfg.uuid then ssdp_uuid=core.uuid() else ssdp_uuid=cfg.uuid end
+
 ssdp_uuid2='uuid:'..ssdp_uuid
 ssdp_server='eXtensible UPnP agent'
 

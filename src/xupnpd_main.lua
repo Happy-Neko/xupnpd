@@ -1,11 +1,26 @@
---core.detach()
+if cfg.daemon==true then core.detach() end
+
 core.openlog(cfg.log_ident,cfg.log_facility)
---core.touchpid(cfg.pid_file)
+
+if cfg.daemon==true then core.touchpid(cfg.pid_file) end
+
+update_id=0
 
 dofile('xupnpd_mime.lua')
 dofile('xupnpd_m3u.lua')
 dofile('xupnpd_ssdp.lua')
 dofile('xupnpd_http.lua')
+
+function reload_playlist()
+    dofile('xupnpd_mime.lua')
+    dofile('xupnpd_m3u.lua')
+    update_id=update_id+1
+
+    if cfg.debug>0 then print('reload playlist <'..update_id..'>') end
+end
+
+events["SIGUSR1"]=reload_playlist
+events["reload"]=reload_playlist
 
 print("start "..cfg.log_ident)
 
@@ -17,4 +32,4 @@ core.mainloop()
 
 print("stop "..cfg.log_ident)
 
---os.remove(cfg.pid_file)
+if cfg.daemon==true then os.remove(cfg.pid_file) end

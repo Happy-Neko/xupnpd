@@ -2,11 +2,6 @@ services={}
 services.cds={}
 services.cms={}
 services.msr={}
-protocols={}
-
-update_id=1
-
-for i,j in pairs(upnp_proto) do table.insert(protocols,j..'*') end
 
 function playlist_item_to_xml(id,parent_id,pls)
     if pls.elements then
@@ -17,13 +12,17 @@ function playlist_item_to_xml(id,parent_id,pls)
         local logo=''
         local url=pls.url or ''
 
-        if pls.logo then logo=string.format('<upnp:albumArtURI dlna:profileID=\"JPEG_TN\">%s</upnp:albumArtURI>',pls.logo) end
+        if pls.logo then logo=string.format('<upnp:albumArtURI dlna:profileID=\"JPEG_TN\">%s</upnp:albumArtURI>',util.xmlencode(pls.logo)) end
 
-        if cfg.proxy then url=www_location..'/proxy?s='..util.urlencode(url) end
+        if cfg.proxy>0 then
+            if cfg.proxy>1 or pls.mime[1]==2 then
+                url=www_location..'/proxy?s='..util.urlencode(pls.objid)
+            end
+        end
 
         return string.format(
             '<item restricted=\"true\" id=\"%s" parentID=\"%s\"><dc:title>%s</dc:title><res protocolInfo=\"%s%s\" size=\"0\">%s</res><upnp:class>%s</upnp:class>%s</item>',
-            id,parent_id,util.xmlencode(pls.name),pls.mime[4],pls.mime[5],url,pls.mime[2],logo)
+            id,parent_id,util.xmlencode(pls.name),pls.mime[4],pls.dlna_extras,util.xmlencode(url),pls.mime[2],logo)
 
     end
 end
@@ -129,8 +128,8 @@ function services.cds.Search(args)
 
     table.insert(items,'</DIDL-Lite>')
 
-    print(soap.serialize({['Result']=table.concat(items), ['NumberReturned']=count, ['TotalMatches']=total, ['UpdateID']=update_id}))
---    return {['Result']=table.concat(items), ['NumberReturned']=count, ['TotalMatches']=total, ['UpdateID']=update_id}
+--    print(soap.serialize({['Result']=table.concat(items), ['NumberReturned']=count, ['TotalMatches']=total, ['UpdateID']=update_id}))
+    return {['Result']=table.concat(items), ['NumberReturned']=count, ['TotalMatches']=total, ['UpdateID']=update_id}
 
 end
 
@@ -142,6 +141,10 @@ function services.cms.GetCurrentConnectionInfo(args)
 end
 
 function services.cms.GetProtocolInfo()
+    local protocols={}
+
+    for i,j in pairs(upnp_proto) do table.insert(protocols,j..'*') end
+
     return {['Sink']='', ['Source']=table.concat(protocols,',')}
 end
 

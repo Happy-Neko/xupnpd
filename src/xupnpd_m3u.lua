@@ -4,9 +4,21 @@ playlist_data.size=0
 playlist_data.elements={}
 
 for i,j in ipairs(playlist) do
-    local pls=m3u.parse(j)
+
+    local pls
+
+    if type(j)=='table' then
+        pls=m3u.parse(j[1])
+
+        if pls and j[2] then pls.name=j[2] end
+    else
+        pls=m3u.parse(j)
+    end
+
 
     if pls then
+        if cfg.debug>0 then print('load \''..pls.name..'\'') end
+
         local udpxy=cfg.udpxy_url..'/udp/'
 
         for ii,jj in ipairs(pls.elements) do
@@ -20,6 +32,17 @@ for i,j in ipairs(playlist) do
             if not m then jj.type='mpeg' m=mime[jj.type] end
 
             jj.mime=m
+
+            if jj.dlna_extras and dlna_org_extras[jj.dlna_extras] then
+                jj.dlna_extras=dlna_org_extras[jj.dlna_extras]
+            else
+                jj.dlna_extras=m[5]
+            end
+
+            jj.objid='0/'..i..'/'..ii
+
+            if cfg.debug>1 then print('\''..jj.name..'\' '..jj.url..' <'..jj.mime[3]..'>') end
+
         end
 
         playlist_data.elements[i]=pls
