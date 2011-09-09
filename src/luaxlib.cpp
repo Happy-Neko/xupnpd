@@ -540,7 +540,7 @@ static int lua_util_geturlinfo(lua_State* L)
         }
     }
 */
-    const char* type="unk";
+    const char* type="none";
 
     DIR* d=opendir(path);
     if(d)
