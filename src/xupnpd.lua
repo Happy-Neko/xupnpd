@@ -38,9 +38,9 @@ cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
 -- playlist (m3u file path or path with alias
 playlist=
 {
-    'example.m3u'
---    { 'butovocom_iptv.m3u', 'Butovo.com' },
---    { 'mozhay.m3u', 'Mozhay.tv' }
+    'playlists/example.m3u'
+--    { 'playlists/butovocom_iptv.m3u', 'Butovo.com' },
+--    { 'playlists/mozhay.m3u', 'Mozhay.tv' }
 }
 
 
