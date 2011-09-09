@@ -22,10 +22,6 @@
 #include <netdb.h>
 #include <ctype.h>
 
-/* TODO:
-- HTTP client for notify
-*/
-
 namespace core
 {
     struct timer_event
