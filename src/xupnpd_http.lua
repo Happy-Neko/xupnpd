@@ -169,12 +169,22 @@ function http_handler(what,from,port,msg)
             http_send_headers(404)
         end
     elseif msg.reqline[1]=='SUBSCRIBE' then
+        local ttl=1800
+        local sid=core.uuid()
+
+        if f.args.s then
+            core.sendevent('subscribe',f.args.s,sid,string.match(msg.callback,'<(.+)>'),ttl)
+        end
+
         http.send(
             string.format(
-                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nSID: uuid:%s\r\nTIMEOUT: Second-1800\r\n\r\n",ssdp_server,
-                os.date('!%a, %d %b %Y %H:%M:%S GMT'),core.uuid()))
+                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nSID: uuid:%s\r\nTIMEOUT: Second-%d\r\n\r\n",ssdp_server,
+                os.date('!%a, %d %b %Y %H:%M:%S GMT'),sid,ttl))
 
     elseif msg.reqline[1]=='UNSUBSCRIBE' then
+
+        core.sendevent('unsubscribe',string.match(msg.sid,'uuid:(.+)'))
+
         http.send(
             string.format(
                 "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nEXT:\r\n\r\n",ssdp_server,os.date('!%a, %d %b %Y %H:%M:%S GMT')))

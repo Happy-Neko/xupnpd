@@ -1491,6 +1491,82 @@ static int lua_http_flush(lua_State* L)
 }
 
 
+static int lua_http_notify(lua_State* L)
+{
+    const char* url=lua_tostring(L,1);
+
+    const char* sid=lua_tostring(L,2);
+
+    size_t len=0;
+    const char* data=lua_tolstring(L,3,&len);
+
+    int seq=lua_tointeger(L,4);
+    if(seq<0)
+        seq=0;
+
+    if(!url || !sid || !data)
+        return 0;
+
+    char tmp[256];
+    int n=snprintf(tmp,sizeof(tmp),"%s",url);
+    if(n<0 || n>=sizeof(tmp))
+        return 0;
+
+    char* host=tmp;
+    int port=0;
+
+    static const char proto_tag[]="://";
+
+    char* p=strstr(host,proto_tag);
+    if(p)
+    {
+        *p=0;
+
+        if(strcasecmp(host,"http"))
+            return 0;
+
+        host=p+sizeof(proto_tag)-1;
+
+        port=80;
+    }
+
+    char* uri=strchr(host,'/');
+
+    if(uri)
+        { *uri=0; uri++; }
+
+    if(!uri || !*uri)
+        uri=(char*)"/";
+
+    p=strchr(host,':');
+
+    if(p)
+        { *p=0; p++; port=atoi(p); }
+
+    if(!port)
+        return 0;
+
+    alarm(15);
+    FILE* fp=core::connect(host,port);
+    if(!fp)
+        return 0;
+
+    fprintf(fp,
+        "NOTIFY %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nContent-Type: text/xml\r\nContent-Length: %i\r\n"
+        "NT: upnp:event\r\nNTS: upnp:propchange\r\nSID: uuid:%s\r\nSEQ: %i\r\nCache-Control: no-cache\r\n\r\n",uri,host,len,sid,seq);
+    fwrite(data,len,1,fp);
+    fflush(fp);
+
+    while((n=fread(tmp,1,sizeof(tmp),fp))>0);
+
+    alarm(0);
+
+    fclose(fp);
+
+    return 0;
+}
+
+
 int luaopen_luaxcore(lua_State* L)
 {
     mcast::uuid_init();
@@ -1526,6 +1602,7 @@ int luaopen_luaxcore(lua_State* L)
         {"sendtfile",lua_http_sendtfile},
         {"sendurl",lua_http_sendurl},
         {"flush",lua_http_flush},
+        {"notify",lua_http_notify},
         {0,0}
     };
 
