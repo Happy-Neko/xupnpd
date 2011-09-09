@@ -113,28 +113,39 @@ function http_handler(what,from,port,msg)
     if msg.reqline[1]=='POST' then
         if f.url=='/soap' then
 
-            if cfg.debug>0 then print(from..' SOAP '..msg.soapaction or '') end
-
-            local s=services[ f.args['s'] ]
-
-            if not s then http_send_headers(404) return end     -- interface is not found
-
-            local func_name=get_soap_method(msg.soapaction)
-            local func=s[func_name]
-
-            if not func then http_send_headers(404) return end  -- method is not found
-
-            if cfg.debug>1 then print(msg.data) end
-
-            local r=soap.find('Envelope/Body/'..func_name,soap.parse(msg.data))
-
-            if not r then http_send_headers(400) return end
+            if cfg.debug>0 then print(from..' SOAP '..(msg.soapaction or '')) end
 
             http_send_headers(200,'xml')
 
-            r=func(r)
+            local err=true
 
-            if not r then
+            local s=services[ f.args['s'] ]
+
+            if s then
+                local func_name=get_soap_method(msg.soapaction or '')
+                local func=s[func_name]
+
+                if func then
+
+                    if cfg.debug>1 then print(msg.data) end
+
+                    local r=soap.find('Envelope/Body/'..func_name,soap.parse(msg.data))
+
+                    r=func(r or {})
+
+                    if r then
+                        http.send(
+                            string.format(
+                                '<?xml version=\"1.0\" encoding=\"utf-8\"?>'..
+                                '<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">'..
+                                '<s:Body><u:%sResponse xmlns:u=\"%s\">%s</u:%sResponse></s:Body></s:Envelope>',                                                            
+                                    func_name,s.schema,soap.serialize(r),func_name))
+                        err=false
+                    end
+                end
+            end
+
+            if err==true then
                 http.send(
                 '<?xml version=\"1.0\" encoding=\"utf-8\"?>'..
                 '<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">'..
@@ -152,15 +163,8 @@ function http_handler(what,from,port,msg)
                    '</s:Body>'..
                 '</s:Envelope>'
                 )
-            else
-                http.send(
-                    string.format(
-                        '<?xml version=\"1.0\" encoding=\"utf-8\"?>'..
-                        '<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">'..
-                        '<s:Body><u:%sResponse xmlns:u=\"%s\">%s</u:%sResponse></s:Body></s:Envelope>',                                                            
-                            func_name,s.schema,soap.serialize(r),func_name)
-                        )
             end
+
         else
             http_send_headers(404)
         end
