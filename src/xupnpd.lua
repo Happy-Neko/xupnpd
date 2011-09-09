@@ -15,6 +15,9 @@ cfg.log_facility="local0"
 -- 'cfg.daemon' detach server from terminal
 cfg.daemon=false
 
+-- silent mode - no logs, no pid file
+cfg.embedded=false
+
 -- 'cfg.debug' enables SSDP debug output to stdout (if cfg.daemon=false)
 -- 0-off, 1-basic, 2-messages
 cfg.debug=1

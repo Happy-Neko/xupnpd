@@ -1382,7 +1382,7 @@ static int lua_http_sendurl(lua_State* L)
         return 0;
 
 
-    char tmp[256];
+    char tmp[2048];
     int n=snprintf(tmp,sizeof(tmp),"%s",s);
     if(n<0 || n>=sizeof(tmp))
         return 0;
@@ -1436,24 +1436,23 @@ static int lua_http_sendurl(lua_State* L)
 
     int status=0;
 
-    char buf[512];
-    while(fgets(buf,sizeof(buf),fp))
+    while(fgets(tmp,sizeof(tmp),fp))
     {
-        char* p=strpbrk(buf,"\r\n");
+        char* p=strpbrk(tmp,"\r\n");
         if(p)
             *p=0;
 
-        if(!*buf)
+        if(!*tmp)
             break;
 
         if(!idx)
         {
-            p=strchr(buf,' ');
+            p=strchr(tmp,' ');
             if(p)
             {
                 *p=0;
                 p++;
-                if(!strcmp(buf,"HTTP/1.1") || !strcmp(buf,"HTTP/1.0"))
+                if(!strcmp(tmp,"HTTP/1.1") || !strcmp(tmp,"HTTP/1.0"))
                 {
                     char* p2=strchr(p,' ');
                     if(p2)
@@ -1473,8 +1472,8 @@ static int lua_http_sendurl(lua_State* L)
         return 0;
     }
     
-    while((n=fread(buf,1,sizeof(buf),fp))>0)
-        if(write(fileno(core::http_client_fp),buf,n)!=n)
+    while((n=fread(tmp,1,sizeof(tmp),fp))>0)
+        if(write(fileno(core::http_client_fp),tmp,n)!=n)
             break;
 
     fclose(fp);

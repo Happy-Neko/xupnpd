@@ -54,7 +54,7 @@ http_err[503]='Out of Resources'
 http_err[504]='Gateway Time-Out'
 http_err[505]='HTTP Version not supported'
 
-http_vars['fname']=ssdp_server
+http_vars['fname']='UPnP-IPTV'
 http_vars['manufacturer']='Anton Burdinuk'
 http_vars['manufacturer_url']='clark15b@gmail.com'
 http_vars['description']=ssdp_server
@@ -93,7 +93,11 @@ end
 
 function http_handler(what,from,port,msg)
 
+    if not msg or not msg.reqline then return end
+
     if msg.reqline[2]=='/' then msg.reqline[2]='/index.html' end
+
+    local head=false
 
     local f=util.geturlinfo(cfg.www_root,msg.reqline[2])
 
@@ -103,6 +107,8 @@ function http_handler(what,from,port,msg)
     end
 
     if cfg.debug>0 then print(from..' '..msg.reqline[1]..' '..msg.reqline[2]) end
+
+    if msg.reqline[1]=='HEAD' then head=true msg.reqline[1]='GET' end
 
     if msg.reqline[1]=='POST' then
         if f.url=='/soap' then
@@ -176,8 +182,6 @@ function http_handler(what,from,port,msg)
 
             if not pls then http_send_headers(404) return end
 
-            if cfg.debug>0 then print(from..' PROXY '..pls.url..' <'..pls.mime[3]..'>') end
-
             http.send(string.format(
                 "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nPragma: no-cache\r\nCache-control: no-cache\r\nContent-Type: %s\r\nConnection: close\r\n"..
                 "TransferMode.DLNA.ORG: Streaming\r\nAccept-Ranges: none\r\nEXT:\r\n",ssdp_server,os.date('!%a, %d %b %Y %H:%M:%S GMT'),pls.mime[3]))
@@ -188,12 +192,19 @@ function http_handler(what,from,port,msg)
 
             http.send('\r\n')
             http.flush()
-            http.sendurl(pls.url)
+
+            if head~=true then
+                if cfg.debug>0 then print(from..' PROXY '..pls.url..' <'..pls.mime[3]..'>') end
+                http.sendurl(pls.url)
+            end
 
         elseif f.url=='/reload' then
-            core.sendevent('reload')
             http_send_headers(200,'txt')
-            http.send('OK')
+
+            if head~=true then
+                http.send('OK')
+                core.sendevent('reload')
+            end
         else
             if f.type=='none' then http_send_headers(404) return end
             if f.type~='file' then http_send_headers(403) return end
@@ -208,13 +219,14 @@ function http_handler(what,from,port,msg)
 
             if not tmpl then len=f.length end
 
-            if cfg.debug>0 then print(from..' FILE '..f.path) end
-
-            if f.url=='/reload.mpeg' then core.sendevent('reload') end
+--            if f.url=='/reload.mpeg' then core.sendevent('reload') end
 
             http_send_headers(200,f.ext,len)
 
-            if tmpl then http.sendtfile(f.path,http_vars) else  http.sendfile(f.path) end
+            if head~=true then
+                if cfg.debug>0 then print(from..' FILE '..f.path) end
+                if tmpl then http.sendtfile(f.path,http_vars) else  http.sendfile(f.path) end
+            end
         end
     else
         http_send_headers(405)

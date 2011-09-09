@@ -6,6 +6,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <ctype.h>
+#include <fcntl.h>
+#include <dirent.h>                     
 
 namespace util
 {
@@ -307,7 +309,7 @@ static int lua_m3u_parse(lua_State* L)
         int idx=1;
 
         char track_name[64]="";
-        char track_ext[256]="";
+        char track_ext[512]="";
         char track_url[256]="";
 
         char buf[256];
@@ -510,7 +512,7 @@ static int lua_util_geturlinfo(lua_State* L)
     lua_pushstring(L,path);
     lua_setfield(L,-2,"path");
 
-
+/*
     struct stat st;
     int rc=stat(path,&st);
 
@@ -537,6 +539,34 @@ static int lua_util_geturlinfo(lua_State* L)
             lua_rawset(L,-3);
         }
     }
+*/
+    const char* type="unk";
+
+    DIR* d=opendir(path);
+    if(d)
+    {
+        type="dir";
+        closedir(d);
+    }else
+    {
+        int fd=open(path,O_RDONLY);
+        if(fd!=-1)
+        {
+            off_t len=lseek(fd,0,SEEK_END);
+            if(len!=(off_t)-1)
+            {
+                lua_pushstring(L,"length");
+                lua_pushinteger(L,(int)len);
+                lua_rawset(L,-3);
+            }
+            type="file";
+            close(fd);
+        }
+    }
+
+    lua_pushstring(L,"type");
+    lua_pushstring(L,type);
+    lua_rawset(L,-3);
 
     char ext[32];
     if(util::get_file_ext(url,ext,sizeof(ext))>0)
