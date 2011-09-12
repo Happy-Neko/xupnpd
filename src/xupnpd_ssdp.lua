@@ -49,8 +49,8 @@ function ssdp_byebye()
 end
 
 function ssdp_handler(what,from,msg)
-    if msg.reqline[1]=='M-SEARCH' and msg['MAN']=='ssdp:discover' then
-        local st=msg['ST']
+    if msg.reqline[1]=='M-SEARCH' and msg['man']=='ssdp:discover' then
+        local st=msg['st']
 
         local resp=false
 

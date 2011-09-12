@@ -1,7 +1,7 @@
 #EXTM3U
 #EXTINF:0 logo=http://butovo.com/iptv/iskra_channels_files/perviy00.jpg type=mpeg dlna_extras=mpeg_ps_pal ,Эфирный: Первый
 http://192.168.1.1:4022/udp/234.5.2.1:20000
-#EXTINF:0 type=mp3 ,Эфирный: Россия
+#EXTINF:0,Эфирный: Россия
 http://192.168.1.1:4022/udp/234.5.2.2:20000
 #EXTINF:0,Эфирный: ТВЦ
 http://192.168.1.1:4022/udp/234.5.2.3:20000

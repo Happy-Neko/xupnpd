@@ -41,6 +41,8 @@ for i,j in ipairs(playlist) do
 
             jj.objid='0/'..i..'/'..ii
 
+            jj.parent=pls
+
             if cfg.debug>1 then print('\''..jj.name..'\' '..jj.url..' <'..jj.mime[3]..'>') end
 
         end

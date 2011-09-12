@@ -24,6 +24,14 @@
 
 namespace core
 {
+    struct url_data
+    {
+        char host[128];
+        char vhost[128];
+        int port;
+        char urn[128];
+    };
+
     struct timer_event
     {
         time_t tv;
@@ -412,7 +420,7 @@ namespace core
 
         lua_getglobal(L,"events");
 
-        unsigned char buf[2048];
+        unsigned char buf[512];
 
         while(recv(__event_pipe[0],buf,sizeof(buf),MSG_DONTWAIT)>0)
         {
@@ -630,50 +638,50 @@ namespace core
 
                         lua_newtable(L);
 
-                        char tmp[512];
-
-                        int idx=0;
-
-                        alarm(15);                              // 15 seconds for read request from client
-
-                        while(fgets(tmp,sizeof(tmp),fp))
                         {
-                            char* p=strpbrk(tmp,"\r\n");
-                            if(p)
-                                *p=0;
-                            if(!*tmp)
-                                break;
-                            add_http_hdr_to_table(L,tmp,idx++);
-                        }
+                            char tmp[1024];
 
-                        lua_getfield(L,-1,"content-length");
-                        if(lua_type(L,-1)!=LUA_TNIL)
-                        {
-                            int len=lua_tointeger(L,-1);
-                            lua_pop(L,1);
+                            int idx=0;
 
-                            if(len>0)
+                            alarm(15);                              // 15 seconds for read request from client
+
+                            while(fgets(tmp,sizeof(tmp),fp))
                             {
-                                luaL_Buffer B;
-                                luaL_buffinit(L,&B);
-                                
-                                int n=0;
-                                while((n=fread(tmp,1,sizeof(tmp)>len?len:sizeof(tmp),fp))>0 && len>0)
-                                {
-                                    luaL_addlstring(&B,tmp,n);
-                                    len-=n;
-                                }
-
-                                lua_pushstring(L,"data");
-                                luaL_pushresult(&B);
-                                lua_rawset(L,-3);
+                                char* p=strpbrk(tmp,"\r\n");
+                                if(p)
+                                    *p=0;
+                                if(!*tmp)
+                                    break;
+                                add_http_hdr_to_table(L,tmp,idx++);
                             }
 
-                        }else
-                            lua_pop(L,1);
+                            lua_getfield(L,-1,"content-length");
+                            if(lua_type(L,-1)!=LUA_TNIL)
+                            {
+                                int len=lua_tointeger(L,-1);
+                                lua_pop(L,1);
 
-                        alarm(0);                               // reset read timer
+                                if(len>0)
+                                {
+                                    luaL_Buffer B;
+                                    luaL_buffinit(L,&B);
+                                
+                                    int n=0;
+                                    while((n=fread(tmp,1,sizeof(tmp)>len?len:sizeof(tmp),fp))>0 && len>0)
+                                    {
+                                        luaL_addlstring(&B,tmp,n);
+                                        len-=n;
+                                    }
 
+                                    luaL_pushresult(&B);
+                                    lua_setfield(L,-2,"data");
+                                }
+
+                            }else
+                                lua_pop(L,1);
+
+                            alarm(0);                               // reset read timer
+                        }
                         if(lua_pcall(L,4,0,0))
                         {
                             if(!detached)
@@ -982,7 +990,7 @@ static int lua_core_uuid(lua_State* L)
 
 static int lua_core_sendevent(lua_State* L)
 {
-    unsigned char buf[2048],*p=buf;
+    unsigned char buf[512],*p=buf;
 
     int num=lua_gettop(L);
 
@@ -1244,7 +1252,7 @@ static int lua_http_sendfile(lua_State* L)
     if(fd==-1)
         return 0;
 
-    char buf[512];
+    char buf[1024];
 
     ssize_t n;
     while((n=read(fd,buf,sizeof(buf)))>0)
@@ -1370,18 +1378,13 @@ FILE* core::connect(const char* s,int port)
     return fp;
 }
 
-static int lua_http_sendurl(lua_State* L)
+static int lua_http_get_url_data(const char* url,core::url_data* d)
 {
-    const char* s=lua_tostring(L,1);
+    char tmp[1024];
 
-    if(!s || !core::http_client_fp)
-        return 0;
-
-
-    char tmp[2048];
-    int n=snprintf(tmp,sizeof(tmp),"%s",s);
+    int n=snprintf(tmp,sizeof(tmp),"%s",url);
     if(n<0 || n>=sizeof(tmp))
-        return 0;
+        return -1;
 
     char* host=tmp;
     int port=0;
@@ -1401,13 +1404,16 @@ static int lua_http_sendurl(lua_State* L)
         port=80;
     }
 
-    char* uri=strchr(host,'/');
+    char* urn=strchr(host,'/');
 
-    if(uri)
-        { *uri=0; uri++; }
+    if(urn)
+        { *urn=0; urn++; }
+    else
+        urn=(char*)"";
 
-    if(!uri || !*uri)
-        uri=(char*)"/";
+    n=snprintf(d->vhost,sizeof(d->vhost),"%s",host);
+    if(n<0 || n>=sizeof(d->vhost))
+        return -1;
 
     p=strchr(host,':');
 
@@ -1415,22 +1421,51 @@ static int lua_http_sendurl(lua_State* L)
         { *p=0; p++; port=atoi(p); }
 
     if(!port)
+        return -1;
+
+    d->port=port;
+
+    n=snprintf(d->urn,sizeof(d->urn),"%s%s",*urn=='/'?"":"/",urn);
+    if(n<0 || n>=sizeof(d->urn))
+        return -1;
+
+    n=snprintf(d->host,sizeof(d->host),"%s",host);
+    if(n<0 || n>=sizeof(d->host))
+        return -1;
+
+    return 0;
+}
+
+static int lua_http_sendurl(lua_State* L)
+{
+    const char* s=lua_tostring(L,1);
+
+    if(!s || !core::http_client_fp)
+        return 0;
+
+    core::url_data url;
+    if(lua_http_get_url_data(s,&url))
         return 0;
 
     alarm(15);
-    FILE* fp=core::connect(host,port);
+
+    FILE* fp=core::connect(url.host,url.port);
     if(!fp)
+    {
+        alarm(0);
         return 0;
-    alarm(0);
+    }
 
     fflush(core::http_client_fp);
 
-    fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\n\r\n",uri,host);
+    fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\n\r\n",url.urn,url.vhost);
     fflush(fp);
 
     int idx=0;
 
     int status=0;
+
+    char tmp[1024];
 
     while(fgets(tmp,sizeof(tmp),fp))
     {
@@ -1465,12 +1500,18 @@ static int lua_http_sendurl(lua_State* L)
     if(status!=200)
     {
         fclose(fp);
+        alarm(0);
         return 0;
     }
     
+    int n;
     while((n=fread(tmp,1,sizeof(tmp),fp))>0)
         if(write(fileno(core::http_client_fp),tmp,n)!=n)
             break;
+        else
+            alarm(15);
+
+    alarm(0);
 
     fclose(fp);
 
@@ -1489,7 +1530,7 @@ static int lua_http_flush(lua_State* L)
 
 static int lua_http_notify(lua_State* L)
 {
-    const char* url=lua_tostring(L,1);
+    const char* s=lua_tostring(L,1);
 
     const char* sid=lua_tostring(L,2);
 
@@ -1500,59 +1541,26 @@ static int lua_http_notify(lua_State* L)
     if(seq<0)
         seq=0;
 
-    if(!url || !sid || !data)
+    if(!s || !sid || !data)
         return 0;
 
-    char tmp[256];
-    int n=snprintf(tmp,sizeof(tmp),"%s",url);
-    if(n<0 || n>=sizeof(tmp))
-        return 0;
-
-    char* host=tmp;
-    int port=0;
-
-    static const char proto_tag[]="://";
-
-    char* p=strstr(host,proto_tag);
-    if(p)
-    {
-        *p=0;
-
-        if(strcasecmp(host,"http"))
-            return 0;
-
-        host=p+sizeof(proto_tag)-1;
-
-        port=80;
-    }
-
-    char* uri=strchr(host,'/');
-
-    if(uri)
-        { *uri=0; uri++; }
-
-    if(!uri || !*uri)
-        uri=(char*)"/";
-
-    p=strchr(host,':');
-
-    if(p)
-        { *p=0; p++; port=atoi(p); }
-
-    if(!port)
+    core::url_data url;
+    if(lua_http_get_url_data(s,&url))
         return 0;
 
     alarm(15);
-    FILE* fp=core::connect(host,port);
+    FILE* fp=core::connect(url.host,url.port);
     if(!fp)
         return 0;
 
     fprintf(fp,
         "NOTIFY %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nContent-Type: text/xml\r\nContent-Length: %i\r\n"
-        "NT: upnp:event\r\nNTS: upnp:propchange\r\nSID: uuid:%s\r\nSEQ: %i\r\nCache-Control: no-cache\r\n\r\n",uri,host,len,sid,seq);
+        "NT: upnp:event\r\nNTS: upnp:propchange\r\nSID: uuid:%s\r\nSEQ: %i\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost,len,sid,seq);
     fwrite(data,len,1,fp);
     fflush(fp);
 
+    int n;
+    char tmp[256];
     while((n=fread(tmp,1,sizeof(tmp),fp))>0);
 
     alarm(0);

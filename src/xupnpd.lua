@@ -27,10 +27,10 @@ cfg.udpxy_url='http://192.168.1.1:4022'
 
 -- 'cfg.proxy' enables proxy for injection DLNA headers to stream
 -- 0-off, 1-radio, 2-radio/TV
-cfg.proxy=1
+cfg.proxy=2
 
 -- 'cfg.dlna_extras' enables DLNA extras
-cfg.dlna_extras=false
+cfg.dlna_extras=true
 
 -- static device UUID, '60bd2fb3-dabe-cb14-c766-0e319b54c29a' for example or nil
 cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
@@ -38,9 +38,9 @@ cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
 -- playlist (m3u file path or path with alias
 playlist=
 {
-    'playlists/example.m3u'
---    { 'playlists/butovocom_iptv.m3u', 'Butovo.com' },
---    { 'playlists/mozhay.m3u', 'Mozhay.tv' }
+--    'playlists/example.m3u'
+--    { 'playlists/butovocom_iptv.m3u', 'Butovo.com' }
+    { 'playlists/mozhay.m3u', 'Mozhay.tv' }
 }
 
 

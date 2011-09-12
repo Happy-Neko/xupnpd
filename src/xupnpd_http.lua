@@ -55,8 +55,8 @@ http_err[504]='Gateway Time-Out'
 http_err[505]='HTTP Version not supported'
 
 http_vars['fname']='UPnP-IPTV'
-http_vars['manufacturer']='Anton Burdinuk'
-http_vars['manufacturer_url']='clark15b@gmail.com'
+http_vars['manufacturer']=util.xmlencode('Anton Burdinuk <clark15b@gmail.com>')
+http_vars['manufacturer_url']=''
 http_vars['description']=ssdp_server
 http_vars['name']='xupnpd'
 http_vars['version']='0.0.1'
@@ -77,11 +77,12 @@ dofile('xupnpd_soap.lua')
 function http_send_headers(err,ext,len)
     http.send(
         string.format(
-            "HTTP/1.0 %i %s\r\nServer: %s\r\nDate: %s\r\nContent-Type: %s\r\nConnection: close\r\n",
-            err,http_err[err] or 'Unknown',ssdp_server,os.date('!%a, %d %b %Y %H:%M:%S GMT'),http_mime[ext] or 'application/x-octet-stream')
+            'HTTP/1.1 %i %s\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\nAccept-Ranges: none\r\n'..
+            'Connection: close\r\nContent-Type: %s\r\nEXT:\r\n',
+            err,http_err[err] or 'Unknown',os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,http_mime[ext] or 'application/x-octet-stream')
     )
     if len then http.send(string.format("Content-Length: %i\r\n",len)) end
-    http.send("\r\n",len)
+    http.send("\r\n")
 end
 
 function get_soap_method(s)
@@ -139,7 +140,7 @@ function http_handler(what,from,port,msg)
                                 '<?xml version=\"1.0\" encoding=\"utf-8\"?>'..
                                 '<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">'..
                                 '<s:Body><u:%sResponse xmlns:u=\"%s\">%s</u:%sResponse></s:Body></s:Envelope>',                                                            
-                                    func_name,s.schema,soap.serialize(r),func_name))
+                                    func_name,s.schema,xml_serialize(r),func_name))
                         err=false
                     end
                 end
@@ -178,16 +179,19 @@ function http_handler(what,from,port,msg)
 
         http.send(
             string.format(
-                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nSID: uuid:%s\r\nTIMEOUT: Second-%d\r\n\r\n",ssdp_server,
-                os.date('!%a, %d %b %Y %H:%M:%S GMT'),sid,ttl))
+                'HTTP/1.1 200 OK\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\nAccept-Ranges: none\r\n'..
+                'Connection: close\r\nEXT:\r\nSID: uuid:%s\r\nTIMEOUT: Second-%d\r\n\r\n',
+                os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,sid,ttl))
 
     elseif msg.reqline[1]=='UNSUBSCRIBE' then
 
-        core.sendevent('unsubscribe',string.match(msg.sid,'uuid:(.+)'))
+        core.sendevent('unsubscribe',string.match(msg.sid or '','uuid:(.+)'))
 
         http.send(
             string.format(
-                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nConnection: close\r\nEXT:\r\n\r\n",ssdp_server,os.date('!%a, %d %b %Y %H:%M:%S GMT')))
+                'HTTP/1.1 200 OK\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\nAccept-Ranges: none\r\n'..
+                'Connection: close\r\nEXT:\r\n\r\n',
+                os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server))
 
     elseif msg.reqline[1]=='GET' then
         if f.url=='/proxy' then
@@ -197,8 +201,9 @@ function http_handler(what,from,port,msg)
             if not pls then http_send_headers(404) return end
 
             http.send(string.format(
-                "HTTP/1.0 200 OK\r\nServer: %s\r\nDate: %s\r\nPragma: no-cache\r\nCache-control: no-cache\r\nContent-Type: %s\r\nConnection: close\r\n"..
-                "TransferMode.DLNA.ORG: Streaming\r\nAccept-Ranges: none\r\nEXT:\r\n",ssdp_server,os.date('!%a, %d %b %Y %H:%M:%S GMT'),pls.mime[3]))
+                'HTTP/1.1 200 OK\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\nAccept-Ranges: none\r\n'..
+                'Connection: close\r\nContent-Type: %s\r\nEXT:\r\nTransferMode.DLNA.ORG: Streaming\r\n',
+                os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,pls.mime[3]))
 
             if pls.dlna_extras~='*' then
                 http.send('ContentFeatures.DLNA.ORG: '..pls.dlna_extras..'\r\n')
