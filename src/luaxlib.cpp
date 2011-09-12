@@ -254,6 +254,52 @@ static int lua_soap_serialize(lua_State* L)
     return 1;
 }
 
+static int lua_soap_serialize_vector(lua_State* L)
+{
+    if(lua_type(L,1)!=LUA_TTABLE)
+        return 0;
+
+    soap::string_builder b;
+
+//printf("%i\n",lua_gettop(L));
+
+    lua_pushnil(L);
+    while(lua_next(L,1))
+    {
+        if(lua_type(L,-1)!=LUA_TTABLE)
+            lua_pop(L,1);
+        else
+        {
+            lua_rawgeti(L,-1,1);
+            lua_rawgeti(L,-2,2);
+
+            size_t nname=0;
+            const char* name=lua_tolstring(L,-2,&nname);
+
+            size_t nval=0;
+            const char* val=lua_tolstring(L,-1,&nval);
+
+            b.add('<'); b.add(name,nname); b.add('>');
+
+//            lua_xml_enc((unsigned char*)lua_tostring(L,-1),&b);
+            b.add(val,nval);
+
+            b.add("</",2); b.add(name,nname); b.add('>');
+
+            lua_pop(L,3);
+        }
+    }
+
+//printf("%i\n",lua_gettop(L));
+
+    soap::string s;
+    b.swap(s);
+
+    lua_pushlstring(L,s.c_str(),s.length());
+
+    return 1;
+}
+
 
 
 /*
@@ -718,6 +764,7 @@ int luaopen_luaxlib(lua_State* L)
         {"parse",lua_soap_parse},
         {"find" ,lua_soap_find},
         {"serialize",lua_soap_serialize},
+        {"serialize_vector",lua_soap_serialize_vector},
         {0,0}
     };
 

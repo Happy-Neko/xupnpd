@@ -22,8 +22,13 @@
 #include <netdb.h>
 #include <ctype.h>
 
+// TODO: proxy optimization
+// TODO: profiles by User-Agent
+
 namespace core
 {
+    enum { http_timeout=15 };
+
     struct url_data
     {
         char host[128];
@@ -643,7 +648,7 @@ namespace core
 
                             int idx=0;
 
-                            alarm(15);                              // 15 seconds for read request from client
+                            alarm(core::http_timeout);
 
                             while(fgets(tmp,sizeof(tmp),fp))
                             {
@@ -1447,7 +1452,7 @@ static int lua_http_sendurl(lua_State* L)
     if(lua_http_get_url_data(s,&url))
         return 0;
 
-    alarm(15);
+    alarm(core::http_timeout);
 
     FILE* fp=core::connect(url.host,url.port);
     if(!fp)
@@ -1458,7 +1463,7 @@ static int lua_http_sendurl(lua_State* L)
 
     fflush(core::http_client_fp);
 
-    fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\n\r\n",url.urn,url.vhost);
+    fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost);
     fflush(fp);
 
     int idx=0;
@@ -1509,7 +1514,7 @@ static int lua_http_sendurl(lua_State* L)
         if(write(fileno(core::http_client_fp),tmp,n)!=n)
             break;
         else
-            alarm(15);
+            alarm(core::http_timeout);
 
     alarm(0);
 
@@ -1548,10 +1553,14 @@ static int lua_http_notify(lua_State* L)
     if(lua_http_get_url_data(s,&url))
         return 0;
 
-    alarm(15);
+    alarm(core::http_timeout);
+
     FILE* fp=core::connect(url.host,url.port);
     if(!fp)
+    {
+        alarm(0);
         return 0;
+    }
 
     fprintf(fp,
         "NOTIFY %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nContent-Type: text/xml\r\nContent-Length: %i\r\n"
@@ -1568,6 +1577,67 @@ static int lua_http_notify(lua_State* L)
     fclose(fp);
 
     return 0;
+}
+
+static int lua_http_download(lua_State* L)
+{
+    const char* s=lua_tostring(L,1);
+    const char* d=lua_tostring(L,2);
+
+    int len=0;
+
+    if(s && d)
+    {
+        core::url_data url;
+        if(!lua_http_get_url_data(s,&url))
+        {
+            alarm(core::http_timeout);
+
+            FILE* fp=core::connect(url.host,url.port);
+            if(fp)
+            {
+                FILE* dfp=fopen(d,"wb");
+
+                if(dfp)
+                {
+                    fprintf(fp,
+                        "GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost);
+                    fflush(fp);
+
+                    int n;
+                    char tmp[1024];
+
+                    while(fgets(tmp,sizeof(tmp),fp))
+                    {
+                        char* p=strpbrk(tmp,"\r\n");
+                        if(p)
+                            *p=0;
+                        if(!*tmp)
+                            break;
+                    }
+
+                    while((n=fread(tmp,1,sizeof(tmp),fp))>0 && fwrite(tmp,1,n,dfp)==n)
+                    {
+                        len+=n;
+                        alarm(core::http_timeout);
+                    }
+
+                    fclose(dfp);
+
+                    if(!len)
+                        remove(d);
+                }
+
+                fclose(fp);
+            }
+
+            alarm(0);
+        }
+    }
+
+    lua_pushinteger(L,len);
+
+    return 1;
 }
 
 
@@ -1607,6 +1677,7 @@ int luaopen_luaxcore(lua_State* L)
         {"sendurl",lua_http_sendurl},
         {"flush",lua_http_flush},
         {"notify",lua_http_notify},
+        {"download",lua_http_download},
         {0,0}
     };
 

@@ -107,7 +107,7 @@ function http_handler(what,from,port,msg)
         return
     end
 
-    if cfg.debug>0 then print(from..' '..msg.reqline[1]..' '..msg.reqline[2]) end
+    if cfg.debug>0 then print(from..' '..msg.reqline[1]..' '..msg.reqline[2]..' \"'..(msg['user-agent'] or '')..'\"') end
 
     if msg.reqline[1]=='HEAD' then head=true msg.reqline[1]='GET' end
 
@@ -140,7 +140,8 @@ function http_handler(what,from,port,msg)
                                 '<?xml version=\"1.0\" encoding=\"utf-8\"?>'..
                                 '<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">'..
                                 '<s:Body><u:%sResponse xmlns:u=\"%s\">%s</u:%sResponse></s:Body></s:Envelope>',                                                            
-                                    func_name,s.schema,xml_serialize(r),func_name))
+                                    func_name,s.schema,soap.serialize_vector(r),func_name))
+--                                    func_name,s.schema,xml_serialize(r),func_name))
                         err=false
                     end
                 end
