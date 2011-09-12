@@ -40,7 +40,8 @@ playlist=
 {
 --    'playlists/example.m3u'
 --    { 'playlists/butovocom_iptv.m3u', 'Butovo.com' }
-    { 'playlists/mozhay.m3u', 'Mozhay.tv' }
+    { 'playlists/mozhay.m3u', 'Mozhay.tv' },
+--    { './localmedia', 'Local Media Files' }
 }
 
 

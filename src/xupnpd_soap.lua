@@ -23,9 +23,13 @@ function playlist_item_to_xml(id,parent_id,pls)
             end
         end
 
-        if cfg.proxy>0 then
-            if cfg.proxy>1 or pls.mime[1]==2 then
-                url=www_location..'/proxy?s='..util.urlencode(pls.objid)
+        if pls.path then
+            url=www_location..'/stream?s='..util.urlencode(pls.objid)
+        else
+            if cfg.proxy>0 then
+                if cfg.proxy>1 or pls.mime[1]==2 then
+                    url=www_location..'/proxy?s='..util.urlencode(pls.objid)
+                end
             end
         end
 

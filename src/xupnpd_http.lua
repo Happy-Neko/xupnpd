@@ -218,6 +218,29 @@ function http_handler(what,from,port,msg)
                 http.sendurl(pls.url)
             end
 
+        elseif f.url=='/stream' then
+
+            local pls=find_playlist_object(f.args['s'] or '')
+
+            if not pls then http_send_headers(404) return end
+
+            http.send(string.format(
+                'HTTP/1.1 200 OK\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\nAccept-Ranges: none\r\n'..
+                'Connection: close\r\nContent-Type: %s\r\nEXT:\r\nTransferMode.DLNA.ORG: Streaming\r\n',
+                os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,pls.mime[3]))
+
+            if pls.dlna_extras~='*' then
+                http.send('ContentFeatures.DLNA.ORG: '..pls.dlna_extras..'\r\n')
+            end
+
+            http.send('\r\n')
+            http.flush()
+
+            if head~=true then
+                if cfg.debug>0 then print(from..' STREAM '..pls.path..' <'..pls.mime[3]..'>') end
+                http.sendfile(pls.path)
+            end
+
         elseif f.url=='/reload' then
             http_send_headers(200,'txt')
 

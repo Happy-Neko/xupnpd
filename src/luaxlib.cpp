@@ -482,6 +482,101 @@ static int lua_m3u_parse(lua_State* L)
 }
 
 
+static int lua_m3u_scan(lua_State* L)
+{
+    const char* path=lua_tostring(L,1);
+    if(!path)
+        path="";
+
+
+    DIR* d=opendir(path);
+    if(!d)
+        return 0;
+    else
+    {
+        lua_newtable(L);
+
+        {
+            const char* fname=strrchr(path,'/');
+            if(!fname)
+                fname=path;
+            else
+                fname++;
+
+            lua_pushstring(L,"name");
+            lua_pushstring(L,fname);
+            lua_rawset(L,-3);
+        }
+
+        const char* delimiter="/";
+        if(path[strlen(path)-1]=='/')
+            delimiter="";
+
+        lua_pushstring(L,"elements");
+        lua_newtable(L);
+        int idx=1;
+
+        dirent* de;
+        while((de=readdir(d)))
+        {
+            if(de->d_name[0]!='.')
+            {
+                char track_url[256]="";
+
+                int n=snprintf(track_url,sizeof(track_url),"%s%s%s",path,delimiter,de->d_name);
+                if(n==-1 | n>=sizeof(track_url))
+                    track_url[sizeof(track_url)-1]=0;
+
+                DIR* dd=opendir(track_url);
+                if(dd)
+                    closedir(dd);
+                else
+                {
+                    char* p=strrchr(track_url,'/');
+                    if(p)
+                        p++;
+                    else
+                        p=track_url;
+
+                    char* p2=strrchr(p,'.');
+                    if(p2)
+                    {
+                        lua_pushinteger(L,idx++);
+
+                        lua_newtable(L);
+
+                        lua_pushstring(L,"name");
+                        lua_pushlstring(L,p,p2-p);
+                        lua_rawset(L,-3);
+
+                        lua_pushstring(L,"path");
+                        lua_pushstring(L,track_url);
+                        lua_rawset(L,-3);
+
+                        lua_pushstring(L,"url");
+                        lua_pushstring(L,p);
+                        lua_rawset(L,-3);
+
+                        lua_rawset(L,-3);       // element
+                    }
+                }
+            }
+        }
+
+        lua_rawset(L,-3);       // elements
+
+        lua_pushstring(L,"size");
+        lua_pushinteger(L,idx-1);
+        lua_rawset(L,-3);
+
+        closedir(d);
+    }
+
+    return 1;
+}
+
+
+
 static int lua_util_geturlinfo(lua_State* L)
 {
     const char* www_root=lua_tostring(L,1);
@@ -558,34 +653,6 @@ static int lua_util_geturlinfo(lua_State* L)
     lua_pushstring(L,path);
     lua_setfield(L,-2,"path");
 
-/*
-    struct stat st;
-    int rc=stat(path,&st);
-
-    lua_pushstring(L,"type");
-    if(rc)
-        lua_pushstring(L,"none");
-    else
-    {
-        if(S_ISREG(st.st_mode))
-            lua_pushstring(L,"file");
-        else if(S_ISDIR(st.st_mode))
-            lua_pushstring(L,"dir");
-        else
-            lua_pushstring(L,"unk");
-    }
-    lua_rawset(L,-3);
-
-    if(!rc)
-    {
-        if(S_ISREG(st.st_mode))
-        {
-            lua_pushstring(L,"length");
-            lua_pushinteger(L,st.st_size);
-            lua_rawset(L,-3);
-        }
-    }
-*/
     const char* type="none";
 
     DIR* d=opendir(path);
@@ -771,6 +838,7 @@ int luaopen_luaxlib(lua_State* L)
     static const luaL_Reg lib_m3u[]=
     {
         {"parse",lua_m3u_parse},
+        {"scan",lua_m3u_scan},
         {0,0}
     };
 

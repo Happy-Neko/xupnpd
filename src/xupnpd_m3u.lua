@@ -8,11 +8,12 @@ for i,j in ipairs(playlist) do
     local pls
 
     if type(j)=='table' then
-        pls=m3u.parse(j[1])
+
+        if string.find(j[1],'(.+).m3u$') then pls=m3u.parse(j[1]) else pls=m3u.scan(j[1]) end
 
         if pls and j[2] then pls.name=j[2] end
     else
-        pls=m3u.parse(j)
+        if string.find(j,'(.+).m3u$') then pls=m3u.parse(j) else pls=m3u.scan(j) end
     end
 
 
