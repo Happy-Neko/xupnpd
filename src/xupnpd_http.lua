@@ -142,7 +142,6 @@ function http_handler(what,from,port,msg)
                                 '<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">'..
                                 '<s:Body><u:%sResponse xmlns:u=\"%s\">%s</u:%sResponse></s:Body></s:Envelope>',                                                            
                                     func_name,s.schema,soap.serialize_vector(r),func_name))
---                                    func_name,s.schema,xml_serialize(r),func_name))
                         err=false
                     end
                 end
@@ -223,16 +222,14 @@ function http_handler(what,from,port,msg)
 
             local pls=find_playlist_object(f.args['s'] or '')
 
-            if not pls then http_send_headers(404) return end
+            if not pls or not pls.path then http_send_headers(404) return end
 
             local flen=pls.length
-
-            if not flen then http_send_headers(404) return end
 
             local ffrom=0
             local flen_total=flen
 
-            if msg.range and flen>0 then
+            if msg.range and flen and flen>0 then
                 local f,t=string.match(msg.range,'bytes=(.*)-(.*)')
 
                 f=tonumber(f)
@@ -248,19 +245,27 @@ function http_handler(what,from,port,msg)
             end
 
             http.send(string.format(
-                'HTTP/1.1 200 OK\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\nAccept-Ranges: bytes\r\n'..
-                'Connection: close\r\nContent-Type: %s\r\nEXT:\r\nTransferMode.DLNA.ORG: Streaming\r\nContent-Length: %d\r\n',
-                os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,pls.mime[3],flen))
+                'HTTP/1.1 200 OK\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\n'..
+                'Connection: close\r\nContent-Type: %s\r\nEXT:\r\nTransferMode.DLNA.ORG: Streaming\r\n',
+                os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,pls.mime[3]))
+
+            if flen then
+                http.send(string.format('Accept-Ranges: bytes\r\nContent-Length: %d\r\n',flen))
+            else
+                http.send('Accept-Ranges: none\r\n')
+            end
 
             if pls.dlna_extras~='*' then
                 local dlna_extras=pls.dlna_extras
-    
---                dlna_extras=string.gsub(dlna_extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11')
+
+                if flen and cfg.fix_dlna_org_op==true then
+                    dlna_extras=string.gsub(dlna_extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11')
+                end
 
                 http.send('ContentFeatures.DLNA.ORG: '..dlna_extras..'\r\n')
             end
 
-            if msg.range and flen>0 then
+            if msg.range and flen and flen>0 then
                 http.send(string.format('Content-Range: bytes %d-%d/%d\r\n',ffrom,ffrom+flen-1,flen_total))
             end
 

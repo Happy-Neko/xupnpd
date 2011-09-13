@@ -89,10 +89,6 @@ events['subscribe']=subscribe
 events['unsubscribe']=unsubscribe
 events['subscr_gc']=subscr_gc
 
---services.cds.Browse({['ObjectID']='0/1', ['BrowseFlag']='BrowseDirectChildren', ['StartingIndex']='0', ['RequestedCount']='3'})
---services.cds.Browse({['ObjectID']='0/1/1', ['BrowseFlag']='BrowseMetadata', ['StartingIndex']='0', ['RequestedCount']='0'})
---services.cds.Search({['ContainerID']='0', ['StartingIndex']='0', ['RequestedCount']='2', ['SearchCriteria']='upnp:class derivedfrom \"object.item.videoItem\" and @refID exists false'})
-
 if cfg.embedded==true then print=function () end end
 
 print("start "..cfg.log_ident)

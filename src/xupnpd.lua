@@ -35,6 +35,12 @@ cfg.http_timeout=15
 -- 'cfg.dlna_extras' enables DLNA extras
 cfg.dlna_extras=true
 
+-- accept 'Ranges' header for local media (switch to 'false' if long files problem)
+cfg.accept_ranges=false
+
+-- change DLNA.ORG_OP=00 to DLNA.ORG_OP=11 for local media (works only if cfg.accept_ranges=true)
+cfg.fix_dlna_org_op=false
+
 -- static device UUID, '60bd2fb3-dabe-cb14-c766-0e319b54c29a' for example or nil
 cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
 

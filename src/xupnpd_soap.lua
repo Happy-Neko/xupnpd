@@ -35,9 +35,9 @@ function playlist_item_to_xml(id,parent_id,pls)
 
         local dlna_extras=pls.dlna_extras
 
---        if pls.length then
---            dlna_extras=string.gsub(dlna_extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11')
---        end
+        if pls.length and cfg.fix_dlna_org_op==true then
+            dlna_extras=string.gsub(dlna_extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11')
+        end
 
         return string.format(
             '<item id=\"%s" parentID=\"%s\" restricted=\"true\"><dc:title>%s</dc:title><upnp:class>%s</upnp:class>%s%s<res size=\"%d\" protocolInfo=\"%s%s\">%s</res></item>',
@@ -85,7 +85,6 @@ function services.cds.Browse(args)
     local total=0
 
     table.insert(items,'<DIDL-Lite xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns:dlna=\"urn:schemas-dlna-org:metadata-1-0\">')
---    table.insert(items,'<DIDL-Lite xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\">')
 
     local pls=find_playlist_object(args.ObjectID)
 
@@ -133,7 +132,6 @@ function services.cds.Search(args)
     if to==from then to=from+10000 end
 
     table.insert(items,'<DIDL-Lite xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns:dlna=\"urn:schemas-dlna-org:metadata-1-0\">')
---    table.insert(items,'<DIDL-Lite xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\">')
 
     local pls=find_playlist_object(args.ContainerID)
 
@@ -160,7 +158,6 @@ function services.cds.Search(args)
 
     table.insert(items,'</DIDL-Lite>')
 
---    print(xml_serialize({{'Result',util.xmlencode(table.concat(items))}, {'NumberReturned',count}, {'TotalMatches',total}, {'UpdateID',update_id}}))
     return {{'Result',util.xmlencode(table.concat(items))}, {'NumberReturned',count}, {'TotalMatches',total}, {'UpdateID',update_id}}
 
 end
