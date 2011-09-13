@@ -24,10 +24,15 @@
 
 // TODO: proxy optimization
 // TODO: profiles by User-Agent
+// TODO: cache to proxy?
+// TODO: local media tree
+// TODO: Accept-Ranges and Content-Range for local media
+// TODO: web interface for playlist control
+// + TODO: http_timeout to config
 
 namespace core
 {
-    enum { http_timeout=15 };
+    int http_timeout=15;
 
     struct url_data
     {
@@ -1640,6 +1645,18 @@ static int lua_http_download(lua_State* L)
     return 1;
 }
 
+static int lua_http_timeout(lua_State* L)
+{
+    int t=lua_tointeger(L,1);
+
+    if(t<1)
+        t=15;
+
+    core::http_timeout=t;
+
+    return 0;
+}
+
 
 int luaopen_luaxcore(lua_State* L)
 {
@@ -1678,6 +1695,7 @@ int luaopen_luaxcore(lua_State* L)
         {"flush",lua_http_flush},
         {"notify",lua_http_notify},
         {"download",lua_http_download},
+        {"timeout",lua_http_timeout},
         {0,0}
     };
 

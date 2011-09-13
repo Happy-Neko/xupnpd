@@ -29,6 +29,9 @@ cfg.udpxy_url='http://192.168.1.1:4022'
 -- 0-off, 1-radio, 2-radio/TV
 cfg.proxy=2
 
+-- I/O timeout
+cfg.http_timeout=15
+
 -- 'cfg.dlna_extras' enables DLNA extras
 cfg.dlna_extras=true
 

@@ -99,6 +99,8 @@ print("start "..cfg.log_ident)
 
 core.timer(300,'subscr_gc')
 
+http.timeout(cfg.http_timeout)
+
 core.mainloop()
 
 print("stop "..cfg.log_ident)
