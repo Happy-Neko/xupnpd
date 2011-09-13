@@ -26,7 +26,7 @@
 // TODO: profiles by User-Agent
 // TODO: cache to proxy?
 // TODO: local media tree
-// TODO: Accept-Ranges and Content-Range for local media
+// + TODO: Accept-Ranges and Content-Range for local media
 // TODO: web interface for playlist control
 // + TODO: http_timeout to config
 
@@ -1262,12 +1262,35 @@ static int lua_http_sendfile(lua_State* L)
     if(fd==-1)
         return 0;
 
-    char buf[1024];
+    if(lua_type(L,2)!=LUA_TNIL)
+    {
+        if(lseek(fd,lua_tointeger(L,2),SEEK_SET)==(off_t)-1)
+        {
+            close(fd);
+            return 0;
+        }
+    }
 
+    char buf[1024];
     ssize_t n;
-    while((n=read(fd,buf,sizeof(buf)))>0)
-        if(write(fileno(core::http_client_fp),buf,n)!=n)
-            break;
+
+    if(lua_type(L,3)!=LUA_TNIL)
+    {
+        int l=lua_tointeger(L,3);
+        if(l>0)
+        {
+            while(l>0 && (n=read(fd,buf,sizeof(buf)>l?l:sizeof(buf)))>0)
+                if(write(fileno(core::http_client_fp),buf,n)!=n)
+                    break;
+                else
+                    l-=n;
+        }
+    }else
+    {
+        while((n=read(fd,buf,sizeof(buf)))>0)
+            if(write(fileno(core::http_client_fp),buf,n)!=n)
+                break;
+    }
 
     close(fd);
 

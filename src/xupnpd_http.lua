@@ -47,6 +47,7 @@ http_err[412]='Precondition Failed'
 http_err[413]='Request Entity Too Large'
 http_err[414]='Request-URL Too Large'
 http_err[415]='Unsupported Media Type'
+http_err[416]='Requested range not satisfiable'
 http_err[500]='Internal Server http_error'
 http_err[501]='Not Implemented'
 http_err[502]='Bad Gateway'
@@ -224,13 +225,39 @@ function http_handler(what,from,port,msg)
 
             if not pls then http_send_headers(404) return end
 
+            local flen=util.getflen(pls.path)
+
+            if not flen then http_send_headers(404) return end
+
+            local ffrom=0
+            local flen_total=flen
+
+            if msg.range and flen>0 then
+                local f,t=string.match(msg.range,'bytes=(.*)-(.*)')
+
+                f=tonumber(f)
+                t=tonumber(t)
+
+                if not f then f=0 end
+                if not t then t=flen-1 end
+
+                if f>t or t+1>flen then http_send_headers(416) return end
+
+                ffrom=f
+                flen=t-f+1
+            end
+
             http.send(string.format(
-                'HTTP/1.1 200 OK\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\nAccept-Ranges: none\r\n'..
-                'Connection: close\r\nContent-Type: %s\r\nEXT:\r\nTransferMode.DLNA.ORG: Streaming\r\n',
-                os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,pls.mime[3]))
+                'HTTP/1.1 200 OK\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\nAccept-Ranges: bytes\r\n'..
+                'Connection: close\r\nContent-Type: %s\r\nEXT:\r\nTransferMode.DLNA.ORG: Streaming\r\nContent-Length: %i\r\n',
+                os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,pls.mime[3],flen))
 
             if pls.dlna_extras~='*' then
                 http.send('ContentFeatures.DLNA.ORG: '..pls.dlna_extras..'\r\n')
+            end
+
+            if msg.range and flen>0 then
+                http.send(string.format('Content-Range: bytes %s-%s/%i\r\n',ffrom,ffrom+flen-1,flen_total))
             end
 
             http.send('\r\n')
@@ -238,7 +265,7 @@ function http_handler(what,from,port,msg)
 
             if head~=true then
                 if cfg.debug>0 then print(from..' STREAM '..pls.path..' <'..pls.mime[3]..'>') end
-                http.sendfile(pls.path)
+                http.sendfile(pls.path,ffrom,flen)
             end
 
         elseif f.url=='/reload' then

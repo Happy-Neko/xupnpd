@@ -700,6 +700,27 @@ static int lua_util_getfext(lua_State* L)
     return 1;
 }
 
+static int lua_util_getflen(lua_State* L)
+{
+    const char* s=lua_tostring(L,1);
+
+    if(s)
+    {
+        int fd=open(s,O_RDONLY);
+        if(fd!=-1)
+        {
+            off_t len=lseek(fd,0,SEEK_END);
+            if(len!=(off_t)-1)
+                lua_pushinteger(L,(int)len);
+            close(fd);
+        }else
+            lua_pushnil(L);
+    }else
+        lua_pushnil(L);
+
+    return 1;
+}
+
 static int lua_util_xmlencode(lua_State* L)
 {
     const char* s=lua_tostring(L,1);
@@ -846,6 +867,7 @@ int luaopen_luaxlib(lua_State* L)
     {
         {"geturlinfo",lua_util_geturlinfo},
         {"getfext",lua_util_getfext},
+        {"getflen",lua_util_getflen},
         {"xmlencode",lua_util_xmlencode},
         {"urlencode",lua_util_urlencode},
         {"upnp_search_object_type",lua_util_upnp_search_object_type},
