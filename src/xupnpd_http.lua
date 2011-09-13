@@ -82,7 +82,7 @@ function http_send_headers(err,ext,len)
             'Connection: close\r\nContent-Type: %s\r\nEXT:\r\n',
             err,http_err[err] or 'Unknown',os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,http_mime[ext] or 'application/x-octet-stream')
     )
-    if len then http.send(string.format("Content-Length: %i\r\n",len)) end
+    if len then http.send(string.format("Content-Length: %d\r\n",len)) end
     http.send("\r\n")
 end
 
@@ -225,7 +225,7 @@ function http_handler(what,from,port,msg)
 
             if not pls then http_send_headers(404) return end
 
-            local flen=util.getflen(pls.path)
+            local flen=pls.length
 
             if not flen then http_send_headers(404) return end
 
@@ -249,15 +249,19 @@ function http_handler(what,from,port,msg)
 
             http.send(string.format(
                 'HTTP/1.1 200 OK\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\nAccept-Ranges: bytes\r\n'..
-                'Connection: close\r\nContent-Type: %s\r\nEXT:\r\nTransferMode.DLNA.ORG: Streaming\r\nContent-Length: %i\r\n',
+                'Connection: close\r\nContent-Type: %s\r\nEXT:\r\nTransferMode.DLNA.ORG: Streaming\r\nContent-Length: %d\r\n',
                 os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,pls.mime[3],flen))
 
             if pls.dlna_extras~='*' then
-                http.send('ContentFeatures.DLNA.ORG: '..pls.dlna_extras..'\r\n')
+                local dlna_extras=pls.dlna_extras
+    
+--                dlna_extras=string.gsub(dlna_extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11')
+
+                http.send('ContentFeatures.DLNA.ORG: '..dlna_extras..'\r\n')
             end
 
             if msg.range and flen>0 then
-                http.send(string.format('Content-Range: bytes %s-%s/%i\r\n',ffrom,ffrom+flen-1,flen_total))
+                http.send(string.format('Content-Range: bytes %d-%d/%d\r\n',ffrom,ffrom+flen-1,flen_total))
             end
 
             http.send('\r\n')

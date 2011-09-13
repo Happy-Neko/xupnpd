@@ -541,23 +541,37 @@ static int lua_m3u_scan(lua_State* L)
                     char* p2=strrchr(p,'.');
                     if(p2)
                     {
-                        lua_pushinteger(L,idx++);
+                        int fd=open(track_url,O_RDONLY);
+                        if(fd!=-1)
+                        {
+                            lua_pushinteger(L,idx++);
 
-                        lua_newtable(L);
+                            lua_newtable(L);
 
-                        lua_pushstring(L,"name");
-                        lua_pushlstring(L,p,p2-p);
-                        lua_rawset(L,-3);
+                            lua_pushstring(L,"name");
+                            lua_pushlstring(L,p,p2-p);
+                            lua_rawset(L,-3);
 
-                        lua_pushstring(L,"path");
-                        lua_pushstring(L,track_url);
-                        lua_rawset(L,-3);
+                            lua_pushstring(L,"path");
+                            lua_pushstring(L,track_url);
+                            lua_rawset(L,-3);
 
-                        lua_pushstring(L,"url");
-                        lua_pushstring(L,p);
-                        lua_rawset(L,-3);
+                            lua_pushstring(L,"url");
+                            lua_pushstring(L,p);
+                            lua_rawset(L,-3);
 
-                        lua_rawset(L,-3);       // element
+                            off_t len=lseek(fd,0,SEEK_END);
+                            if(len!=(off_t)-1)
+                            {
+                                lua_pushstring(L,"length");
+                                lua_pushinteger(L,(int)len);
+                                lua_rawset(L,-3);
+                            }
+
+                            lua_rawset(L,-3);       // element
+
+                            close(fd);
+                        }
                     }
                 }
             }

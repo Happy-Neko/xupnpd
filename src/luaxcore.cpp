@@ -26,7 +26,9 @@
 // TODO: profiles by User-Agent
 // TODO: cache to proxy?
 // TODO: local media tree
+// TODO: long files size! (lseek)
 // + TODO: Accept-Ranges and Content-Range for local media
+// + TODO: size to playlist for local media
 // TODO: web interface for playlist control
 // + TODO: http_timeout to config
 
