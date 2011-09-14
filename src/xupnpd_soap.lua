@@ -69,6 +69,15 @@ function xml_serialize(r)
     return table.concat(t)
 end
 
+function acl_validate(acl,ip)
+    for i in string.gmatch(acl,'([^;]+)') do
+        if ip==i then return true end
+    end
+
+    return false
+end
+
+
 services.cds.schema='urn:schemas-upnp-org:service:ContentDirectory:1'
 
 function services.cds.GetSystemUpdateID()
@@ -79,7 +88,7 @@ function services.cds.GetSortCapabilities()
     return {{'SortCaps','dc:title'}}
 end
 
-function services.cds.Browse(args)
+function services.cds.Browse(args,ip)
     local items={}
     local count=0
     local total=0
@@ -103,8 +112,10 @@ function services.cds.Browse(args)
             if pls.elements then
                 for i,j in ipairs(pls.elements) do
                     if i>from and i<=to then
-                        table.insert(items,playlist_item_to_xml(args.ObjectID..'/'..i,args.ObjectID,j))
-                        count=count+1
+                        if not j.acl or acl_validate(j.acl,ip) then
+                            table.insert(items,playlist_item_to_xml(args.ObjectID..'/'..i,args.ObjectID,j))
+                            count=count+1
+                        end
                     end
                 end
                 total=pls.size
@@ -120,7 +131,7 @@ function services.cds.Browse(args)
 end
 
 
-function services.cds.Search(args)
+function services.cds.Search(args,ip)
     local items={}
     local count=0
     local total=0
@@ -138,8 +149,10 @@ function services.cds.Search(args)
     if pls then
         function __search(id,parent_id,p)
             if p.elements then
-                for i,j in pairs(p.elements) do
-                    __search(id..'/'..i,id,j)
+                if not p.acl or acl_validate(p.acl,ip) then
+                    for i,j in pairs(p.elements) do
+                        __search(id..'/'..i,id,j)
+                    end
                 end
             else
                 if what==0 or p.mime[1]==what then

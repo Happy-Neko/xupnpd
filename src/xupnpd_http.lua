@@ -133,7 +133,7 @@ function http_handler(what,from,port,msg)
 
                     local r=soap.find('Envelope/Body/'..func_name,soap.parse(msg.data))
 
-                    r=func(r or {})
+                    r=func(r or {},string.match(from,'(.+):.+'))
 
                     if r then
                         http.send(

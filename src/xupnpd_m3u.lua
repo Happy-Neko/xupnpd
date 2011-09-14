@@ -11,7 +11,10 @@ for i,j in ipairs(playlist) do
 
         if string.find(j[1],'(.+).m3u$') then pls=m3u.parse(j[1]) else pls=m3u.scan(j[1]) end
 
-        if pls and j[2] then pls.name=j[2] end
+        if pls then
+            if j[2] then pls.name=j[2] end
+            if j[3] then pls.acl=j[3] end
+        end
     else
         if string.find(j,'(.+).m3u$') then pls=m3u.parse(j) else pls=m3u.scan(j) end
     end
