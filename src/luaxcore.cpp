@@ -30,7 +30,7 @@
 // TODO: PS3 without proxy and dlna_extras - 502 error
 // TODO: UPnPlay - 401 error
 // TODO: acl for playlists by IP or User-Agent
-// TODO: ar71xx - FPU emulator disabled, make sure your toolchain was compiled with software floating point support (soft-float). 
+
 
 namespace core
 {
@@ -1266,7 +1266,7 @@ static int lua_http_sendfile(lua_State* L)
 
     if(lua_gettop(L)>1 && lua_type(L,2)!=LUA_TNIL)
     {
-        if(lseek64(fd,lua_tonumber(L,2),SEEK_SET)==(off64_t)-1)
+        if(lseek64(fd,(off64_t)lua_tonumber(L,2),SEEK_SET)==(off64_t)-1)
         {
             close(fd);
             return 0;
@@ -1278,7 +1278,7 @@ static int lua_http_sendfile(lua_State* L)
 
     if(lua_gettop(L)>2 && lua_type(L,3)!=LUA_TNIL)
     {
-        off64_t l=lua_tonumber(L,3);
+        off64_t l=(off64_t)lua_tonumber(L,3);
         if(l>0)
         {
             while(l>0 && (n=read(fd,buf,sizeof(buf)>l?l:sizeof(buf)))>0)

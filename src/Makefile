@@ -11,9 +11,13 @@ mipsel:
 	$(MAKE) embedded SDK=/usr/local/toolchain-mipsel_gcc3.4.6/mipsel-linux/bin
 
 ar71xx:
+	$(MAKE) embedded SDK=/usr/local/toolchain-mips_r2_gcc-4.5-linaro_uClibc-0.9.32/mips-openwrt-linux/bin PATH=$(PATH):/usr/local/toolchain-mips_r2_gcc-4.5-linaro_uClibc-0.9.32/libexec/gcc/mips-openwrt-linux-uclibc/4.5.4
+
+ar71xx_old:
 	$(MAKE) embedded SDK=/usr/local/toolchain-mips_gcc4.1.2/mips-linux/bin
 
 embedded:
+	export PATH
 	make -C $(LUA) CC=$(SDK)/gcc a
 	$(SDK)/gcc $(CFLAGS) -DWITH_URANDOM -o xupnpd $(SRC) -lm -llua -ldl
 	$(SDK)/strip xupnpd
