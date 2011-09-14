@@ -42,8 +42,6 @@ for i,j in ipairs(playlist) do
 
             jj.objid='0/'..i..'/'..ii
 
-            if jj.length and cfg.accept_ranges==false then jj.length=nil end
-
             jj.parent=pls
 
             if cfg.debug>1 then print('\''..jj.name..'\' '..jj.url..' <'..jj.mime[3]..'>') end

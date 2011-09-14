@@ -23,7 +23,7 @@ function subscribe(event,sid,callback,ttl)
     s.sid=sid
     s.callback=callback
     s.timestamp=os.time()
-    s.ttl=ttl
+    s.ttl=tonumber(ttl)
 
     if cfg.debug>0 then print('subscribe: '..sid..', '..event..', '..callback) end
 

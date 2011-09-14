@@ -23,11 +23,14 @@
 #include <ctype.h>
 
 // TODO: proxy optimization
-// TODO: profiles by User-Agent
+// TODO: profiles by User-Agent?
 // TODO: cache to proxy?
-// TODO: local media tree
-// TODO: long files size! (lseek, int)
+// TODO: local media tree?
 // TODO: web interface for playlist control
+// TODO: PS3 without proxy and dlna_extras - 502 error
+// TODO: UPnPlay - 401 error
+// TODO: acl for playlists by IP or User-Agent
+// TODO: ar71xx - FPU emulator disabled, make sure your toolchain was compiled with software floating point support (soft-float). 
 
 namespace core
 {
@@ -1257,13 +1260,13 @@ static int lua_http_sendfile(lua_State* L)
 
     fflush(core::http_client_fp);
 
-    int fd=open(s,O_RDONLY);
+    int fd=open(s,O_RDONLY|O_LARGEFILE);
     if(fd==-1)
         return 0;
 
-    if(lua_type(L,2)!=LUA_TNIL)
+    if(lua_gettop(L)>1 && lua_type(L,2)!=LUA_TNIL)
     {
-        if(lseek(fd,lua_tointeger(L,2),SEEK_SET)==(off_t)-1)
+        if(lseek64(fd,lua_tonumber(L,2),SEEK_SET)==(off64_t)-1)
         {
             close(fd);
             return 0;
@@ -1273,9 +1276,9 @@ static int lua_http_sendfile(lua_State* L)
     char buf[1024];
     ssize_t n;
 
-    if(lua_type(L,3)!=LUA_TNIL)
+    if(lua_gettop(L)>2 && lua_type(L,3)!=LUA_TNIL)
     {
-        int l=lua_tointeger(L,3);
+        off64_t l=lua_tonumber(L,3);
         if(l>0)
         {
             while(l>0 && (n=read(fd,buf,sizeof(buf)>l?l:sizeof(buf)))>0)

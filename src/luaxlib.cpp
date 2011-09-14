@@ -541,7 +541,7 @@ static int lua_m3u_scan(lua_State* L)
                     char* p2=strrchr(p,'.');
                     if(p2)
                     {
-                        int fd=open(track_url,O_RDONLY);
+                        int fd=open(track_url,O_RDONLY|O_LARGEFILE);
                         if(fd!=-1)
                         {
                             lua_pushinteger(L,idx++);
@@ -560,11 +560,11 @@ static int lua_m3u_scan(lua_State* L)
                             lua_pushstring(L,p);
                             lua_rawset(L,-3);
 
-                            off_t len=lseek(fd,0,SEEK_END);
-                            if(len!=(off_t)-1)
+                            off64_t len=lseek64(fd,0,SEEK_END);
+                            if(len!=(off64_t)-1)
                             {
                                 lua_pushstring(L,"length");
-                                lua_pushinteger(L,(int)len);
+                                lua_pushnumber(L,len);
                                 lua_rawset(L,-3);
                             }
 
@@ -676,14 +676,14 @@ static int lua_util_geturlinfo(lua_State* L)
         closedir(d);
     }else
     {
-        int fd=open(path,O_RDONLY);
+        int fd=open(path,O_RDONLY|O_LARGEFILE);
         if(fd!=-1)
         {
-            off_t len=lseek(fd,0,SEEK_END);
-            if(len!=(off_t)-1)
+            off64_t len=lseek64(fd,0,SEEK_END);
+            if(len!=(off64_t)-1)
             {
                 lua_pushstring(L,"length");
-                lua_pushinteger(L,(int)len);
+                lua_pushnumber(L,len);
                 lua_rawset(L,-3);
             }
             type="file";
@@ -720,12 +720,12 @@ static int lua_util_getflen(lua_State* L)
 
     if(s)
     {
-        int fd=open(s,O_RDONLY);
+        int fd=open(s,O_RDONLY|O_LARGEFILE);
         if(fd!=-1)
         {
-            off_t len=lseek(fd,0,SEEK_END);
-            if(len!=(off_t)-1)
-                lua_pushinteger(L,(int)len);
+            off64_t len=lseek64(fd,0,SEEK_END);
+            if(len!=(off64_t)-1)
+                lua_pushnumber(L,len);
             close(fd);
         }else
             lua_pushnil(L);

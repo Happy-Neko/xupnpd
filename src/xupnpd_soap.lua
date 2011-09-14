@@ -35,12 +35,12 @@ function playlist_item_to_xml(id,parent_id,pls)
 
         local dlna_extras=pls.dlna_extras
 
-        if pls.length and cfg.fix_dlna_org_op==true then
+        if pls.length then
             dlna_extras=string.gsub(dlna_extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11')
         end
 
         return string.format(
-            '<item id=\"%s" parentID=\"%s\" restricted=\"true\"><dc:title>%s</dc:title><upnp:class>%s</upnp:class>%s%s<res size=\"%d\" protocolInfo=\"%s%s\">%s</res></item>',
+            '<item id=\"%s" parentID=\"%s\" restricted=\"true\"><dc:title>%s</dc:title><upnp:class>%s</upnp:class>%s%s<res size=\"%s\" protocolInfo=\"%s%s\">%s</res></item>',
             id,parent_id,util.xmlencode(pls.name),pls.mime[2],artist,logo,pls.length or 0,pls.mime[4],dlna_extras,util.xmlencode(url))
 
     end

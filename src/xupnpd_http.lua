@@ -82,7 +82,7 @@ function http_send_headers(err,ext,len)
             'Connection: close\r\nContent-Type: %s\r\nEXT:\r\n',
             err,http_err[err] or 'Unknown',os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,http_mime[ext] or 'application/x-octet-stream')
     )
-    if len then http.send(string.format("Content-Length: %d\r\n",len)) end
+    if len then http.send(string.format("Content-Length: %s\r\n",len)) end
     http.send("\r\n")
 end
 
@@ -250,7 +250,7 @@ function http_handler(what,from,port,msg)
                 os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,pls.mime[3]))
 
             if flen then
-                http.send(string.format('Accept-Ranges: bytes\r\nContent-Length: %d\r\n',flen))
+                http.send(string.format('Accept-Ranges: bytes\r\nContent-Length: %s\r\n',flen))
             else
                 http.send('Accept-Ranges: none\r\n')
             end
@@ -258,7 +258,7 @@ function http_handler(what,from,port,msg)
             if pls.dlna_extras~='*' then
                 local dlna_extras=pls.dlna_extras
 
-                if flen and cfg.fix_dlna_org_op==true then
+                if flen then
                     dlna_extras=string.gsub(dlna_extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11')
                 end
 
@@ -266,7 +266,7 @@ function http_handler(what,from,port,msg)
             end
 
             if msg.range and flen and flen>0 then
-                http.send(string.format('Content-Range: bytes %d-%d/%d\r\n',ffrom,ffrom+flen-1,flen_total))
+                http.send(string.format('Content-Range: bytes %s-%s/%s\r\n',ffrom,ffrom+flen-1,flen_total))
             end
 
             http.send('\r\n')
@@ -304,7 +304,7 @@ function http_handler(what,from,port,msg)
 
             if head~=true then
                 if cfg.debug>0 then print(from..' FILE '..f.path) end
-                if tmpl then http.sendtfile(f.path,http_vars) else  http.sendfile(f.path) end
+                if tmpl then http.sendtfile(f.path,http_vars) else http.sendfile(f.path) end
             end
         end
     else
