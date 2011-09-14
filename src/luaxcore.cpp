@@ -29,7 +29,6 @@
 // TODO: web interface for playlist control
 // TODO: PS3 without proxy and dlna_extras - 502 error
 // TODO: UPnPlay - 401 error
-// TODO: acl for playlists by IP or User-Agent
 
 
 namespace core

@@ -110,6 +110,16 @@ function http_handler(what,from,port,msg)
 
     if cfg.debug>0 then print(from..' '..msg.reqline[1]..' '..msg.reqline[2]..' \"'..(msg['user-agent'] or '')..'\"') end
 
+    if f.url=='/ui' then
+        if util.getflen('xupnpd_ui.lua') then
+            dofile('xupnpd_ui.lua')
+            ui_handler(f.args,msg.data or '',string.match(from,'(.+):.+'))
+        else
+            http_send_headers(404)
+        end
+        return
+    end
+
     if msg.reqline[1]=='HEAD' then head=true msg.reqline[1]='GET' end
 
     if msg.reqline[1]=='POST' then

@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include <fcntl.h>
 #include <dirent.h>                     
+#include "mem.h"
 
 namespace util
 {
@@ -778,6 +779,29 @@ static int lua_util_urlencode(lua_State* L)
     return 1;
 }
 
+static int lua_util_urldecode(lua_State* L)
+{
+    size_t l=0;
+    const char* s=lua_tolstring(L,1,&l);
+
+    if(!s)
+    {
+        lua_pushstring(L,"");
+        return 1;
+    }
+    char* p=(char*)MALLOC(l+1);
+    if(p)
+    {
+        memcpy(p,s,l+1);
+        lua_pushstring(L,util::url_decode(p));
+        FREE(p);
+    }else
+        lua_pushstring(L,"");
+
+
+    return 1;
+}
+
 // 0 - all, 1 - video, 2 - audio, 3 - images
 static int lua_search_object_type(const char* exp)
 {
@@ -884,6 +908,7 @@ int luaopen_luaxlib(lua_State* L)
         {"getflen",lua_util_getflen},
         {"xmlencode",lua_util_xmlencode},
         {"urlencode",lua_util_urlencode},
+        {"urldecode",lua_util_urldecode},
         {"upnp_search_object_type",lua_util_upnp_search_object_type},
         {0,0}
     };
