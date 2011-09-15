@@ -80,20 +80,27 @@ function reload_playlist()
 
     if cfg.debug>0 then print('reload playlist, update_id='..update_id) end
 
-    core.fspawn(subscr_notify,'cds_event')
+    if cfg.dlna_notify==true then
+        core.fspawn(subscr_notify,'cds_event')
+    end
 end
 
 events['SIGUSR1']=reload_playlist
 events['reload']=reload_playlist
-events['subscribe']=subscribe
-events['unsubscribe']=unsubscribe
-events['subscr_gc']=subscr_gc
+
+if cfg.dlna_notify==true then
+    events['subscribe']=subscribe
+    events['unsubscribe']=unsubscribe
+    events['subscr_gc']=subscr_gc
+end
 
 if cfg.embedded==true then print=function () end end
 
 print("start "..cfg.log_ident)
 
-core.timer(300,'subscr_gc')
+if cfg.dlna_notify==true then
+    core.timer(300,'subscr_gc')
+end
 
 http.timeout(cfg.http_timeout)
 

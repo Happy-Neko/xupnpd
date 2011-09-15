@@ -35,6 +35,9 @@ cfg.http_timeout=15
 -- 'cfg.dlna_extras' enables DLNA extras
 cfg.dlna_extras=true
 
+-- enables UPnP/DLNA notify when reload playlist
+cfg.dlna_notify=true
+
 -- static device UUID, '60bd2fb3-dabe-cb14-c766-0e319b54c29a' for example or nil
 cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
 

@@ -61,7 +61,7 @@ http_vars['manufacturer_url']=''
 http_vars['description']=ssdp_server
 http_vars['name']='xupnpd'
 http_vars['version']='0.0.1'
-http_vars['url']='http://ps3muxer.org/pshare.html'
+http_vars['url']='http://xupnpd.org'
 http_vars['uuid']=ssdp_uuid
 http_vars['interface']=ssdp.interface()
 http_vars['port']=cfg.http_port
@@ -84,6 +84,9 @@ function http_send_headers(err,ext,len)
     )
     if len then http.send(string.format("Content-Length: %s\r\n",len)) end
     http.send("\r\n")
+
+    if cfg.debug>0 and err~=200 then print('http error '..err) end
+
 end
 
 function get_soap_method(s)
@@ -175,6 +178,9 @@ function http_handler(what,from,port,msg)
                    '</s:Body>'..
                 '</s:Envelope>'
                 )
+
+                if cfg.debug>0 then print('upnp error 501') end
+
             end
 
         else

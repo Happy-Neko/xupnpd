@@ -26,10 +26,10 @@
 // TODO: profiles by User-Agent?
 // TODO: cache to proxy?
 // TODO: local media tree?
-// TODO: web interface for playlist control
-// TODO: PS3 without proxy and dlna_extras - 502 error
-// TODO: UPnPlay - 401 error
-
+// TODO: web interface for playlist control (txt config file with pls list)
+// TODO: WMP resubscribe on notify :( - no effect
+// TODO: UPnPlay - 401: Invalid Action
+// TODO: RegisterDevice?
 
 namespace core
 {
