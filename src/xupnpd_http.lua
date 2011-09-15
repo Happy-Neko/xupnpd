@@ -14,6 +14,7 @@ http_mime['jpg']='image/jpeg'
 http_mime['png']='image/png'
 http_mime['ico']='image/vnd.microsoft.icon'
 http_mime['mpeg']='video/mpeg'
+http_mime['css']='text/css'
 
 -- http http_error list
 http_err[100]='Continue'
@@ -119,10 +120,12 @@ function http_handler(what,from,port,msg)
 
     if cfg.debug>0 then print(from..' '..msg.reqline[1]..' '..msg.reqline[2]..' \"'..(msg['user-agent'] or '')..'\"') end
 
+    local from_ip=string.match(from,'(.+):.+')
+
     if f.url=='/ui' then
         if util.getflen('ui/xupnpd_ui.lua') then
             dofile('ui/xupnpd_ui.lua')
-            ui_handler(f.args,msg.data or '',string.match(from,'(.+):.+'))
+            ui_handler(f.args,msg.data or '',from_ip)
         else
             http_send_headers(404)
         end
@@ -152,7 +155,7 @@ function http_handler(what,from,port,msg)
 
                     local r=soap.find('Envelope/Body/'..func_name,soap.parse(msg.data))
 
-                    r=func(r or {},string.match(from,'(.+):.+'))
+                    r=func(r or {},from_ip)
 
                     if r then
                         http.send(
@@ -237,6 +240,9 @@ function http_handler(what,from,port,msg)
 
             if head~=true then
                 if cfg.debug>0 then print(from..' PROXY '..pls.url..' <'..pls.mime[3]..'>') end
+
+                core.sendevent('status',util.getpid(),from_ip..' '..pls.name)
+
                 http.sendurl(pls.url)
             end
 
@@ -296,6 +302,9 @@ function http_handler(what,from,port,msg)
 
             if head~=true then
                 if cfg.debug>0 then print(from..' STREAM '..pls.path..' <'..pls.mime[3]..'>') end
+
+                core.sendevent('status',util.getpid(),from_ip..' '..pls.name)
+
                 http.sendfile(pls.path,ffrom,flen)
             end
 
@@ -322,7 +331,16 @@ function http_handler(what,from,port,msg)
 
 --            if f.url=='/reload.mpeg' then core.sendevent('reload') end
 
-            http_send_headers(200,f.ext,len)
+            http.send(
+                string.format(
+                    'HTTP/1.1 200 OK\r\nDate: %s\r\nServer: %s\r\nAccept-Ranges: none\r\nConnection: close\r\nContent-Type: %s\r\nEXT:\r\n',
+                    os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,http_mime[f.ext] or 'application/x-octet-stream'))
+
+            if len then
+                http.send(string.format('Content-Length: %s\r\n',len))
+            end
+
+            http.send('\r\n')
 
             if head~=true then
                 if cfg.debug>0 then print(from..' FILE '..f.path) end

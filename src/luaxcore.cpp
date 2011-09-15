@@ -28,9 +28,10 @@
 // TODO: local media tree?
 // TODO: web interface for playlist control (txt config file with pls list)
 // TODO: WMP resubscribe on notify :( - no effect
+// TODO: TimeSeekRange.dlna.org: npt=1790.044-
 // TODO: UPnPlay - 401: Invalid Action
 // TODO: RegisterDevice?
-// TODO: streaming status in UI (setstatus for childs)
+// TODO: multipart/form-data parser
 
 namespace core
 {
@@ -715,6 +716,13 @@ namespace core
 //printf("%i\n",lua_gettop(L));
 
                 exit(0);
+            }else if(pid!=(pid_t)-1)
+            {
+                lua_getglobal(L,"childs");
+                lua_pushinteger(L,pid);
+                lua_newtable(L);
+                lua_rawset(L,-3);
+                lua_pop(L,1);
             }
 
             close(fd);
@@ -876,7 +884,6 @@ char* core::parse_command_line(const char* cmd,char** dst,int n)
 
     return s;
 }
-
 
 static int lua_core_spawn(lua_State* L)
 {
@@ -1310,6 +1317,8 @@ static int lua_http_sendtfile(lua_State* L)
     if(!fp)
         return 0;
 
+//printf("%i\n",lua_gettop(L));
+
     int st=0;
 
     char var[64]="";
@@ -1350,6 +1359,17 @@ static int lua_http_sendtfile(lua_State* L)
 
                 lua_getfield(L,2,var);
 
+                if(lua_type(L,-1)==LUA_TFUNCTION)
+                {
+                    if(lua_pcall(L,0,1,0))
+                    {
+                        if(!core::detached)
+                            fprintf(stderr,"%s\n",lua_tostring(L,-1));
+                        else
+                            syslog(LOG_INFO,"%s",lua_tostring(L,-1));
+                    }                                                                                                                            
+                }
+
                 const char* p=lua_tostring(L,-1);
                 if(!p)
                     p="";
@@ -1368,6 +1388,7 @@ static int lua_http_sendtfile(lua_State* L)
             break;
         }
     }
+//printf("%i\n",lua_gettop(L));
 
     fclose(fp);
 

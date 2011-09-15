@@ -85,6 +85,14 @@ function reload_playlist()
     end
 end
 
+function set_child_status(pid,status)
+    pid=tonumber(pid)
+    if childs[pid] then
+        childs[pid].status=status
+        childs[pid].time=os.time()
+    end
+end
+
 events['SIGUSR1']=reload_playlist
 events['reload']=reload_playlist
 
@@ -93,6 +101,8 @@ if cfg.dlna_notify==true then
     events['unsubscribe']=unsubscribe
     events['subscr_gc']=subscr_gc
 end
+
+events['status']=set_child_status
 
 if cfg.embedded==true then print=function () end end
 

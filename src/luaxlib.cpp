@@ -7,7 +7,8 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <fcntl.h>
-#include <dirent.h>                     
+#include <dirent.h>
+#include <signal.h>
 #include "mem.h"
 
 namespace util
@@ -882,6 +883,20 @@ static int lua_util_upnp_search_object_type(lua_State* L)
     return 1;
 }
 
+static int lua_util_getpid(lua_State* L)
+{
+    lua_pushinteger(L,getpid());
+    return 1;
+}
+
+static int lua_util_kill(lua_State* L)
+{
+    int pid=lua_tointeger(L,1);
+    if(pid>0)
+        kill(pid,SIGTERM);
+    return 0;
+}
+
 
 int luaopen_luaxlib(lua_State* L)
 {
@@ -910,6 +925,8 @@ int luaopen_luaxlib(lua_State* L)
         {"urlencode",lua_util_urlencode},
         {"urldecode",lua_util_urldecode},
         {"upnp_search_object_type",lua_util_upnp_search_object_type},
+        {"getpid",lua_util_getpid},
+        {"kill",lua_util_kill},
         {0,0}
     };
 
