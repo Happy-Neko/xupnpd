@@ -2,7 +2,7 @@ function ui_handler(args,data,ip)
     http_send_headers(200,'html')
 
     if not args.action then
-        http.sendtfile('www/ui_main.html',{})
+        http.sendtfile('ui/ui_main.html',{})
     else
         if args.action=='upload' then
             local delimiter=string.match(data,'^(.-)[\r\n]')
@@ -32,7 +32,7 @@ function ui_handler(args,data,ip)
                 end
             end
 
-            http.sendtfile('www/ui_upload.html',{ ['fname']=fname, ['content']=table.concat(t,'<br>') })
+            http.sendtfile('ui/ui_upload.html',{ ['fname']=fname, ['content']=table.concat(t,'<br>') })
         end            
     end
 

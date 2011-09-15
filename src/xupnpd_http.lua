@@ -100,7 +100,13 @@ function http_handler(what,from,port,msg)
 
     if not msg or not msg.reqline then return end
 
-    if msg.reqline[2]=='/' then msg.reqline[2]='/index.html' end
+    if msg.reqline[2]=='/' then
+        if util.getflen('ui/xupnpd_ui.lua') then
+            msg.reqline[2]='/ui'
+        else
+            msg.reqline[2]='/index.html'
+        end
+    end
 
     local head=false
 
@@ -114,8 +120,8 @@ function http_handler(what,from,port,msg)
     if cfg.debug>0 then print(from..' '..msg.reqline[1]..' '..msg.reqline[2]..' \"'..(msg['user-agent'] or '')..'\"') end
 
     if f.url=='/ui' then
-        if util.getflen('xupnpd_ui.lua') then
-            dofile('xupnpd_ui.lua')
+        if util.getflen('ui/xupnpd_ui.lua') then
+            dofile('ui/xupnpd_ui.lua')
             ui_handler(f.args,msg.data or '',string.match(from,'(.+):.+'))
         else
             http_send_headers(404)

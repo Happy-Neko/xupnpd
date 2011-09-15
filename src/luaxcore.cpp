@@ -30,6 +30,7 @@
 // TODO: WMP resubscribe on notify :( - no effect
 // TODO: UPnPlay - 401: Invalid Action
 // TODO: RegisterDevice?
+// TODO: streaming status in UI (setstatus for childs)
 
 namespace core
 {
