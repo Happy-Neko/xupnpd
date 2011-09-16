@@ -1,9 +1,11 @@
 function ui_show_streams()
+    http.send('<table>\n')
     for i,j in pairs(childs) do
         if j.status then
-            http.send(j.status..'<br>\n')
+            http.send('<tr><td>'..j.status..'</td></tr>\n')
         end
     end
+    http.send('</table>\n')
 end
 
 function ui_clone_table(t)
@@ -14,8 +16,9 @@ function ui_clone_table(t)
     return tt
 end
 
-ui_vars={}
+ui_vars=ui_clone_table(http_vars)
 ui_vars.streams=ui_show_streams
+ui_vars.return_url='/ui'
 
 function ui_handler(args,data,ip)
     http_send_headers(200,'html')
@@ -24,39 +27,63 @@ function ui_handler(args,data,ip)
         http.sendtfile('ui/ui_main.html',ui_vars)
     else
         if args.action=='upload' then
-            local delimiter=string.match(data,'^(.-)[\r\n]')
-            
-            local body=string.match(data,delimiter..'[\r\n]+(.-)\r\n'..delimiter..'--[\r\n]*')
-            delimiter=nil
-            
-            local hdr,content=string.match(body,'(.+)\r?\n\r?\n(.+)')
-            body=nil 
-            
-            local fname=string.match(hdr,'filename=\"(.+)\"')
-            hdr=nil
 
-            local fd=io.open(fname,'w+')
-            if fd then
-                fd:write(content)
-                fd:close()
-            end
+            ui_vars.return_url='/ui?action=playlist'
 
-            local pls=m3u.parse(fname)
+            local tt=util.multipart_split(data)
+            data=nil
 
-            function show_pls()
-                if pls then
-                    for i,j in ipairs(pls.elements) do
-                        http.send(j.name..'<br>\n')
+            if tt and tt[1] then
+                local n,m=string.find(tt[1],'\r?\n\r?\n')
+
+                if n then
+                    local fname=string.match(string.sub(tt[1],1,n-1),'filename=\"(.+)\"')
+
+                    if fname then
+                        local tfname='/tmp/'..fname
+
+                        local fd=io.open(tfname,'w+')
+                        if fd then
+                            fd:write(string.sub(tt[1],m+1))
+                            fd:close()
+                        end
+
+                        local pls=m3u.parse(tfname)
+
+                        if pls then
+                            function show_pls()
+                                http.send('<table>\n')
+                                for i,j in ipairs(pls.elements) do
+                                    http.send('<tr><td>'..j.name..'</td></tr>\n')
+                                end
+                                http.send('</table>\n')
+                            end
+
+                            local t=ui_clone_table(ui_vars)
+                            ui_vars.playlist=show_pls
+                            ui_vars.playlist_name=pls.name
+                            http.sendtfile('ui/ui_upload.html',ui_vars)
+                            os.rename(tfname,fname)
+                        else
+                            http.sendtfile('ui/ui_error.html',ui_vars)
+                            os.remove(tfname)
+                        end
+                    else
+                        http.sendtfile('ui/ui_error.html',ui_vars)
                     end
                 end
             end
-
-            local t=ui_clone_table(ui_vars)
-            t.playlist=show_pls
-            t.playlist_name=fname
-
-            http.sendtfile('ui/ui_upload.html',t)
-        end            
+        elseif args.action=='reload' then
+            core.sendevent('reload')
+            http.sendtfile('ui/ui_ok.html',ui_vars)
+        elseif args.action=='playlist' then
+   
+   
+            http.sendtfile('ui/ui_playlist.html',ui_vars)
+   
+   
+        else
+            http.sendtfile('ui/ui_'..args.action..'.html',ui_vars)
+        end
     end
-
 end

@@ -24,6 +24,7 @@ function subscribe(event,sid,callback,ttl)
     s.callback=callback
     s.timestamp=os.time()
     s.ttl=tonumber(ttl)
+    s.seq=0
 
     if cfg.debug>0 then print('subscribe: '..sid..', '..event..', '..callback) end
 
@@ -57,17 +58,22 @@ function subscr_gc(what,sec)
     core.timer(sec,what)
 end
 
-function subscr_notify(event)
+function subscr_notify(t)
 
-    local data=string.format('<e:propertyset xmlns:e=\"urn:schemas-upnp-org:event-1-0\"><e:property><SystemUpdateID>%d</SystemUpdateID></e:property></e:propertyset>',update_id)
+    local tt={}
+    table.insert(tt,'0,'..update_id)
 
-    for i,j in pairs(subscr) do
-        if j.event==event then
+    for i,j in ipairs(playlist_data.elements) do
+        table.insert(tt,j.objid..','..update_id)
+    end
 
-            if cfg.debug>0 then print('notify: '..j.callback..', '..event) end
-            http.notify(j.callback,j.sid,data,update_id)
+    local data=string.format(
+        '<e:propertyset xmlns:e=\"urn:schemas-upnp-org:event-1-0\"><e:property><SystemUpdateID>%s</SystemUpdateID><ContainerUpdateIDs>%s</ContainerUpdateIDs></e:property></e:propertyset>',
+        update_id,table.concat(tt,','))
 
-        end
+    for i,j in ipairs(t) do
+        if cfg.debug>0 then print('notify: '..j.callback..', sid='..j.sid..', seq='..j.seq) end
+        http.notify(j.callback,j.sid,data,j.seq)
     end
 end
 
@@ -81,7 +87,18 @@ function reload_playlist()
     if cfg.debug>0 then print('reload playlist, update_id='..update_id) end
 
     if cfg.dlna_notify==true then
-        core.fspawn(subscr_notify,'cds_event')
+        local t={}
+
+        for i,j in pairs(subscr) do
+            if j.event=='cds_event' then
+                table.insert(t, { ['callback']=j.callback, ['sid']=j.sid, ['seq']=j.seq } )
+                j.seq=j.seq+1
+            end
+        end
+
+        if table.maxn(t)>0 then
+            core.fspawn(subscr_notify,t)
+        end
     end
 end
 

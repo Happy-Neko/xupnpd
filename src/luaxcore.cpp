@@ -25,13 +25,12 @@
 // TODO: proxy optimization
 // TODO: profiles by User-Agent?
 // TODO: cache to proxy?
-// TODO: local media tree?
+// TODO: local media tree (events!)?
+// TODO: TimeSeekRange.dlna.org: npt=1790.044-
+
 // TODO: web interface for playlist control (txt config file with pls list)
 // TODO: WMP resubscribe on notify :( - no effect
-// TODO: TimeSeekRange.dlna.org: npt=1790.044-
 // TODO: UPnPlay - 401: Invalid Action
-// TODO: RegisterDevice?
-// TODO: multipart/form-data parser
 
 namespace core
 {
@@ -1614,7 +1613,7 @@ static int lua_http_notify(lua_State* L)
     }
 
     fprintf(fp,
-        "NOTIFY %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nContent-Type: text/xml\r\nContent-Length: %i\r\n"
+        "NOTIFY %s HTTP/1.1\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nContent-Type: text/xml\r\nContent-Length: %i\r\n"
         "NT: upnp:event\r\nNTS: upnp:propchange\r\nSID: uuid:%s\r\nSEQ: %i\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost,len,sid,seq);
     fwrite(data,len,1,fp);
     fflush(fp);
@@ -1655,8 +1654,12 @@ static int lua_http_download(lua_State* L)
                         "GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost);
                     fflush(fp);
 
+                    int status=0;
+                    int content_length=-1;
+
                     int n;
                     char tmp[1024];
+                    int idx=0;
 
                     while(fgets(tmp,sizeof(tmp),fp))
                     {
@@ -1665,6 +1668,34 @@ static int lua_http_download(lua_State* L)
                             *p=0;
                         if(!*tmp)
                             break;
+
+                        if(!idx)
+                        {
+                            char* pp=strchr(tmp,' ');
+                            if(pp)
+                            {
+                                while(*pp && *pp==' ')
+                                    pp++;
+                                char* pp2=strchr(pp,' ');
+                                if(pp2)
+                                    *pp2=0;
+                                status=atoi(pp);
+                            }
+                        }else
+                        {
+                            char* pp=strchr(tmp,':');
+                            if(pp)
+                            {
+                                *pp=0;
+                                pp++;
+                                while(*pp && *pp==' ')
+                                    pp++;
+
+                                if(!strcasecmp(tmp,"Content-Length"))
+                                    content_length=atoi(pp);
+                            }
+                        }
+                        idx++;
                     }
 
                     while((n=fread(tmp,1,sizeof(tmp),fp))>0 && fwrite(tmp,1,n,dfp)==n)
@@ -1674,6 +1705,9 @@ static int lua_http_download(lua_State* L)
                     }
 
                     fclose(dfp);
+
+                    if(status!=200 || (content_length!=-1 && content_length!=len))
+                        len=0;
 
                     if(!len)
                         remove(d);

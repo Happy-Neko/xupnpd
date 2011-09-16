@@ -897,6 +897,57 @@ static int lua_util_kill(lua_State* L)
     return 0;
 }
 
+static int lua_util_multipart_split(lua_State* L)
+{
+    const char* s=lua_tostring(L,1);
+
+    if(!s)
+        return 0;
+
+    while(*s && *s==' ')
+        s++;
+
+    const char* p=strpbrk(s,"\r\n");
+    if(!p)
+        return 0;
+
+    char delimiter[128];
+
+    int dn=p-s;
+    if(dn>=sizeof(delimiter))
+        return 0;
+
+    memcpy(delimiter,s,dn);
+    delimiter[dn]=0;
+
+    int idx=1;
+
+    lua_newtable(L);
+
+    for(const char* p1=s,*p2;p1;p1=p2)
+    {
+        p1+=dn;
+        while(*p1=='\r' || *p1=='\n')
+            p1++;
+
+        p2=strstr(p1,delimiter);
+        if(p2)
+        {
+            const char* p3=p2;
+            if(p3[-1]=='\n')
+                p3--;
+            if(p3[-1]=='\r')
+                p3--;
+            
+            lua_pushinteger(L,idx++);
+            lua_pushlstring(L,p1,p3-p1);
+            lua_rawset(L,-3);
+        }        
+    }
+
+    return 1;
+}
+
 
 int luaopen_luaxlib(lua_State* L)
 {
@@ -927,6 +978,7 @@ int luaopen_luaxlib(lua_State* L)
         {"upnp_search_object_type",lua_util_upnp_search_object_type},
         {"getpid",lua_util_getpid},
         {"kill",lua_util_kill},
+        {"multipart_split",lua_util_multipart_split},
         {0,0}
     };
 

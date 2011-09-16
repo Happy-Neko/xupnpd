@@ -53,6 +53,7 @@ for i,j in ipairs(playlist) do
 
         playlist_data.elements[i]=pls
         playlist_data.elements[i].id=i
+        playlist_data.elements[i].objid='0/'..i
         playlist_data.size=playlist_data.size+1
     end
 end

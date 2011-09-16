@@ -340,6 +340,10 @@ function http_handler(what,from,port,msg)
                 http.send(string.format('Content-Length: %s\r\n',len))
             end
 
+            if tmpl then
+                http.send('Pragma: no-cache\r\nCache-control: no-cache\r\n')
+            end
+
             http.send('\r\n')
 
             if head~=true then

@@ -1,22 +1,32 @@
 <html>
 <head>
-<title>xupnpd</title>
+<title>${fname}</title>
 <link rel="stylesheet" href="/bootstrap-1.2.0.min.css">
 </head>
 
 <body>    
 
 <div class="container">
-<h3>Upload playlist</h3>
-<form method=post action="/ui?action=upload" enctype="multipart/form-data">
-<input type=file name=m3ufile><br>
-<input class="btn Primary" type=submit value=Send>
-</form>
 
-<h3>Streams</h3>
-${streams}
+<h3>${fname}</h3>
+UUID: ${uuid}<br>
+Multicast interface: ${interface}<br>
+WWW port: ${port}<br>
+Model: <a href=${url}>${name}-${version}</a><br>
+Manufacturer: ${manufacturer}<br>
+<i>${description}</i><br><br>
 
-<a class='btn primary' href='/ui'>refresh</a>
+<a class='btn Primary' href='/ui?action=reload'>Reload</a>
+<a class='btn Primary' href='/ui?action=status'>Status</a>
+<a class='btn Primary' href='/ui?action=playlist'>Playlist</a><br><br>
+
+<br><br>
+<p style='font-size: 8pt' align=left>
+<img src='/icon-48x48.png'></img><br>
+<b>License</b>: <a href='http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt'>GPL</a><br>
+Copyright (C) 2011 Anton Burdinuk<br>
+E-Mail: <a href='mailto:clark15b@gmail.com'>clark15b@gmail.com</a><br>
+</p>
 
 </div>
 

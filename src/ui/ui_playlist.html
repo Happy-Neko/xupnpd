@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>${fname} - playlist</title>
+<link rel="stylesheet" href="/bootstrap-1.2.0.min.css">
+</head>
+
+<body>    
+
+<div class="container">
+
+<h3>Upload *.m3u file</h3>
+<form method=post action="/ui?action=upload" enctype="multipart/form-data">
+<input type=file name=m3ufile><br><br>
+<input class="btn Primary" type=submit value=Send>
+<a class='btn info' href='/ui'>Back</a>
+</form>
+
+</div>
+
+</body>
+</html>
