@@ -44,10 +44,10 @@ cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
 -- playlist (m3u file path or path with alias
 playlist=
 {
---    'playlists/example.m3u',
---    { 'playlists/butovocom_iptv.m3u', 'Butovo.com' },
+--    'playlists/example/example.m3u',
+--    { 'playlists/example/butovocom_iptv.m3u', 'Butovo.com' },
     { 'playlists/mozhay.m3u', 'Mozhay.tv' },
-    { './localmedia', 'Local Media Files', '127.0.0.1;192.168.1.1' }
+--    { './localmedia', 'Local Media Files', '127.0.0.1;192.168.1.1' }
 }
 
 
