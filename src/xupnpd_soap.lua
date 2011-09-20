@@ -88,6 +88,10 @@ function services.cds.GetSortCapabilities()
     return {{'SortCaps','dc:title'}}
 end
 
+function services.cds.GetSearchCapabilities()
+    return {{'SearchCaps','upnp:class'}}
+end
+
 function services.cds.Browse(args,ip)
     local items={}
     local count=0

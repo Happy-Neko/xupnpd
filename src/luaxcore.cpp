@@ -27,10 +27,9 @@
 // TODO: cache to proxy?
 // TODO: local media tree (events!)?
 // TODO: TimeSeekRange.dlna.org: npt=1790.044-
+// TODO: sendfile()
 
 // TODO: web interface for playlist control (txt config file with pls list)
-// TODO: WMP resubscribe on notify :( - no effect
-// TODO: UPnPlay - 401: Invalid Action
 
 namespace core
 {

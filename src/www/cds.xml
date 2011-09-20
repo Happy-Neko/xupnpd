@@ -17,6 +17,16 @@
          </argumentList>
       </action>
       <action>
+         <name>GetSearchCapabilities</name>
+         <argumentList>
+            <argument>
+               <name>SearchCaps</name>
+               <direction>out</direction>
+               <relatedStateVariable>SearchCapabilities</relatedStateVariable>
+            </argument>
+         </argumentList>
+      </action>
+      <action>
         <name>GetSortCapabilities</name>
         <argumentList>
             <argument>
@@ -165,6 +175,10 @@
       <stateVariable sendEvents="no">
          <name>A_ARG_TYPE_Count</name>
          <dataType>ui4</dataType>
+      </stateVariable>
+      <stateVariable sendEvents="no">
+         <name>SearchCapabilities</name>
+         <dataType>string</dataType>
       </stateVariable>
       <stateVariable sendEvents="no">
          <name>A_ARG_TYPE_SortCriteria</name>
