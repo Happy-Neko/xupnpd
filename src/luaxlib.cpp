@@ -949,6 +949,40 @@ static int lua_util_multipart_split(lua_State* L)
 }
 
 
+static int lua_util_dir(lua_State* L)
+{
+    const char* path=lua_tostring(L,1);
+    if(!path)
+        path="";
+
+
+    DIR* d=opendir(path);
+    if(!d)
+        return 0;
+    else
+    {
+        lua_newtable(L);
+
+        int idx=1;
+
+        dirent* de;
+        while((de=readdir(d)))
+        {
+            if(de->d_name[0]!='.')
+            {
+                lua_pushinteger(L,idx++);
+                lua_pushstring(L,de->d_name);
+                lua_rawset(L,-3);
+            }
+        }
+
+        closedir(d);
+    }
+
+    return 1;
+}
+
+
 int luaopen_luaxlib(lua_State* L)
 {
     static const luaL_Reg lib_soap[]=
@@ -979,6 +1013,7 @@ int luaopen_luaxlib(lua_State* L)
         {"getpid",lua_util_getpid},
         {"kill",lua_util_kill},
         {"multipart_split",lua_util_multipart_split},
+        {"dir",lua_util_dir},
         {0,0}
     };
 

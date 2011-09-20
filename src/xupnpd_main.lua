@@ -6,6 +6,16 @@ if cfg.daemon==true and cfg.embedded~=true then core.touchpid(cfg.pid_file) end
 
 if cfg.embedded==true then cfg.debug=0 end
 
+
+function clone_table(t)
+    local tt={}
+    for i,j in pairs(t) do
+        tt[i]=j
+    end
+    return tt
+end
+
+
 update_id=1
 
 subscr={}
@@ -79,7 +89,7 @@ end
 
 function reload_playlist()
     dofile('xupnpd_mime.lua')
-    dofile('xupnpd_m3u.lua')
+    reload_playlists()
     update_id=update_id+1
 
     if update_id>100000 then update_id=1 end

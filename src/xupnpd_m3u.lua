@@ -1,63 +1,87 @@
-playlist_data={}
-playlist_data.name='root'
-playlist_data.size=0
-playlist_data.elements={}
+function reload_playlists()
+    playlist_data={}
+    playlist_data.name='root'
+    playlist_data.size=0
+    playlist_data.elements={}
 
-for i,j in ipairs(playlist) do
+    local plist=clone_table(playlist)
 
-    local pls
+    local d=util.dir('playlists')
 
-    if type(j)=='table' then
+    if d then
+        local tt={}
+        for i,j in ipairs(plist) do
+            local path=nil
+            if type(j)=='table' then path=j[1] else path=j end
+            tt[path]=j
+        end
 
-        if string.find(j[1],'(.+).m3u$') then pls=m3u.parse(j[1]) else pls=m3u.scan(j[1]) end
+        for i,j in ipairs(d) do
+            if string.find(j,'^[%w_]+%.m3u$') then
+                local fname='playlists/'..j
+                if not tt[fname] then
+                    table.insert(plist,fname)
+                    print('found unlisted playlist \''..fname..'\'')
+                end
+            end
+        end
+    end
+
+    for i,j in ipairs(plist) do
+
+        local pls
+
+        if type(j)=='table' then
+
+            if string.find(j[1],'(.+).m3u$') then pls=m3u.parse(j[1]) else pls=m3u.scan(j[1]) end
+
+            if pls then
+                if j[2] then pls.name=j[2] end
+                if j[3] then pls.acl=j[3] end
+            end
+        else
+            if string.find(j,'(.+).m3u$') then pls=m3u.parse(j) else pls=m3u.scan(j) end
+        end
+
 
         if pls then
-            if j[2] then pls.name=j[2] end
-            if j[3] then pls.acl=j[3] end
-        end
-    else
-        if string.find(j,'(.+).m3u$') then pls=m3u.parse(j) else pls=m3u.scan(j) end
-    end
+            if cfg.debug>0 then print('load \''..pls.name..'\'') end
 
+            local udpxy=cfg.udpxy_url..'/udp/'
 
-    if pls then
-        if cfg.debug>0 then print('load \''..pls.name..'\'') end
+            for ii,jj in ipairs(pls.elements) do
 
-        local udpxy=cfg.udpxy_url..'/udp/'
+                jj.url=string.gsub(jj.url,'udp://@',udpxy,1)
 
-        for ii,jj in ipairs(pls.elements) do
+                if not jj.type then jj.type=util.getfext(jj.url) end
 
-            jj.url=string.gsub(jj.url,'udp://@',udpxy,1)
+                local m=mime[jj.type]
 
-            if not jj.type then jj.type=util.getfext(jj.url) end
+                if not m then jj.type='mpeg' m=mime[jj.type] end
 
-            local m=mime[jj.type]
+                jj.mime=m
 
-            if not m then jj.type='mpeg' m=mime[jj.type] end
+                if jj.dlna_extras and dlna_org_extras[jj.dlna_extras] then
+                    jj.dlna_extras=dlna_org_extras[jj.dlna_extras]
+                else
+                    jj.dlna_extras=m[5]
+                end
 
-            jj.mime=m
+                jj.objid='0/'..i..'/'..ii
 
-            if jj.dlna_extras and dlna_org_extras[jj.dlna_extras] then
-                jj.dlna_extras=dlna_org_extras[jj.dlna_extras]
-            else
-                jj.dlna_extras=m[5]
+                jj.parent=pls
+
+                if cfg.debug>1 then print('\''..jj.name..'\' '..jj.url..' <'..jj.mime[3]..'>') end
+
             end
 
-            jj.objid='0/'..i..'/'..ii
-
-            jj.parent=pls
-
-            if cfg.debug>1 then print('\''..jj.name..'\' '..jj.url..' <'..jj.mime[3]..'>') end
-
+            playlist_data.elements[i]=pls
+            playlist_data.elements[i].id=i
+            playlist_data.elements[i].objid='0/'..i
+            playlist_data.size=playlist_data.size+1
         end
-
-        playlist_data.elements[i]=pls
-        playlist_data.elements[i].id=i
-        playlist_data.elements[i].objid='0/'..i
-        playlist_data.size=playlist_data.size+1
     end
 end
-
 
 function find_playlist_object(s)
     local pls=nil
@@ -73,3 +97,4 @@ function find_playlist_object(s)
     return pls
 end
 
+reload_playlists()

@@ -1,12 +1,15 @@
 <html>
 <head>
-<title>${fname} - playlist</title>
-<link rel="stylesheet" href="/bootstrap-1.2.0.min.css">
+<title>${fname} - playlists</title>
+<link rel="stylesheet" href="/ui?action=style">
 </head>
 
 <body>    
 
 <div class="container">
+
+<h3>Playlists</h3>
+${playlists}
 
 <h3>Upload *.m3u file</h3>
 <form method=post action="/ui?action=upload" enctype="multipart/form-data">
