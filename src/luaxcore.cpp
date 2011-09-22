@@ -29,7 +29,8 @@
 // TODO: TimeSeekRange.dlna.org: npt=1790.044-
 // TODO: sendfile()
 
-// TODO: web interface for playlist control (txt config file with pls list)
+// TODO: web interface for playlist control (browse for directory)
+// TODO: AR9132 - Bus error (SIGBUS)
 
 namespace core
 {
