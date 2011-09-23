@@ -2,12 +2,15 @@
 #include <syslog.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "luaxlib.h"
 #include "luaxcore.h"
 
 int main(int argc,char** argv)
 {
     const char* p=strrchr(argv[0],'/');
+
+    int rc;
 
     if(p)
     {
@@ -18,10 +21,14 @@ int main(int argc,char** argv)
         strncpy(location,argv[0],n);
         location[n]=0;
 
-        int rc=chdir(location);
+        rc=chdir(location);
 
         argv[0]=(char*)p+1;
     }
+
+    const char* root=getenv("ROOT");
+    if(root && *root)
+        rc=chdir(root);        
 
     lua_State* L=lua_open();
     if(L)
@@ -39,8 +46,9 @@ int main(int argc,char** argv)
         }
         lua_setglobal(L,"arg");
 
-        char initfile[128];
-        snprintf(initfile,sizeof(initfile),"%s.lua",argv[0]);
+//        char initfile[128];
+//        snprintf(initfile,sizeof(initfile),"%s.lua",argv[0]);
+        const char initfile[]="xupnpd.lua";
 
         if(luaL_loadfile(L,initfile) || lua_pcall(L,0,0,0))
         {
