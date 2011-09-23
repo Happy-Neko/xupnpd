@@ -30,6 +30,7 @@
 // TODO: sendfile()
 
 // TODO: web interface for playlist control (browse for directory)
+// TODO: upload playlist fail
 // TODO: AR9132 - Bus error (SIGBUS)
 
 namespace core

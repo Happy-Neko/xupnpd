@@ -11,10 +11,14 @@ mipsel:
 	$(MAKE) embedded SDK=/usr/local/toolchain-mipsel_gcc3.4.6/mipsel-linux/bin
 
 ar71xx:
+	$(MAKE) embedded SDK=/usr/local/toolchain-mips_r2_gcc-4.3.3+cs_uClibc-0.9.30.1/usr/mips-openwrt-linux/bin PATH=$(PATH):/usr/local/toolchain-mips_r2_gcc-4.3.3+cs_uClibc-0.9.30.1/usr/libexec/gcc/mips-openwrt-linux-uclibc/4.3.3
+
+ar71xx_ar9132:
+	$(MAKE) embedded SDK=/usr/local/toolchain-mips_r2_gcc-4.3.3+cs_uClibc-0.9.30.1-ar9132/usr/mips-openwrt-linux/bin PATH=$(PATH):/usr/local/toolchain-mips_r2_gcc-4.3.3+cs_uClibc-0.9.30.1-ar9132/usr/libexec/gcc/mips-openwrt-linux-uclibc/4.3.3
+
+ar71xx_trunk:
 	$(MAKE) embedded SDK=/usr/local/toolchain-mips_r2_gcc-4.5-linaro_uClibc-0.9.32/mips-openwrt-linux/bin PATH=$(PATH):/usr/local/toolchain-mips_r2_gcc-4.5-linaro_uClibc-0.9.32/libexec/gcc/mips-openwrt-linux-uclibc/4.5.4
 
-ar71xx_old:
-	$(MAKE) embedded SDK=/usr/local/toolchain-mips_gcc4.1.2/mips-linux/bin
 
 embedded:
 	export PATH

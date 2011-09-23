@@ -39,9 +39,13 @@ function ui_handler(args,data,ip)
                         local pls=m3u.parse(tfname)
 
                         if pls then
-                            os.rename(tfname,'playlists/'..fname)
-                            core.sendevent('reload')
-                            http.sendtfile('ui/ui_ok.html',ui_vars)
+                            if not os.rename(tfname,'playlists/'..fname) then
+                                os.remove(tfname)
+                                http.sendtfile('ui/ui_error.html',ui_vars)
+                            else
+                                core.sendevent('reload')
+                                http.sendtfile('ui/ui_ok.html',ui_vars)
+                            end
                         else
                             os.remove(tfname)
                             http.sendtfile('ui/ui_error.html',ui_vars)
