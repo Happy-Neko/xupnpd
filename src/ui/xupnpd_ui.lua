@@ -39,7 +39,7 @@ function ui_handler(args,data,ip)
                         local pls=m3u.parse(tfname)
 
                         if pls then
-                            if not os.rename(tfname,'playlists/'..fname) then
+                            if os.execute(string.format('mv %s playlists/%s',tfname,fname))~=0 then
                                 os.remove(tfname)
                                 http.sendtfile('ui/ui_error.html',ui_vars)
                             else
