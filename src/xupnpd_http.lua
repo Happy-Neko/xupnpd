@@ -158,12 +158,17 @@ function http_handler(what,from,port,msg)
                     r=func(r or {},from_ip)
 
                     if r then
-                        http.send(
+                        local resp=
                             string.format(
                                 '<?xml version=\"1.0\" encoding=\"utf-8\"?>'..
                                 '<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">'..
                                 '<s:Body><u:%sResponse xmlns:u=\"%s\">%s</u:%sResponse></s:Body></s:Envelope>',                                                            
-                                    func_name,s.schema,soap.serialize_vector(r),func_name))
+                                    func_name,s.schema,soap.serialize_vector(r),func_name)
+
+                        http.send(resp)
+
+                        if cfg.debug>2 then print(resp) end
+
                         err=false
                     end
                 end
