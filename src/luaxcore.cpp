@@ -31,6 +31,9 @@
 
 // TODO: X_GetFeatureList?
 // TODO: AR9132 - Bus error (SIGBUS)
+// TODO: Web inteface (path to local media)
+// TODO: cron for download playlists from Internet
+// TODO: group-title
 
 namespace core
 {
