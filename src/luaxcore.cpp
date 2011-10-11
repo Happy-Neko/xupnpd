@@ -34,6 +34,8 @@
 // TODO: Web inteface (path to local media)
 // TODO: cron for download playlists from Internet
 // TODO: group-title
+// TODO: 1900 port sharing?
+// TODO: DIR-320 DD-WRT - 'ps' shown many 'xupnpd', timeouts?
 
 namespace core
 {
