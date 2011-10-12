@@ -21,11 +21,13 @@ function reload_playlists()
                 local fname='playlists/'..j
                 if not tt[fname] then
                     table.insert(plist,fname)
-                    print('found unlisted playlist \''..fname..'\'')
+                    if cfg.debug>0 then print('found unlisted playlist \''..fname..'\'') end
                 end
             end
         end
     end
+
+    local groups={}
 
     for i,j in ipairs(plist) do
 
@@ -45,7 +47,7 @@ function reload_playlists()
 
 
         if pls then
-            if cfg.debug>0 then print('load \''..pls.name..'\'') end
+            if cfg.debug>0 then print('playlist \''..pls.name..'\'') end
 
             local udpxy=cfg.udpxy_url..'/udp/'
 
@@ -73,6 +75,28 @@ function reload_playlists()
 
                 if cfg.debug>1 then print('\''..jj.name..'\' '..jj.url..' <'..jj.mime[3]..'>') end
 
+
+                if cfg.group==true then
+                    local group_title=jj['group-title']
+                    if group_title then
+                        local group=groups[group_title]
+                        if not group then
+                            group={}
+                            group.name=group_title
+                            group.elements={}
+                            group.size=0
+                            group.virtual=true
+                            groups[group_title]=group
+                        end
+
+                        local element=clone_table(jj)
+                        element.parent=group
+                        element.objid=nil
+                        group.size=group.size+1
+                        group.elements[group.size]=element
+                    end
+                end
+
             end
 
             playlist_data.elements[i]=pls
@@ -81,6 +105,23 @@ function reload_playlists()
             playlist_data.size=playlist_data.size+1
         end
     end
+
+    if cfg.group==true then
+        for i,j in pairs(groups) do
+
+            if cfg.debug>0 then print('group \''..j.name..'\'') end
+
+            playlist_data.size=playlist_data.size+1
+            j.id=playlist_data.size
+            j.objid='0/'..j.id
+            playlist_data.elements[j.id]=j
+
+            for ii,jj in ipairs(j.elements) do
+                jj.objid='0/'..j.id..'/'..ii
+            end
+        end
+    end
+
 end
 
 function find_playlist_object(s)

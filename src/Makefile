@@ -4,7 +4,8 @@ SRC     = main.cpp soap.cpp mem.cpp mcast.cpp luaxlib.cpp luaxcore.cpp
 
 x86:
 	make -C $(LUA) CC=gcc a
-	gcc $(CFLAGS) -DWITH_LIBUUID -o xupnpd $(SRC) -ldl -llua -lm -luuid
+	gcc -O2 -c -o md5.o md5c.c
+	gcc $(CFLAGS) -DWITH_LIBUUID -o xupnpd $(SRC) md5.o -ldl -llua -lm -luuid
 	strip xupnpd
 
 mipsel_ddwrt:
@@ -21,9 +22,11 @@ ar71xx:
 embedded:
 	export PATH
 	make -C $(LUA) CC=$(SDK)/gcc a
-	$(SDK)/gcc $(CFLAGS) -DWITH_URANDOM -o xupnpd-$(TARGET) $(SRC) -lm -llua -ldl
+	$(SDK)/gcc -O2 -c -o md5.o md5c.c
+	$(SDK)/gcc $(CFLAGS) -DWITH_URANDOM -o xupnpd-$(TARGET) $(SRC) md5.o -lm -llua -ldl
 	$(SDK)/strip xupnpd-$(TARGET)
 
 clean:
 	make -C $(LUA) clean
 	rm -f $(LUA)/liblua.a
+	rm -f md5.o

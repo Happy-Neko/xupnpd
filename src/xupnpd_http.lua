@@ -61,7 +61,7 @@ http_vars['manufacturer']=util.xmlencode('Anton Burdinuk <clark15b@gmail.com>')
 http_vars['manufacturer_url']=''
 http_vars['description']=ssdp_server
 http_vars['name']='xupnpd'
-http_vars['version']='1.0-beta2'
+http_vars['version']=cfg.version
 http_vars['url']='http://xupnpd.org'
 http_vars['uuid']=ssdp_uuid
 http_vars['interface']=ssdp.interface()
@@ -244,6 +244,8 @@ function http_handler(what,from,port,msg)
             http.flush()
 
             if head~=true then
+                if pls.event then core.sendevent(pls.event,pls.url) end
+
                 if cfg.debug>0 then print(from..' PROXY '..pls.url..' <'..pls.mime[3]..'>') end
 
                 core.sendevent('status',util.getpid(),from_ip..' '..pls.name)
@@ -306,6 +308,8 @@ function http_handler(what,from,port,msg)
             http.flush()
 
             if head~=true then
+                if pls.event then core.sendevent(pls.event,pls.path) end
+
                 if cfg.debug>0 then print(from..' STREAM '..pls.path..' <'..pls.mime[3]..'>') end
 
                 core.sendevent('status',util.getpid(),from_ip..' '..pls.name)
@@ -333,8 +337,6 @@ function http_handler(what,from,port,msg)
             local len=nil
 
             if not tmpl then len=f.length end
-
---            if f.url=='/reload.mpeg' then core.sendevent('reload') end
 
             http.send(
                 string.format(

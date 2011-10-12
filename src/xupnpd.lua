@@ -1,7 +1,7 @@
 cfg={}
 
 -- multicast interface for SSDP exchange, 'eth0' or 'br0' for example
-cfg.ssdp_interface="lo"
+cfg.ssdp_interface='lo'
 
 -- 'cfg.ssdp_loop' enables multicast loop (if player and server in one host)
 cfg.ssdp_loop=1
@@ -10,7 +10,7 @@ cfg.ssdp_loop=1
 cfg.http_port=4044
 
 -- syslog facility (syslog,local0-local7)
-cfg.log_facility="local0"
+cfg.log_facility='local0'
 
 -- 'cfg.daemon' detach server from terminal
 cfg.daemon=false
@@ -38,6 +38,9 @@ cfg.dlna_extras=true
 -- enables UPnP/DLNA notify when reload playlist
 cfg.dlna_notify=true
 
+-- group by 'group-title'
+cfg.group=true
+
 -- static device UUID, '60bd2fb3-dabe-cb14-c766-0e319b54c29a' for example or nil
 cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
 
@@ -53,9 +56,9 @@ playlist=
 
 
 -- log ident, pid file end www root
-cfg.log_ident=arg[1] or "xupnpd"
-cfg.pid_file="/var/run/"..cfg.log_ident..".pid"
-cfg.www_root="./www/"
-
+cfg.log_ident=arg[1] or 'xupnpd'
+cfg.pid_file='/var/run/'..cfg.log_ident..'.pid'
+cfg.www_root='./www/'
+cfg.version='1.0-beta4'
 
 dofile('xupnpd_main.lua')

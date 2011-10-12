@@ -153,7 +153,7 @@ function services.cds.Search(args,ip)
     if pls then
         function __search(id,parent_id,p)
             if p.elements then
-                if not p.acl or acl_validate(p.acl,ip) then
+                if not p.virtual and (not p.acl or acl_validate(p.acl,ip)) then
                     for i,j in pairs(p.elements) do
                         __search(id..'/'..i,id,j)
                     end

@@ -10,6 +10,7 @@
 #include <dirent.h>
 #include <signal.h>
 #include "mem.h"
+#include "md5.h"
 
 namespace util
 {
@@ -302,6 +303,80 @@ static int lua_soap_serialize_vector(lua_State* L)
     return 1;
 }
 
+static void lua_m3u_parse_track_ext(lua_State* L,const char* track_ext)
+{
+    const char* name=0;
+    int nname=0;
+    const char* value=0;
+    int nvalue=0;
+
+    int st=0;
+
+    for(const char* p=track_ext;;p++)
+    {
+        switch(st)
+        {
+        case 0:
+            if(*p!=' ')
+                { name=p; st=1; }
+            break;
+        case 1:
+            if(*p=='=')
+                { nname=p-name; st=2; }
+            else if(*p==' ') st=0;
+            break;
+        case 2:
+            if(*p=='\"')
+                st=10;
+            else
+                { value=p; st=3; }
+            break;
+        case 3:
+            if(*p==' ' || *p==0)
+            {
+                nvalue=p-value;
+
+                if(nname>0 && nvalue>0)
+                {
+                    lua_pushlstring(L,name,nname);
+                    lua_pushlstring(L,value,nvalue);
+                    lua_rawset(L,-3);
+                }
+
+                nname=0;
+                nvalue=0;
+                st=0;
+            }
+            break;
+        case 10:
+            if(*p=='\"')
+                { nname=0; st=0; }
+            else
+                { value=p; st=11; }
+            break;
+        case 11:
+            if(*p=='\"')
+            {
+                nvalue=p-value;
+
+                if(nname>0 && nvalue>0)
+                {
+                    lua_pushlstring(L,name,nname);
+                    lua_pushlstring(L,value,nvalue);
+                    lua_rawset(L,-3);
+                }
+
+                nname=0;
+                nvalue=0;
+                st=0;
+            }
+            break;
+        }
+
+        if(!*p)
+            break;
+    }
+}
 
 
 /*
@@ -432,36 +507,46 @@ static int lua_m3u_parse(lua_State* L)
                 lua_pushstring(L,track_name);
                 lua_rawset(L,-3);
 
-                lua_pushstring(L,"url");
-                lua_pushstring(L,track_url);
-                lua_rawset(L,-3);
+                static const char file_tag[]="file://";
 
-                for(char* p1=track_ext,*p2;p1;p1=p2)
+                if(strncmp(track_url,file_tag,sizeof(file_tag)-1))
                 {
-                    while(*p1 && *p1==' ')
-                        p1++;
+                    lua_pushstring(L,"url");
+                    lua_pushstring(L,track_url);
+                    lua_rawset(L,-3);
+                }else
+                {
+                    char* _track_url=track_url+sizeof(file_tag)-1;
 
-                    p2=strchr(p1,' ');
-                    if(p2)
+                    lua_pushstring(L,"path");
+                    lua_pushstring(L,_track_url);
+                    lua_rawset(L,-3);
+
+                    char* pp=strrchr(track_url,'/');
+                    if(pp)
+                        pp++;
+                    else
+                        pp=track_url;
+
+                    lua_pushstring(L,"url");
+                    lua_pushstring(L,pp);
+                    lua_rawset(L,-3);
+
+                    int fd=open(_track_url,O_RDONLY|O_LARGEFILE);
+                    if(fd!=-1)
                     {
-                        *p2=0;
-                        p2++;
-                    }
-
-                    char* p3=strchr(p1,'=');
-                    if(p3)
-                    {
-                        *p3=0;
-                        p3++;
-
-                        if(*p1 && *p3)
+                        off64_t len=lseek64(fd,0,SEEK_END);
+                        if(len!=(off64_t)-1)
                         {
-                            lua_pushstring(L,p1);
-                            lua_pushstring(L,p3);
+                            lua_pushstring(L,"length");
+                            lua_pushnumber(L,len);
                             lua_rawset(L,-3);
                         }
-                    }                    
+                        close(fd);
+                    }
                 }
+
+                lua_m3u_parse_track_ext(L,track_ext);
 
                 lua_rawset(L,-3);
 
@@ -982,6 +1067,48 @@ static int lua_util_dir(lua_State* L)
     return 1;
 }
 
+static int lua_util_md5(lua_State* L)
+{
+    const char* path=lua_tostring(L,1);
+    if(!path)
+        lua_pushnil(L);
+    else
+    {
+        FILE* fp=fopen(path,"rb");
+        if(!fp)
+            lua_pushnil(L);
+        else
+        {
+            MD5_CTX ctx;
+            MD5_Init(&ctx);
+
+            {
+                char tmp[512];
+                size_t n;
+                while((n=fread(tmp,1,sizeof(tmp),fp))>0)
+                    MD5_Update(&ctx,(unsigned char*)tmp,n);
+            }
+
+            fclose(fp);
+
+            unsigned char tmp[16];
+            MD5_Final(tmp,&ctx);
+
+            char buf[sizeof(tmp)*2];
+
+            static const char hex[]="0123456789abcdef";
+            for(int i=0,j=0;i<sizeof(tmp);i++)
+            {
+                buf[j++]=hex[(tmp[i]>>4)&0x0f];
+                buf[j++]=hex[tmp[i]&0x0f];
+            }
+
+            lua_pushlstring(L,buf,sizeof(buf));
+        }
+    }
+
+    return 1;
+}
 
 int luaopen_luaxlib(lua_State* L)
 {
@@ -1014,6 +1141,7 @@ int luaopen_luaxlib(lua_State* L)
         {"kill",lua_util_kill},
         {"multipart_split",lua_util_multipart_split},
         {"dir",lua_util_dir},
+        {"md5",lua_util_md5},
         {0,0}
     };
 

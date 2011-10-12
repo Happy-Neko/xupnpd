@@ -2,7 +2,7 @@ if cfg.daemon==true then core.detach() end
 
 core.openlog(cfg.log_ident,cfg.log_facility)
 
-if cfg.daemon==true and cfg.embedded~=true then core.touchpid(cfg.pid_file) end
+if cfg.daemon==true then core.touchpid(cfg.pid_file) end
 
 if cfg.embedded==true then cfg.debug=0 end
 
@@ -145,4 +145,4 @@ core.mainloop()
 
 print("stop "..cfg.log_ident)
 
-if cfg.daemon==true and cfg.embedded~=true then os.remove(cfg.pid_file) end
+if cfg.daemon==true then os.execute('rm -f '..cfg.pid_file) end
