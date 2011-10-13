@@ -1,3 +1,9 @@
+/* 
+ * Copyright (C) 2011 Anton Burdinuk
+ * clark15b@gmail.com
+ * https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+ */
+
 #include "mcast.h"
 #include <sys/socket.h>
 #include <arpa/inet.h>

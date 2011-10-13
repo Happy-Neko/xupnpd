@@ -1,3 +1,7 @@
+-- Copyright (C) 2011 Anton Burdinuk
+-- clark15b@gmail.com
+-- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+
 upnp_type=
 {
     ['video'] = 1,
@@ -26,6 +30,7 @@ upnp_proto=
     ['mp2p']  = 'http-get:*:video/mp2p:',
     ['mov']   = 'http-get:*:video/quicktime:',
     ['mkv']   = 'http-get:*:video/x-matroska:',
+    ['3gp']   = 'http-get:*:video/3gpp:',
     ['aac']   = 'http-get:*:audio/x-aac:',
     ['ac3']   = 'http-get:*:audio/x-ac3:',
     ['mp3']   = 'http-get:*:audio/mpeg:',
@@ -87,6 +92,7 @@ mime=
     ['mp2p']  = { upnp_type.video, upnp_class.video, 'video/mp2p',      upnp_proto.mp2p,  dlna_org_extras.mpeg_ps_pal },
     ['mov']   = { upnp_type.video, upnp_class.video, 'video/quicktime', upnp_proto.mov,   dlna_org_extras.none },
     ['mkv']   = { upnp_type.video, upnp_class.video, 'video/x-matroska',upnp_proto.mkv,   dlna_org_extras.none },
+    ['3gp']   = { upnp_type.video, upnp_class.video, 'video/3gpp',      upnp_proto['3gp'],dlna_org_extras.none },
     ['aac']   = { upnp_type.audio, upnp_class.audio, 'audio/x-aac',     upnp_proto.aac,   dlna_org_extras.none },
     ['ac3']   = { upnp_type.audio, upnp_class.audio, 'audio/x-ac3',     upnp_proto.ac3,   dlna_org_extras.ac3 },
     ['mp3']   = { upnp_type.audio, upnp_class.audio, 'audio/mpeg',      upnp_proto.mp3,   dlna_org_extras.mp3 },

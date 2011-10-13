@@ -1,3 +1,9 @@
+/* 
+ * Copyright (C) 2011 Anton Burdinuk
+ * clark15b@gmail.com
+ * https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+ */
+
 #ifndef __MCAST_H
 #define __MCAST_H
 

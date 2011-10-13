@@ -1,3 +1,9 @@
+/* 
+ * Copyright (C) 2011 Anton Burdinuk
+ * clark15b@gmail.com
+ * https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+ */
+
 #include "luaxcore.h"
 #include <unistd.h>
 #include <sys/types.h>
@@ -32,8 +38,8 @@
 // TODO: X_GetFeatureList?
 // TODO: Web inteface (path to local media)
 // TODO: cron for download playlists from Internet
-// TODO: group-title
 // TODO: 1900 port sharing?
+// TODO: podcast, youtube, vimeo?
 
 namespace core
 {
@@ -44,7 +50,7 @@ namespace core
         char host[128];
         char vhost[128];
         int port;
-        char urn[128];
+        char urn[256];
     };
 
     struct timer_event
@@ -1638,6 +1644,7 @@ static int lua_http_download(lua_State* L)
     const char* d=lua_tostring(L,2);
 
     int len=0;
+    char location[256]="";
 
     if(s && d)
     {
@@ -1656,7 +1663,6 @@ static int lua_http_download(lua_State* L)
                     fprintf(fp,
                         "GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost);
                     fflush(fp);
-
                     int status=0;
                     int content_length=-1;
 
@@ -1696,6 +1702,12 @@ static int lua_http_download(lua_State* L)
 
                                 if(!strcasecmp(tmp,"Content-Length"))
                                     content_length=atoi(pp);
+                                else if(!strcasecmp(tmp,"Location"))
+                                {
+                                    int n=snprintf(location,sizeof(location),"%s",pp);
+                                    if(n==-1 || n>=sizeof(location))
+                                        location[sizeof(location)-1]=0;
+                                }
                             }
                         }
                         idx++;
@@ -1723,9 +1735,16 @@ static int lua_http_download(lua_State* L)
         }
     }
 
+    int rn=1;
     lua_pushinteger(L,len);
 
-    return 1;
+    if(*location)
+    {
+        lua_pushstring(L,location);
+        rn++;
+    }
+
+    return rn;
 }
 
 static int lua_http_timeout(lua_State* L)

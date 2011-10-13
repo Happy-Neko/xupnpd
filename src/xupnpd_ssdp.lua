@@ -1,3 +1,7 @@
+-- Copyright (C) 2011 Anton Burdinuk
+-- clark15b@gmail.com
+-- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+
 ssdp_msg_alive={}
 ssdp_msg_byebye={}
 

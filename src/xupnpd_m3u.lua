@@ -1,3 +1,7 @@
+-- Copyright (C) 2011 Anton Burdinuk
+-- clark15b@gmail.com
+-- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+
 function reload_playlists()
     playlist_data={}
     playlist_data.name='root'

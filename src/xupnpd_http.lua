@@ -1,3 +1,7 @@
+-- Copyright (C) 2011 Anton Burdinuk
+-- clark15b@gmail.com
+-- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+
 http_mime={}
 http_err={}
 http_vars={}
@@ -250,7 +254,11 @@ function http_handler(what,from,port,msg)
 
                 core.sendevent('status',util.getpid(),from_ip..' '..pls.name)
 
-                http.sendurl(pls.url)
+                if pls.vimeo_id then
+                    vimeo_sendurl(pls.vimeo_id,pls.url)
+                else
+                    http.sendurl(pls.url)
+                end
             end
 
         elseif f.url=='/stream' then

@@ -1,3 +1,7 @@
+-- Copyright (C) 2011 Anton Burdinuk
+-- clark15b@gmail.com
+-- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+
 if cfg.daemon==true then core.detach() end
 
 core.openlog(cfg.log_ident,cfg.log_facility)
@@ -20,6 +24,7 @@ update_id=1
 
 subscr={}
 
+dofile('xupnpd_vimeo.lua')
 dofile('xupnpd_mime.lua')
 dofile('xupnpd_m3u.lua')
 dofile('xupnpd_ssdp.lua')

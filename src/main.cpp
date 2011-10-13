@@ -1,3 +1,9 @@
+/* 
+ * Copyright (C) 2011 Anton Burdinuk
+ * clark15b@gmail.com
+ * https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
+ */
+
 #include <stdio.h>
 #include <syslog.h>
 #include <string.h>
@@ -5,6 +11,7 @@
 #include <stdlib.h>
 #include "luaxlib.h"
 #include "luaxcore.h"
+#include "luajson.h"
 
 int main(int argc,char** argv)
 {
@@ -36,6 +43,7 @@ int main(int argc,char** argv)
         luaL_openlibs(L);
         luaopen_luaxlib(L);
         luaopen_luaxcore(L);
+        luaopen_luajson(L);
 
         lua_newtable(L);
         for(int i=0;i<argc;i++)
