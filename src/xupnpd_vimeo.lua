@@ -10,7 +10,7 @@ function vimeo_feed_download(feed)
     local feed_path='/tmp/'..feed_name..'.json'
     local feed_m3u_path='./playlists/'..feed_name..'.m3u'
 
---    if http.download(feed_url,feed_path)>0 then
+    if http.download(feed_url,feed_path)>0 then
         local fd=io.open(feed_path,'r')
 
         if fd then
@@ -31,7 +31,7 @@ function vimeo_feed_download(feed)
 
             fd:close()
         end        
---    end
+    end
 end
 
 
