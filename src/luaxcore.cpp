@@ -42,7 +42,6 @@
 // TODO: podcast, youtube, vimeo?
 // TODO: ulibc - no remove, no rename! (unlink)
 // TODO: mp4 dlna profile for ps3 (DLNA.ORG_OP=11 + Content-Length,  MPEG-4, not AVC)?
-// TODO: Content-Length to proxy (real server => player)
 
 namespace core
 {
@@ -1506,6 +1505,7 @@ static int lua_http_get_url_data(const char* url,core::url_data* d)
 static int lua_http_sendurl(lua_State* L)
 {
     const char* s=lua_tostring(L,1);
+    int extra_headers=lua_gettop(L)>1?lua_tointeger(L,2):0;
 
     if(!s || !core::http_client_fp)
         return 0;
@@ -1522,8 +1522,6 @@ static int lua_http_sendurl(lua_State* L)
         alarm(0);
         return 0;
     }
-
-    fflush(core::http_client_fp);
 
     fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost);
     fflush(fp);
@@ -1560,9 +1558,20 @@ static int lua_http_sendurl(lua_State* L)
                     }
                 }
             }
+        }else if(extra_headers>0)
+        {
+            static const char content_length_tag[]="Content-Length:";
+            if(!strncasecmp(tmp,content_length_tag,sizeof(content_length_tag)-1))
+                fprintf(core::http_client_fp,"%s\r\n",tmp);
         }
+
         idx++;
     }
+
+    if(extra_headers>0)
+        fprintf(core::http_client_fp,"\r\n");
+
+    fflush(core::http_client_fp);
 
     if(status!=200)
     {
@@ -1572,8 +1581,11 @@ static int lua_http_sendurl(lua_State* L)
     }
     
     int n;
+
+    int dfd=fileno(core::http_client_fp);
+
     while((n=fread(tmp,1,sizeof(tmp),fp))>0)
-        if(write(fileno(core::http_client_fp),tmp,n)!=n)
+        if(write(dfd,tmp,n)!=n)
             break;
         else
             alarm(core::http_timeout);
@@ -1644,7 +1656,7 @@ static int lua_http_notify(lua_State* L)
 static int lua_http_download(lua_State* L)
 {
     const char* s=lua_tostring(L,1);
-    const char* d=lua_tostring(L,2);
+    const char* d=lua_gettop(L)>1?lua_tostring(L,2):0;
 
     int len=0;
     char location[256]="";

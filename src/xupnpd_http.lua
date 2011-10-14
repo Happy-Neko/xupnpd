@@ -242,10 +242,10 @@ function http_handler(what,from,port,msg)
 
             http.send('ContentFeatures.DLNA.ORG: '..pls.dlna_extras..'\r\n')
 
-            http.send('\r\n')
-            http.flush()
-
-            if head~=true then
+            if head==true then
+                http.send('\r\n')
+                http.flush()
+            else
                 if pls.event then core.sendevent(pls.event,pls.url) end
 
                 if cfg.debug>0 then print(from..' PROXY '..pls.url..' <'..pls.mime[3]..'>') end
@@ -255,6 +255,7 @@ function http_handler(what,from,port,msg)
                 if pls.vimeo_id then
                     vimeo_sendurl(pls.vimeo_id,pls.url)
                 else
+                    http.send('\r\n')
                     http.sendurl(pls.url)
                 end
             end

@@ -31,7 +31,7 @@ function vimeo_feed_download(feed)
 
                 if util.md5(tmp_m3u_path)~=util.md5(feed_m3u_path) then
                     if os.execute(string.format('mv %s %s',tmp_m3u_path,feed_m3u_path))==0 then
-                        if cfg.debug>0 then print('Vimeo feed '..feed_name..' is updated') end
+                        if cfg.debug>0 then print('Vimeo feed '..feed_name..' updated') end
                         rc=true
                     end
                 else
@@ -73,9 +73,8 @@ function vimeo_sendurl(vimeo_id,vimeo_url)
 
     if url then
         if cfg.debug>0 then print('Send Vimeo Clip: '..vimeo_id) end
-        http.sendurl(url)
+        http.sendurl(url,1)
     end
 end
 
 --vimeo_feed_download('channel/hd')
---vimeo_sendurl('30364356','http://vimeo.com/30364356')

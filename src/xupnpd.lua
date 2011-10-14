@@ -53,6 +53,7 @@ playlist=
 --    'playlists/example/example.m3u',
 --    { 'playlists/example/butovocom_iptv.m3u', 'Butovo.com' },
     { 'playlists/mozhay.m3u', 'Mozhay.tv' },
+    { 'playlists/vimeo_channel_hd.m3u', 'Vimeo HD Channel' },
 --    { './localmedia', 'Local Media Files', '127.0.0.1;192.168.1.1' }
 }
 
