@@ -93,7 +93,6 @@ function subscr_notify(t)
 end
 
 function reload_playlist()
-    dofile('xupnpd_mime.lua')
     reload_playlists()
     update_id=update_id+1
 

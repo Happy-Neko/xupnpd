@@ -39,7 +39,7 @@ function vimeo_sendurl(vimeo_id,vimeo_url)
 
     local url=nil
 
-    local tmp_path='/tmp/vimeo_'..vimeo_id..'.html'
+    local tmp_path='/tmp/vimeo_'..vimeo_id..'_'..util.getpid()..'.html'
 
     if http.download(vimeo_url,tmp_path)>0 then
         local fd=io.open(tmp_path,'r')
@@ -56,7 +56,7 @@ function vimeo_sendurl(vimeo_id,vimeo_url)
 
                 if location then
                     url=location
-                    if cfg.debug>0 then print('Real Vimeo URL: '..url) end
+                    if cfg.debug>0 then print('Vimeo Real URL: '..url) end
                 end
 
             end

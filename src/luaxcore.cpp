@@ -40,6 +40,10 @@
 // TODO: cron for download playlists from Internet
 // TODO: 1900 port sharing?
 // TODO: podcast, youtube, vimeo?
+// TODO: ulibc - no remove, no rename!
+// TODO: mp4 dlna profile for ps3 (DLNA.ORG_OP=11 + Content-Length,  MPEG-4, not AVC)?
+// TODO: download to memory
+// TODO: Content-Length to proxy (real server => player)
 
 namespace core
 {
@@ -1725,7 +1729,7 @@ static int lua_http_download(lua_State* L)
                         len=0;
 
                     if(!len)
-                        remove(d);
+                        unlink(d);
                 }
 
                 fclose(fp);

@@ -41,6 +41,9 @@ cfg.dlna_notify=true
 -- group by 'group-title'
 cfg.group=true
 
+-- Device name
+cfg.name='UPnP-IPTV'
+
 -- static device UUID, '60bd2fb3-dabe-cb14-c766-0e319b54c29a' for example or nil
 cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
 
@@ -52,8 +55,6 @@ playlist=
     { 'playlists/mozhay.m3u', 'Mozhay.tv' },
 --    { './localmedia', 'Local Media Files', '127.0.0.1;192.168.1.1' }
 }
-
-
 
 -- log ident, pid file end www root
 cfg.log_ident=arg[1] or 'xupnpd'

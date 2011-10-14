@@ -60,7 +60,7 @@ http_err[503]='Out of Resources'
 http_err[504]='Gateway Time-Out'
 http_err[505]='HTTP Version not supported'
 
-http_vars['fname']='UPnP-IPTV'
+http_vars['fname']=cfg.name
 http_vars['manufacturer']=util.xmlencode('Anton Burdinuk <clark15b@gmail.com>')
 http_vars['manufacturer_url']=''
 http_vars['description']=ssdp_server
@@ -240,9 +240,7 @@ function http_handler(what,from,port,msg)
                 'Connection: close\r\nContent-Type: %s\r\nEXT:\r\nTransferMode.DLNA.ORG: Streaming\r\n',
                 os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,pls.mime[3]))
 
-            if pls.dlna_extras~='*' then
-                http.send('ContentFeatures.DLNA.ORG: '..pls.dlna_extras..'\r\n')
-            end
+            http.send('ContentFeatures.DLNA.ORG: '..pls.dlna_extras..'\r\n')
 
             http.send('\r\n')
             http.flush()
@@ -298,15 +296,12 @@ function http_handler(what,from,port,msg)
                 http.send('Accept-Ranges: none\r\n')
             end
 
-            if pls.dlna_extras~='*' then
-                local dlna_extras=pls.dlna_extras
-
-                if flen then
-                    dlna_extras=string.gsub(dlna_extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11')
-                end
-
-                http.send('ContentFeatures.DLNA.ORG: '..dlna_extras..'\r\n')
+            local dlna_extras=pls.dlna_extras
+            if flen and dlna_extras~='*' then
+                dlna_extras=string.gsub(dlna_extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11')
             end
+
+            http.send('ContentFeatures.DLNA.ORG: '..dlna_extras..'\r\n')
 
             if msg.range and flen and flen>0 then
                 http.send(string.format('Content-Range: bytes %s-%s/%s\r\n',ffrom,ffrom+flen-1,flen_total))

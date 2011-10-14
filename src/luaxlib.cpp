@@ -1116,6 +1116,15 @@ static int lua_util_md5(lua_State* L)
     return 1;
 }
 
+
+static int lua_util_unlink(lua_State* L)
+{
+    const char* path=lua_tostring(L,1);
+    if(path)
+        unlink(path);
+    return 0;
+}
+
 int luaopen_luaxlib(lua_State* L)
 {
     static const luaL_Reg lib_soap[]=
@@ -1148,6 +1157,7 @@ int luaopen_luaxlib(lua_State* L)
         {"multipart_split",lua_util_multipart_split},
         {"dir",lua_util_dir},
         {"md5",lua_util_md5},
+        {"unlink",lua_util_unlink},
         {0,0}
     };
 
