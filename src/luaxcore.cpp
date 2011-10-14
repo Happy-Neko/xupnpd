@@ -40,9 +40,8 @@
 // TODO: cron for download playlists from Internet
 // TODO: 1900 port sharing?
 // TODO: podcast, youtube, vimeo?
-// TODO: ulibc - no remove, no rename!
+// TODO: ulibc - no remove, no rename! (unlink)
 // TODO: mp4 dlna profile for ps3 (DLNA.ORG_OP=11 + Content-Length,  MPEG-4, not AVC)?
-// TODO: download to memory
 // TODO: Content-Length to proxy (real server => player)
 
 namespace core
@@ -1650,7 +1649,22 @@ static int lua_http_download(lua_State* L)
     int len=0;
     char location[256]="";
 
-    if(s && d)
+    FILE* dfp=0;
+
+    luaL_Buffer B;
+
+    if(d)
+    {
+        dfp=fopen(d,"wb");
+        if(!dfp)
+        {
+            lua_pushinteger(L,len);
+            return 1;
+        }
+    }else
+        luaL_buffinit(L,&B);
+
+    if(s)
     {
         core::url_data url;
         if(!lua_http_get_url_data(s,&url))
@@ -1660,77 +1674,74 @@ static int lua_http_download(lua_State* L)
             FILE* fp=core::connect(url.host,url.port);
             if(fp)
             {
-                FILE* dfp=fopen(d,"wb");
+                fprintf(fp,
+                    "GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost);
+                fflush(fp);
+                int status=0;
+                int content_length=-1;
 
-                if(dfp)
+                int n;
+                char tmp[1024];
+                int idx=0;
+
+                while(fgets(tmp,sizeof(tmp),fp))
                 {
-                    fprintf(fp,
-                        "GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost);
-                    fflush(fp);
-                    int status=0;
-                    int content_length=-1;
+                    char* p=strpbrk(tmp,"\r\n");
+                    if(p)
+                        *p=0;
+                    if(!*tmp)
+                        break;
 
-                    int n;
-                    char tmp[1024];
-                    int idx=0;
-
-                    while(fgets(tmp,sizeof(tmp),fp))
+                    if(!idx)
                     {
-                        char* p=strpbrk(tmp,"\r\n");
-                        if(p)
-                            *p=0;
-                        if(!*tmp)
-                            break;
-
-                        if(!idx)
+                        char* pp=strchr(tmp,' ');
+                        if(pp)
                         {
-                            char* pp=strchr(tmp,' ');
-                            if(pp)
-                            {
-                                while(*pp && *pp==' ')
-                                    pp++;
-                                char* pp2=strchr(pp,' ');
-                                if(pp2)
-                                    *pp2=0;
-                                status=atoi(pp);
-                            }
-                        }else
-                        {
-                            char* pp=strchr(tmp,':');
-                            if(pp)
-                            {
-                                *pp=0;
+                            while(*pp && *pp==' ')
                                 pp++;
-                                while(*pp && *pp==' ')
-                                    pp++;
+                            char* pp2=strchr(pp,' ');
+                            if(pp2)
+                                *pp2=0;
+                            status=atoi(pp);
+                        }
+                    }else
+                    {
+                        char* pp=strchr(tmp,':');
+                        if(pp)
+                        {
+                            *pp=0;
+                            pp++;
+                            while(*pp && *pp==' ')
+                                pp++;
 
-                                if(!strcasecmp(tmp,"Content-Length"))
-                                    content_length=atoi(pp);
-                                else if(!strcasecmp(tmp,"Location"))
-                                {
-                                    int n=snprintf(location,sizeof(location),"%s",pp);
-                                    if(n==-1 || n>=sizeof(location))
-                                        location[sizeof(location)-1]=0;
-                                }
+                            if(!strcasecmp(tmp,"Content-Length"))
+                                content_length=atoi(pp);
+                            else if(!strcasecmp(tmp,"Location"))
+                            {
+                                int n=snprintf(location,sizeof(location),"%s",pp);
+                                if(n==-1 || n>=sizeof(location))
+                                    location[sizeof(location)-1]=0;
                             }
                         }
-                        idx++;
                     }
-
-                    while((n=fread(tmp,1,sizeof(tmp),fp))>0 && fwrite(tmp,1,n,dfp)==n)
-                    {
-                        len+=n;
-                        alarm(core::http_timeout);
-                    }
-
-                    fclose(dfp);
-
-                    if(status!=200 || (content_length!=-1 && content_length!=len))
-                        len=0;
-
-                    if(!len)
-                        unlink(d);
+                    idx++;
                 }
+
+                while((n=fread(tmp,1,sizeof(tmp),fp))>0)
+                {
+                    if(dfp)
+                    {
+                        if(fwrite(tmp,1,n,dfp)!=n)
+                            break;
+                    }else
+                        luaL_addlstring(&B,tmp,n);
+
+                    len+=n;
+                    alarm(core::http_timeout);
+                }
+
+                if(status!=200 || (content_length!=-1 && content_length!=len))
+                    len=0;
 
                 fclose(fp);
             }
@@ -1739,16 +1750,32 @@ static int lua_http_download(lua_State* L)
         }
     }
 
-    int rn=1;
-    lua_pushinteger(L,len);
 
-    if(*location)
+    if(dfp)
     {
-        lua_pushstring(L,location);
-        rn++;
+        lua_pushinteger(L,len);
+        fclose(dfp);
+
+        if(!len)
+            unlink(d);
+
+    }else
+    {
+        luaL_pushresult(&B);
+        if(!len)
+        {
+            lua_pop(L,1);
+            lua_pushnil(L);
+        }
     }
 
-    return rn;
+
+    if(*location)
+        lua_pushstring(L,location);
+    else
+        lua_pushnil(L);
+
+    return 2;
 }
 
 static int lua_http_timeout(lua_State* L)
