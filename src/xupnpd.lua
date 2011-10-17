@@ -55,6 +55,7 @@ playlist=
     { 'playlists/mozhay.m3u', 'Mozhay.tv' },
     { 'playlists/vimeo_channel_hd.m3u', 'Vimeo HD Channel' },
     { 'playlists/vimeo_channel_sd.m3u', 'Vimeo SD Channel' },
+    { 'playlists/youtube.m3u', 'YouTube' },
 --    { './localmedia', 'Local Media Files', '127.0.0.1;192.168.1.1' }
 }
 

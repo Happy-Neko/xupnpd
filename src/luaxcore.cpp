@@ -52,7 +52,7 @@ namespace core
         char host[128];
         char vhost[128];
         int port;
-        char urn[256];
+        char urn[512];
     };
 
     struct timer_event
@@ -1507,12 +1507,21 @@ static int lua_http_sendurl(lua_State* L)
     const char* s=lua_tostring(L,1);
     int extra_headers=lua_gettop(L)>1?lua_tointeger(L,2):0;
 
+    int rc=0;
+    char location[512]="";
+
     if(!s || !core::http_client_fp)
-        return 0;
+    {
+        lua_pushinteger(L,rc);
+        return 1;
+    }
 
     core::url_data url;
     if(lua_http_get_url_data(s,&url))
-        return 0;
+    {
+        lua_pushinteger(L,rc);
+        return 1;
+    }
 
     alarm(core::http_timeout);
 
@@ -1520,7 +1529,8 @@ static int lua_http_sendurl(lua_State* L)
     if(!fp)
     {
         alarm(0);
-        return 0;
+        lua_pushinteger(L,rc);
+        return 1;
     }
 
     fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost);
@@ -1558,29 +1568,49 @@ static int lua_http_sendurl(lua_State* L)
                     }
                 }
             }
-        }else if(extra_headers>0)
+        }else
         {
-            static const char content_length_tag[]="Content-Length:";
-            if(!strncasecmp(tmp,content_length_tag,sizeof(content_length_tag)-1))
-                fprintf(core::http_client_fp,"%s\r\n",tmp);
+            static const char location_tag[]="Location:";
+            if(!strncasecmp(tmp,location_tag,sizeof(location_tag)-1))
+            {
+                char* pp=tmp+sizeof(location_tag)-1;
+                while(*pp==' ')
+                    pp++;
+
+                int n=snprintf(location,sizeof(location),"%s",pp);
+                if(n==-1 || n>=sizeof(location))
+                    location[sizeof(location)-1]=0;
+            }else if(extra_headers>0 && status==200)
+            {
+                static const char content_length_tag[]="Content-Length:";
+                if(!strncasecmp(tmp,content_length_tag,sizeof(content_length_tag)-1))
+                    fprintf(core::http_client_fp,"%s\r\n",tmp);        
+            }
         }
 
         idx++;
     }
 
-    if(extra_headers>0)
-        fprintf(core::http_client_fp,"\r\n");
-
-    fflush(core::http_client_fp);
-
     if(status!=200)
     {
         fclose(fp);
         alarm(0);
-        return 0;
-    }
+        lua_pushinteger(L,rc);
+
+        if(*location)
+            lua_pushstring(L,location);
+        else
+            lua_pushnil(L);
+        return 2;
+    }else
+        rc=1;
     
     int n;
+
+    if(extra_headers>0)
+        fprintf(core::http_client_fp,"\r\n");
+
+    fflush(core::http_client_fp);
 
     int dfd=fileno(core::http_client_fp);
 
@@ -1594,7 +1624,9 @@ static int lua_http_sendurl(lua_State* L)
 
     fclose(fp);
 
-    return 0;
+    lua_pushinteger(L,rc);
+
+    return 1;
 }
 
 
@@ -1659,7 +1691,7 @@ static int lua_http_download(lua_State* L)
     const char* d=lua_gettop(L)>1?lua_tostring(L,2):0;
 
     int len=0;
-    char location[256]="";
+    char location[512]="";
 
     FILE* dfp=0;
 

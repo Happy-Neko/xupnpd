@@ -25,6 +25,7 @@ subscr={}
 plugins={}
 
 dofile('xupnpd_vimeo.lua')
+dofile('xupnpd_youtube.lua')
 dofile('xupnpd_mime.lua')
 dofile('xupnpd_m3u.lua')
 dofile('xupnpd_ssdp.lua')
