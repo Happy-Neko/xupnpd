@@ -30,6 +30,26 @@ dofile('xupnpd_m3u.lua')
 dofile('xupnpd_ssdp.lua')
 dofile('xupnpd_http.lua')
 
+
+function update_feeds_async()
+    local num=0
+    for i,j in ipairs(feeds) do
+        local plugin=plugins[ j[1] ]
+        if plugin and plugin.updatefeed then
+            if plugin.updatefeed(j[2],j[3])==true then num=num+1 end
+        end
+    end
+
+    if num>0 then core.sendevent('reload') end
+
+end
+
+function update_feeds(what,sec)
+    core.fspawn(update_feeds_async)
+    core.timer(cfg.feeds_update_interval,what)
+end
+
+
 function subscribe(event,sid,callback,ttl)
     local s={}
     subscr[sid]=s
@@ -73,7 +93,7 @@ function subscr_gc(what,sec)
     core.timer(sec,what)
 end
 
-function subscr_notify(t)
+function subscr_notify_async(t)
 
     local tt={}
     table.insert(tt,'0,'..update_id)
@@ -107,11 +127,12 @@ function reload_playlist()
             if j.event=='cds_event' then
                 table.insert(t, { ['callback']=j.callback, ['sid']=j.sid, ['seq']=j.seq } )
                 j.seq=j.seq+1
+                if j.seq>100000 then j.seq=0 end
             end
         end
 
         if table.maxn(t)>0 then
-            core.fspawn(subscr_notify,t)
+            core.fspawn(subscr_notify_async,t)
         end
     end
 end
@@ -133,6 +154,10 @@ if cfg.dlna_notify==true then
     events['subscr_gc']=subscr_gc
 end
 
+if cfg.feeds_update_interval>0 then
+    events['update_feeds']=update_feeds
+end
+
 events['status']=set_child_status
 
 if cfg.embedded==true then print=function () end end
@@ -144,6 +169,10 @@ if cfg.dlna_notify==true then
 end
 
 http.timeout(cfg.http_timeout)
+
+if cfg.feeds_update_interval>0 then
+    core.timer(5,'update_feeds')
+end
 
 core.mainloop()
 

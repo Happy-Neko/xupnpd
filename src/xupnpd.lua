@@ -54,13 +54,24 @@ playlist=
 --    { 'playlists/example/butovocom_iptv.m3u', 'Butovo.com' },
     { 'playlists/mozhay.m3u', 'Mozhay.tv' },
     { 'playlists/vimeo_channel_hd.m3u', 'Vimeo HD Channel' },
+    { 'playlists/vimeo_channel_sd.m3u', 'Vimeo SD Channel' },
 --    { './localmedia', 'Local Media Files', '127.0.0.1;192.168.1.1' }
+}
+
+-- feeds update interval (seconds, 0 - no update)
+cfg.feeds_update_interval=0
+
+-- feeds list (plugin, feed name, feed type)
+feeds=
+{
+    { 'vimeo', 'channel/hd', 'mp4' },
+    { 'vimeo', 'channel/sd', 'flv' }
 }
 
 -- log ident, pid file end www root
 cfg.log_ident=arg[1] or 'xupnpd'
 cfg.pid_file='/var/run/'..cfg.log_ident..'.pid'
 cfg.www_root='./www/'
-cfg.version='1.0-beta4'
+cfg.version='1.0-beta5'
 
 dofile('xupnpd_main.lua')
