@@ -41,7 +41,7 @@
 // TODO: 1900 port sharing?
 // TODO: podcast, youtube, vimeo?
 // TODO: ulibc - no remove, no rename! (unlink)
-// TODO: mp4 dlna profile for ps3 (DLNA.ORG_OP=11 + Content-Length,  MPEG-4, not AVC)?
+// TODO: mp4 (PS3 many try (2 for TV) - bad stream)?
 
 namespace core
 {

@@ -3,7 +3,7 @@
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
 -- feed example: 'channel/hd'
-function vimeo_feed_download(feed)
+function vimeo_updatefeed(feed)
 
     local rc=false
 
@@ -25,7 +25,7 @@ function vimeo_feed_download(feed)
                 dfd:write('#EXTM3U\n')
 
                 for i,j in ipairs(x) do
-                    dfd:write('#EXTINF:0 logo=',j.thumbnail_medium,' type=mp4 vimeo_id=',j.id,',',j.title,'\n',j.url,'\n')
+                    dfd:write('#EXTINF:0 logo=',j.thumbnail_medium,' type=mp4 plugin=vimeo,',j.title,'\n',j.url,'\n')
                 end
                 dfd:close()
 
@@ -45,9 +45,11 @@ function vimeo_feed_download(feed)
 end
 
 
-function vimeo_sendurl(vimeo_id,vimeo_url)
+function vimeo_sendurl(vimeo_url)
 
     local url=nil
+
+    local vimeo_id=string.match(vimeo_url,'.+/(%w+)$')
 
     local clip_page=http.download(vimeo_url)
 
@@ -77,4 +79,8 @@ function vimeo_sendurl(vimeo_id,vimeo_url)
     end
 end
 
---vimeo_feed_download('channel/hd')
+plugins['vimeo']={}
+plugins.vimeo.sendurl=vimeo_sendurl
+plugins.vimeo.updatefeed=vimeo_updatefeed
+
+--vimeo_updatefeed('channel/hd')

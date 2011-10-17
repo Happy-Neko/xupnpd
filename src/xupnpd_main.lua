@@ -10,7 +10,6 @@ if cfg.daemon==true then core.touchpid(cfg.pid_file) end
 
 if cfg.embedded==true then cfg.debug=0 end
 
-
 function clone_table(t)
     local tt={}
     for i,j in pairs(t) do
@@ -23,6 +22,7 @@ end
 update_id=1
 
 subscr={}
+plugins={}
 
 dofile('xupnpd_vimeo.lua')
 dofile('xupnpd_mime.lua')

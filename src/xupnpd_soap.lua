@@ -39,7 +39,7 @@ function playlist_item_to_xml(id,parent_id,pls)
 
         local dlna_extras=pls.dlna_extras
 
-        if pls.length then
+        if pls.path and dlna_extras~='*' then
             dlna_extras=string.gsub(dlna_extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11')
         end
 

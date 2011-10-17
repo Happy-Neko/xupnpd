@@ -252,8 +252,8 @@ function http_handler(what,from,port,msg)
 
                 core.sendevent('status',util.getpid(),from_ip..' '..pls.name)
 
-                if pls.vimeo_id then
-                    vimeo_sendurl(pls.vimeo_id,pls.url)
+                if pls.plugin then
+                    plugins[pls.plugin].sendurl(pls.url)
                 else
                     http.send('\r\n')
                     http.sendurl(pls.url)
@@ -298,7 +298,7 @@ function http_handler(what,from,port,msg)
             end
 
             local dlna_extras=pls.dlna_extras
-            if flen and dlna_extras~='*' then
+            if dlna_extras~='*' then
                 dlna_extras=string.gsub(dlna_extras,'DLNA.ORG_OP=%d%d','DLNA.ORG_OP=11')
             end
 

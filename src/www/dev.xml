@@ -11,7 +11,7 @@
         <manufacturer>${manufacturer}</manufacturer>
         <manufacturerURL>${manufacturer_url}</manufacturerURL>
         <modelDescription>${description}</modelDescription>
-        <modelName>${name}</modelName>
+        <modelName>${name}-${version}</modelName>
         <modelNumber>${version}</modelNumber>
         <modelURL>${url}</modelURL>
         <serialNumber>xupnpd-${version}</serialNumber>
