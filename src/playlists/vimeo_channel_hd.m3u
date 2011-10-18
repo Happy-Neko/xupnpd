@@ -1,4 +1,10 @@
 #EXTM3U
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/205/751/205751980_200.jpg type=mp4 plugin=vimeo,WindMills
+http://vimeo.com/30507832
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/204/847/204847127_200.jpg type=mp4 plugin=vimeo,Attenuation
+http://vimeo.com/30492065
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/205/547/205547999_200.jpg type=mp4 plugin=vimeo,MACHINE
+http://vimeo.com/30586946
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/204/056/204056508_200.jpg type=mp4 plugin=vimeo,The Curious Fate of Humankind
 http://vimeo.com/30381893
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/203/308/203308561_200.jpg type=mp4 plugin=vimeo,[BRDG004] hazcauch × vokoi
@@ -33,9 +39,3 @@ http://vimeo.com/30126264
 http://vimeo.com/30016668
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/201/803/201803147_200.jpg type=mp4 plugin=vimeo,Do I Have Power - Timber timbre (2011)
 http://vimeo.com/28826615
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/199/223/199223752_200.jpg type=mp4 plugin=vimeo,Infinity Water - Case Study
-http://vimeo.com/29715980
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/200/662/200662698_200.jpg type=mp4 plugin=vimeo,Battlesnake - The Cheshire Cat
-http://vimeo.com/29916038
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/200/974/200974465_200.jpg type=mp4 plugin=vimeo,Tabula Rasa - Short
-http://vimeo.com/25927524

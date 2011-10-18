@@ -58,6 +58,9 @@ function ui_handler(args,data,ip)
         elseif args.action=='reload' then
             core.sendevent('reload')
             http.sendtfile('ui/ui_ok.html',ui_vars)
+        elseif args.action=='feeds' then
+            update_feeds_async()
+            http.sendtfile('ui/ui_ok.html',ui_vars)
         elseif args.action=='playlist' then
 
             function show_playlists()

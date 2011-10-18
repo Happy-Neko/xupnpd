@@ -48,7 +48,7 @@ cfg.name='UPnP-IPTV'
 cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
 
 -- url cache item ttl (sec)
-cfg.cache_ttl=900
+cfg.cache_ttl=3600
 
 -- feeds update interval (seconds, 0 - disabled)
 cfg.feeds_update_interval=0
@@ -58,17 +58,21 @@ playlist=
 {
 --    'playlists/example/example.m3u',
 --    { 'playlists/example/butovocom_iptv.m3u', 'Butovo.com' },
-    { 'playlists/mozhay.m3u', 'Mozhay.tv' },
-    { 'playlists/vimeo_channel_hd.m3u', 'Vimeo HD Channel' },
-    { 'playlists/youtube_top_rated.m3u', 'YouTube Top Rated' },
+    { 'playlists/mozhay.m3u',             'Mozhay.tv' },
+    { 'playlists/vimeo_channel_hd.m3u',   'Vimeo HD Channel' },
+    { 'playlists/vimeo_channel_hdxs.m3u', 'HD Xtreme sports' },
+    { 'playlists/vimeo_channel_mtb.m3u',  'Mountain Bike Channel' },
+    { 'playlists/youtube_top_rated.m3u',  'YouTube Top Rated' },
 --    { './localmedia', 'Local Media Files', '127.0.0.1;192.168.1.1' }
 }
 
 -- feeds list (plugin, feed name, feed type)
 feeds=
 {
-    { 'vimeo',   'channel/hd', 'mp4' },
-    { 'youtube', 'top_rated',  'mp4' }
+    { 'vimeo',   'channel/hd',   'mp4' },
+    { 'vimeo',   'channel/hdxs', 'mp4' },
+    { 'vimeo',   'channel/mtb',  'mp4' },
+    { 'youtube', 'top_rated',    'mp4' }
 }
 
 -- log ident, pid file end www root
