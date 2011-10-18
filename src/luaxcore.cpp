@@ -28,20 +28,12 @@
 #include <netdb.h>
 #include <ctype.h>
 
-// TODO: proxy optimization
-// TODO: profiles by User-Agent?
 // TODO: cache to proxy?
 // TODO: local media tree (events!)?
 // TODO: TimeSeekRange.dlna.org: npt=1790.044-
 // TODO: sendfile()
-
-// TODO: X_GetFeatureList?
 // TODO: Web inteface (path to local media)
-// TODO: cron for download playlists from Internet
-// TODO: 1900 port sharing?
-// TODO: podcast, youtube, vimeo?
-// TODO: ulibc - no remove, no rename! (unlink)
-// TODO: mp4 (PS3 many try (2 for TV) - bad stream)?
+// TODO: YouTube err 80710091 (PS3)
 
 namespace core
 {
@@ -443,18 +435,23 @@ namespace core
 
         lua_getglobal(L,"events");
 
-        unsigned char buf[512];
+        unsigned char buf[1024];
 
-        while(recv(__event_pipe[0],buf,sizeof(buf),MSG_DONTWAIT)>0)
+        int n;
+        while((n=recv(__event_pipe[0],buf,sizeof(buf),MSG_DONTWAIT))>0)
         {
             int num=0;
 
             for(unsigned char* p=buf;p<buf+sizeof(buf)-1;)
             {
-                int len=*p;
-                p++;
+                u_int16_t len=0;
+                memcpy((char*)&len,p,sizeof(len));
+                p+=sizeof(len);
+
                 if(!len || len>sizeof(buf)-(p-buf))
                     break;
+
+//printf("* '%s'\n",p);
                 if(!num)
                     lua_getfield(L,-1,(char*)p);
                 else
@@ -1019,9 +1016,11 @@ static int lua_core_uuid(lua_State* L)
 
 static int lua_core_sendevent(lua_State* L)
 {
-    unsigned char buf[512],*p=buf;
+    unsigned char buf[1024],*p=buf;
 
     int num=lua_gettop(L);
+
+    u_int16_t ll;
 
     for(int i=1;i<=num;i++)
     {
@@ -1031,16 +1030,23 @@ static int lua_core_sendevent(lua_State* L)
         if(!s)
             s="";
 
-        size_t ll=l+3;
+        l+=1;
+
+        ll=l+sizeof(ll)*2;
 
         if(ll>sizeof(buf)-(p-buf))
             break;
 
-        *p=l+1; p++; strcpy((char*)p,s); p+=l+1;
+        ll=l;
+        memcpy(p,(char*)&ll,sizeof(ll));
+        p+=sizeof(ll);
+        memcpy((char*)p,s,l);
+        p+=l;
     }
 
-    *p=0;
-    p++;
+    ll=0;
+    memcpy(p,(char*)&ll,sizeof(ll));
+    p+=sizeof(ll);
 
     send(core::__event_pipe[1],buf,p-buf,0);
 
@@ -1506,6 +1512,7 @@ static int lua_http_sendurl(lua_State* L)
 {
     const char* s=lua_tostring(L,1);
     int extra_headers=lua_gettop(L)>1?lua_tointeger(L,2):0;
+    const char* range=lua_gettop(L)>2?lua_tostring(L,3):0;
 
     int rc=0;
     char location[512]="";
@@ -1533,7 +1540,29 @@ static int lua_http_sendurl(lua_State* L)
         return 1;
     }
 
-    fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost);
+/*
+-> Range: bytes=983040-12697300
+<- Content-Range: bytes 983040-12697300/12697301
+<- Content-Length: 11714261
+
+-> Range: bytes=1966080-12697300
+<- Content-Range: bytes 1966080-12697300/12697301
+<- Content-Length: 10731221
+
+-> Range: bytes=2949120-12697300
+<- Content-Range: bytes 2949120-12697300/12697301
+<- Content-Length: 9748181
+
+
+*/
+
+    fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n",url.urn,url.vhost);
+    if(range && *range)
+    {
+        fprintf(fp,"Range: %s\r\n",range);
+//printf("-> Range: %s\n",range);
+    }
+    fprintf(fp,"\r\n");
     fflush(fp);
 
     int idx=0;
@@ -1565,7 +1594,7 @@ static int lua_http_sendurl(lua_State* L)
                     {
                         *p2=0;
                         status=atoi(p);
-                    }
+                    }  
                 }
             }
         }else
@@ -1580,18 +1609,22 @@ static int lua_http_sendurl(lua_State* L)
                 int n=snprintf(location,sizeof(location),"%s",pp);
                 if(n==-1 || n>=sizeof(location))
                     location[sizeof(location)-1]=0;
-            }else if(extra_headers>0 && status==200)
+            }else if(extra_headers>0 && (status==200 || status==206))
             {
                 static const char content_length_tag[]="Content-Length:";
-                if(!strncasecmp(tmp,content_length_tag,sizeof(content_length_tag)-1))
-                    fprintf(core::http_client_fp,"%s\r\n",tmp);        
+                static const char content_range_tag[]="Content-Range:";
+                if(!strncasecmp(tmp,content_length_tag,sizeof(content_length_tag)-1) || !strncasecmp(tmp,content_range_tag,sizeof(content_range_tag)-1))
+                {
+                    fprintf(core::http_client_fp,"%s\r\n",tmp);
+//printf("<- %s\n",tmp);
+                }
             }
         }
 
         idx++;
     }
 
-    if(status!=200)
+    if(status!=200 && status!=206)
     {
         fclose(fp);
         alarm(0);

@@ -19,10 +19,11 @@ function clone_table(t)
 end
 
 
-update_id=1
+update_id=1             -- system update_id
 
-subscr={}
-plugins={}
+subscr={}               -- event sessions (for UPnP notify engine)
+plugins={}              -- external plugins (YouTube, Vimeo ...)
+cache={}                -- real URL cache for plugins
 
 dofile('xupnpd_vimeo.lua')
 dofile('xupnpd_youtube.lua')
@@ -32,6 +33,7 @@ dofile('xupnpd_ssdp.lua')
 dofile('xupnpd_http.lua')
 
 
+-- download feeds from external sources (child process)
 function update_feeds_async()
     local num=0
     for i,j in ipairs(feeds) do
@@ -45,12 +47,14 @@ function update_feeds_async()
 
 end
 
+-- spawn child process for feeds downloading
 function update_feeds(what,sec)
     core.fspawn(update_feeds_async)
     core.timer(cfg.feeds_update_interval,what)
 end
 
 
+-- subscribe player for ContentDirectory events
 function subscribe(event,sid,callback,ttl)
     local s={}
     subscr[sid]=s
@@ -66,6 +70,7 @@ function subscribe(event,sid,callback,ttl)
 
 end
 
+-- unsubscribe player
 function unsubscribe(sid)
     if subscr[sid] then
         subscr[sid]=nil
@@ -74,9 +79,13 @@ function unsubscribe(sid)
     end
 end
 
-function subscr_gc(what,sec)
+
+-- garbage collection
+function sys_gc(what,sec)
 
     local t=os.time()
+
+    -- force unsubscribe
     local g={}
 
     for i,j in pairs(subscr) do
@@ -91,9 +100,26 @@ function subscr_gc(what,sec)
         if cfg.debug>0 then print('force unsubscribe (timeout): '..j) end
     end
 
+    -- cache clear
+    g={}
+
+    for i,j in pairs(cache) do
+        if os.difftime(t,j.time)>=cfg.cache_ttl then
+            table.insert(g,i)
+        end
+    end
+
+    for i,j in ipairs(g) do
+        cache[j]=nil
+
+        if cfg.debug>0 then print('remove URL from cache (timeout): '..j) end
+    end
+
     core.timer(sec,what)
 end
 
+
+-- ContentDirectory event deliver (child process)
 function subscr_notify_async(t)
 
     local tt={}
@@ -113,6 +139,8 @@ function subscr_notify_async(t)
     end
 end
 
+
+-- reload all playlists
 function reload_playlist()
     reload_playlists()
     update_id=update_id+1
@@ -138,6 +166,7 @@ function reload_playlist()
     end
 end
 
+-- change child process status (for UI)
 function set_child_status(pid,status)
     pid=tonumber(pid)
     if childs[pid] then
@@ -146,31 +175,27 @@ function set_child_status(pid,status)
     end
 end
 
+-- event handlers
 events['SIGUSR1']=reload_playlist
 events['reload']=reload_playlist
-
-if cfg.dlna_notify==true then
-    events['subscribe']=subscribe
-    events['unsubscribe']=unsubscribe
-    events['subscr_gc']=subscr_gc
-end
-
-if cfg.feeds_update_interval>0 then
-    events['update_feeds']=update_feeds
-end
-
+events['store']=function(k,v) local t={} t.time=os.time() t.value=v cache[k]=t end
+events['sys_gc']=sys_gc
+events['subscribe']=subscribe
+events['unsubscribe']=unsubscribe
+events['update_feeds']=update_feeds
 events['status']=set_child_status
+
 
 if cfg.embedded==true then print=function () end end
 
 print("start "..cfg.log_ident)
 
-if cfg.dlna_notify==true then
-    core.timer(300,'subscr_gc')
-end
+-- start garbage collection system
+core.timer(300,'sys_gc')
 
 http.timeout(cfg.http_timeout)
 
+-- start feeds update system
 if cfg.feeds_update_interval>0 then
     core.timer(5,'update_feeds')
 end

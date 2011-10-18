@@ -44,9 +44,11 @@ function vimeo_updatefeed(feed,feed_type)
 end
 
 -- send '\r\n' before data
-function vimeo_sendurl(vimeo_url)
+function vimeo_sendurl(vimeo_url,range)
 
     local url=nil
+
+    if plugin_sendurl_from_cache(vimeo_url,range) then return end
 
     local vimeo_id=string.match(vimeo_url,'.+/(%w+)$')
 
@@ -57,26 +59,18 @@ function vimeo_sendurl(vimeo_url)
         clip_page=nil
 
         if sig and ts then
-
-            local redirect_url=string.format('http://player.vimeo.com/play_redirect?clip_id=%s&sig=%s&time=%s&quality=hd&codecs=H264,VP8,VP6&type=moogaloop_local&embed_location=',vimeo_id,sig,ts)
-            if cfg.debug>0 then print('Vimeo Redirect URL: '..redirect_url) end
-
-            local clip_page,location=http.download(redirect_url)
-
-            if location then
-                url=location
-                if cfg.debug>0 then print('Vimeo Real URL: '..url) end
-            else
-                if cfg.debug>0 then print('Vimeo Real URL is not found') end
-            end
+            url=string.format('http://player.vimeo.com/play_redirect?clip_id=%s&sig=%s&time=%s&quality=hd&codecs=H264&type=moogaloop_local&embed_location=',vimeo_id,sig,ts)
         end
     else
         if cfg.debug>0 then print('Vimeo Clip '..vimeo_id..' is not found') end
     end
 
     if url then
-        if cfg.debug>0 then print('Send Vimeo Clip: '..vimeo_id) end
-        http.sendurl(url,1)
+        if cfg.debug>0 then print('Vimeo Real URL: '..url) end
+
+        plugin_sendurl(vimeo_url,url,range)
+    else
+        if cfg.debug>0 then print('Vimeo Real URL is not found') end
     end
 end
 
@@ -85,4 +79,3 @@ plugins.vimeo.sendurl=vimeo_sendurl
 plugins.vimeo.updatefeed=vimeo_updatefeed
 
 --vimeo_updatefeed('channel/hd','mp4')
---vimeo_updatefeed('channel/sd','flv')

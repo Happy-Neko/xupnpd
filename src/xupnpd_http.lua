@@ -101,6 +101,36 @@ function get_soap_method(s)
 end
 
 
+function plugin_sendurl_from_cache(url,range)
+    local c=cache[url]
+
+    if c and c.value then
+        if cfg.debug>0 then print('Cache URL: '..c.value) end
+        http.sendurl(c.value,1,range)
+        return true
+    end
+
+    return false
+end
+
+function plugin_sendurl(url,real_url,range)
+    local rc,location
+
+    location=real_url
+
+    for i=1,5,1 do
+        core.sendevent('store',url,location)
+        rc,location=http.sendurl(location,1,range)
+
+        if not location then
+            break
+        else
+            if cfg.debug>0 then print('Redirect #'..i..' to: '..location) end
+        end
+    end
+end
+
+
 function http_handler(what,from,port,msg)
 
     if not msg or not msg.reqline then return end
@@ -236,7 +266,7 @@ function http_handler(what,from,port,msg)
             if not pls then http_send_headers(404) return end
 
             http.send(string.format(
-                'HTTP/1.1 200 OK\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\nAccept-Ranges: none\r\n'..
+                'HTTP/1.1 200 OK\r\nPragma: no-cache\r\nCache-control: no-cache\r\nDate: %s\r\nServer: %s\r\n'..
                 'Connection: close\r\nContent-Type: %s\r\nEXT:\r\nTransferMode.DLNA.ORG: Streaming\r\n',
                 os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server,pls.mime[3]))
 
@@ -253,9 +283,10 @@ function http_handler(what,from,port,msg)
                 core.sendevent('status',util.getpid(),from_ip..' '..pls.name)
 
                 if pls.plugin then
-                    plugins[pls.plugin].sendurl(pls.url)
+                    http.send('Accept-Ranges: bytes\r\n')
+                    plugins[pls.plugin].sendurl(pls.url,msg.range)
                 else
-                    http.send('\r\n')
+                    http.send('Accept-Ranges: none\r\n\r\n')
                     http.sendurl(pls.url)
                 end
             end

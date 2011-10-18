@@ -47,6 +47,12 @@ cfg.name='UPnP-IPTV'
 -- static device UUID, '60bd2fb3-dabe-cb14-c766-0e319b54c29a' for example or nil
 cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
 
+-- url cache item ttl (sec)
+cfg.cache_ttl=900
+
+-- feeds update interval (seconds, 0 - disabled)
+cfg.feeds_update_interval=0
+
 -- playlist (m3u file path or path with alias
 playlist=
 {
@@ -54,25 +60,21 @@ playlist=
 --    { 'playlists/example/butovocom_iptv.m3u', 'Butovo.com' },
     { 'playlists/mozhay.m3u', 'Mozhay.tv' },
     { 'playlists/vimeo_channel_hd.m3u', 'Vimeo HD Channel' },
-    { 'playlists/vimeo_channel_sd.m3u', 'Vimeo SD Channel' },
-    { 'playlists/youtube.m3u', 'YouTube' },
+    { 'playlists/youtube_top_rated.m3u', 'YouTube Top Rated' },
 --    { './localmedia', 'Local Media Files', '127.0.0.1;192.168.1.1' }
 }
-
--- feeds update interval (seconds, 0 - no update)
-cfg.feeds_update_interval=0
 
 -- feeds list (plugin, feed name, feed type)
 feeds=
 {
-    { 'vimeo', 'channel/hd', 'mp4' },
-    { 'vimeo', 'channel/sd', 'flv' }
+    { 'vimeo',   'channel/hd', 'mp4' },
+    { 'youtube', 'top_rated',  'mp4' }
 }
 
 -- log ident, pid file end www root
 cfg.log_ident=arg[1] or 'xupnpd'
 cfg.pid_file='/var/run/'..cfg.log_ident..'.pid'
 cfg.www_root='./www/'
-cfg.version='1.0-beta5'
+cfg.version='1.0-beta6'
 
 dofile('xupnpd_main.lua')
