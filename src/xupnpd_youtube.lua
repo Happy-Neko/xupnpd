@@ -104,7 +104,7 @@ function youtube_sendurl(youtube_url,range)
 
         plugin_sendurl(youtube_url,url,range)
     else
-        if cfg.debug>0 then print('YouTube Real URL is not found (fmt='..youtube_fmt..')') end
+        if cfg.debug>0 then print('YouTube Real URL is not found)') end
     end
 end
 
