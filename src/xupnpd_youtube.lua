@@ -11,7 +11,15 @@ youtube_fmt=22
 function youtube_updatefeed(feed,feed_type)
     local rc=false
 
-    local feed_url='http://gdata.youtube.com/feeds/mobile/standardfeeds/'..feed..'?alt=json&start-index=1&max-results=50'
+    local feed_url=nil
+
+    if feed:sub(1,1)~='@' then
+        feed_url='http://gdata.youtube.com/feeds/mobile/standardfeeds/'..feed..'?alt=json&start-index=1&max-results=50'
+    else
+        feed=feed:sub(2)
+        feed_url='http://gdata.youtube.com/feeds/mobile/users/'..feed..'/favorites?alt=json&start-index=1&max-results=50'
+    end
+
     local feed_name='youtube_'..feed
     local feed_m3u_path='./playlists/'..feed_name..'.m3u'
     local tmp_m3u_path='/tmp/'..feed_name..'.m3u'
@@ -112,4 +120,4 @@ plugins['youtube']={}
 plugins.youtube.sendurl=youtube_sendurl
 plugins.youtube.updatefeed=youtube_updatefeed
 
---youtube_updatefeed('top_rated','mp4')
+youtube_updatefeed('top_rated','mp4')
