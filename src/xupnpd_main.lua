@@ -86,7 +86,7 @@ function cache_store(k,v)
 
     local time=os.time()
 
-    if cache_size>=3 then
+    if cache_size>=cfg.cache_size then
         local min_k=nil
         local min_time=nil
         for i,j in pairs(cache) do
