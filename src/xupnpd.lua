@@ -47,6 +47,9 @@ cfg.name='UPnP-IPTV'
 -- static device UUID, '60bd2fb3-dabe-cb14-c766-0e319b54c29a' for example or nil
 cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
 
+-- max url cache size
+cfg.cache_size=8
+
 -- url cache item ttl (sec)
 cfg.cache_ttl=3600
 

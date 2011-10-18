@@ -24,6 +24,7 @@ update_id=1             -- system update_id
 subscr={}               -- event sessions (for UPnP notify engine)
 plugins={}              -- external plugins (YouTube, Vimeo ...)
 cache={}                -- real URL cache for plugins
+cache_size=0
 
 dofile('xupnpd_vimeo.lua')
 dofile('xupnpd_youtube.lua')
@@ -79,6 +80,32 @@ function unsubscribe(sid)
     end
 end
 
+--store to cache
+function cache_store(k,v)
+    if cache[k] then cache[k].value=v return end
+
+    local time=os.time()
+
+    if cache_size>=3 then
+        local min_k=nil
+        local min_time=nil
+        for i,j in pairs(cache) do
+            if not min_time or min_time>j.time then min_k=i min_time=j.time end
+        end
+        if min_k then
+            if cfg.debug>0 then print('remove URL from cache (overflow): '..min_k) end
+            cache[min_k]=nil
+            cache_size=cache_size-1
+        end
+    end
+
+    local t={}
+    t.time=time
+    t.value=v
+    cache[k]=t
+    cache_size=cache_size+1
+end
+
 
 -- garbage collection
 function sys_gc(what,sec)
@@ -108,6 +135,8 @@ function sys_gc(what,sec)
             table.insert(g,i)
         end
     end
+
+    cache_size=cache_size-table.maxn(g)
 
     for i,j in ipairs(g) do
         cache[j]=nil
@@ -178,7 +207,7 @@ end
 -- event handlers
 events['SIGUSR1']=reload_playlist
 events['reload']=reload_playlist
-events['store']=function(k,v) local t={} t.time=os.time() t.value=v cache[k]=t end
+events['store']=cache_store
 events['sys_gc']=sys_gc
 events['subscribe']=subscribe
 events['unsubscribe']=unsubscribe
