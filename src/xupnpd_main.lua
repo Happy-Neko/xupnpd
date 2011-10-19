@@ -18,6 +18,18 @@ function clone_table(t)
     return tt
 end
 
+function load_plugins(path,what)
+    local d=util.dir(path)
+
+    if d then
+        for i,j in ipairs(d) do
+            if string.find(j,'^[%w_]+%.lua$') then
+                if cfg.debug>0 then print(what..' \''..j..'\'') end
+                dofile(path..j)
+            end
+        end
+    end
+end
 
 update_id=1             -- system update_id
 
@@ -26,13 +38,19 @@ plugins={}              -- external plugins (YouTube, Vimeo ...)
 cache={}                -- real URL cache for plugins
 cache_size=0
 
-dofile('xupnpd_vimeo.lua')
-dofile('xupnpd_youtube.lua')
+if not cfg.feeds_path then cfg.feeds_path=cfg.playlists_path end
+
+-- create feeds directory
+if cfg.feeds_path~=cfg.playlists_path then os.execute('mkdir -p '..cfg.feeds_path) end
+
+-- load config and plugins
+load_plugins(cfg.plugin_path,'plugin')
+load_plugins(cfg.config_path,'config')
+
 dofile('xupnpd_mime.lua')
 dofile('xupnpd_m3u.lua')
 dofile('xupnpd_ssdp.lua')
 dofile('xupnpd_http.lua')
-
 
 -- download feeds from external sources (child process)
 function update_feeds_async()
@@ -213,6 +231,7 @@ events['subscribe']=subscribe
 events['unsubscribe']=unsubscribe
 events['update_feeds']=update_feeds
 events['status']=set_child_status
+events['config']=function() load_plugins(cfg.config_path,'config') cache={} cache_size=0 end
 
 
 if cfg.embedded==true then print=function () end end

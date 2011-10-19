@@ -1,41 +1,41 @@
-#EXTM3U
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/205/751/205751980_200.jpg type=mp4 plugin=vimeo,WindMills
+#EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/202/722/202722789_200.jpg ,M83 | Midnight City
+http://vimeo.com/30198629
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/205/751/205751980_200.jpg ,WindMills
 http://vimeo.com/30507832
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/204/847/204847127_200.jpg type=mp4 plugin=vimeo,Attenuation
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/204/847/204847127_200.jpg ,Attenuation
 http://vimeo.com/30492065
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/205/547/205547999_200.jpg type=mp4 plugin=vimeo,MACHINE
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/205/547/205547999_200.jpg ,MACHINE
 http://vimeo.com/30586946
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/204/056/204056508_200.jpg type=mp4 plugin=vimeo,The Curious Fate of Humankind
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/204/056/204056508_200.jpg ,The Curious Fate of Humankind
 http://vimeo.com/30381893
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/308/203308561_200.jpg type=mp4 plugin=vimeo,[BRDG004] hazcauch × vokoi
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/308/203308561_200.jpg ,[BRDG004] hazcauch × vokoi
 http://vimeo.com/30279391
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/200/404/200404659_200.jpg type=mp4 plugin=vimeo,5:46 am
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/200/404/200404659_200.jpg ,5:46 am
 http://vimeo.com/28236362
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/187/551/187551494_200.jpg type=mp4 plugin=vimeo,Amasia
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/187/551/187551494_200.jpg ,Amasia
 http://vimeo.com/28148581
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/204/846/204846407_200.jpg type=mp4 plugin=vimeo,Dry Bones
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/204/846/204846407_200.jpg ,Dry Bones
 http://vimeo.com/30484462
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/962/203962108_200.jpg type=mp4 plugin=vimeo,Universal Alchémy
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/962/203962108_200.jpg ,Universal Alchémy
 http://vimeo.com/30364356
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/199/565/199565004_200.jpg type=mp4 plugin=vimeo,Who Are You?
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/199/565/199565004_200.jpg ,Who Are You?
 http://vimeo.com/29705942
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/023/203023619_200.jpg type=mp4 plugin=vimeo,Poussière
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/023/203023619_200.jpg ,Poussière
 http://vimeo.com/30230507
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/200/885/200885447_200.jpg type=mp4 plugin=vimeo,Landscapes: Volume Two
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/200/885/200885447_200.jpg ,Landscapes: Volume Two
 http://vimeo.com/29950141
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/493/203493960_200.jpg type=mp4 plugin=vimeo,HAERSKOGEN
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/493/203493960_200.jpg ,HAERSKOGEN
 http://vimeo.com/30302943
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/255/203255101_200.jpg type=mp4 plugin=vimeo,SYNDROMES - a short film by Kristoffer Borgli & The Golden Filter
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/255/203255101_200.jpg ,SYNDROMES - a short film by Kristoffer Borgli & The Golden Filter
 http://vimeo.com/30271240
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/394/203394969_200.jpg type=mp4 plugin=vimeo,Vermont.
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/203/394/203394969_200.jpg ,Vermont.
 http://vimeo.com/30291111
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/141/646/141646156_200.jpg type=mp4 plugin=vimeo,BLACK
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/141/646/141646156_200.jpg ,BLACK
 http://vimeo.com/21929292
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/201/970/201970000_200.jpg type=mp4 plugin=vimeo,Aerostat
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/201/970/201970000_200.jpg ,Aerostat
 http://vimeo.com/30067977
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/202/416/202416269_200.jpg type=mp4 plugin=vimeo,Dynamic Blooms
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/202/416/202416269_200.jpg ,Dynamic Blooms
 http://vimeo.com/30126264
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/201/373/201373097_200.jpg type=mp4 plugin=vimeo,Page 23 (English subtitles)
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/201/373/201373097_200.jpg ,Page 23 (English subtitles)
 http://vimeo.com/30016668
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/201/803/201803147_200.jpg type=mp4 plugin=vimeo,Do I Have Power - Timber timbre (2011)
-http://vimeo.com/28826615

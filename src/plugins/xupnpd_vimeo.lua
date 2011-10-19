@@ -3,13 +3,13 @@
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
 -- feed example: 'channel/hd'
-function vimeo_updatefeed(feed,feed_type)
+function vimeo_updatefeed(feed,friendly_name)
     local rc=false
 
     local feed_url='http://vimeo.com/api/v2/'..feed..'/videos.json'
     local feed_name='vimeo_'..string.gsub(feed,'/','_',1)
-    local feed_m3u_path='./playlists/'..feed_name..'.m3u'
-    local tmp_m3u_path='/tmp/'..feed_name..'.m3u'
+    local feed_m3u_path=cfg.feeds_path..feed_name..'.m3u'
+    local tmp_m3u_path=cfg.tmp_path..feed_name..'.m3u'
 
     local feed_data=http.download(feed_url)
 
@@ -21,10 +21,10 @@ function vimeo_updatefeed(feed,feed_type)
         if x then
             local dfd=io.open(tmp_m3u_path,'w+')
             if dfd then
-                dfd:write('#EXTM3U\n')
+                dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=vimeo\n')
 
                 for i,j in ipairs(x) do
-                    dfd:write('#EXTINF:0 logo=',j.thumbnail_medium,' type=',feed_type,' plugin=vimeo,',j.title,'\n',j.url,'\n')
+                    dfd:write('#EXTINF:0 logo=',j.thumbnail_medium,' ,',j.title,'\n',j.url,'\n')
                 end
                 dfd:close()
 

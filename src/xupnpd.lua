@@ -51,7 +51,7 @@ cfg.uuid='60bd2fb3-dabe-cb14-c766-0e319b54c29a'
 cfg.cache_size=8
 
 -- url cache item ttl (sec)
-cfg.cache_ttl=3600
+cfg.cache_ttl=900
 
 -- feeds update interval (seconds, 0 - disabled)
 cfg.feeds_update_interval=0
@@ -59,29 +59,29 @@ cfg.feeds_update_interval=0
 -- playlist (m3u file path or path with alias
 playlist=
 {
---    'playlists/example/example.m3u',
---    { 'playlists/example/butovocom_iptv.m3u', 'Butovo.com' },
-    { 'playlists/mozhay.m3u',             'Mozhay.tv' },
-    { 'playlists/vimeo_channel_hd.m3u',   'Vimeo HD Channel' },
-    { 'playlists/vimeo_channel_hdxs.m3u', 'HD Xtreme sports' },
-    { 'playlists/vimeo_channel_mtb.m3u',  'Mountain Bike Channel' },
-    { 'playlists/youtube_top_rated.m3u',  'YouTube Top Rated' },
+    { './playlists/mozhay.m3u',             'Mozhay.tv' },
 --    { './localmedia', 'Local Media Files', '127.0.0.1;192.168.1.1' }
 }
 
 -- feeds list (plugin, feed name, feed type)
 feeds=
 {
-    { 'vimeo',   'channel/hd',   'mp4' },
-    { 'vimeo',   'channel/hdxs', 'mp4' },
-    { 'vimeo',   'channel/mtb',  'mp4' },
-    { 'youtube', 'top_rated',    'mp4' }
+    { 'vimeo',   'channel/hd',   'Vimeo HD Channel' },
+    { 'vimeo',   'channel/hdxs', 'HD Xtreme sports' },
+    { 'vimeo',   'channel/mtb',  'Mountain Bike Channel' },
+    { 'youtube', 'top_rated',    'YouTube Top Rated' }
 }
 
 -- log ident, pid file end www root
+cfg.version='1.0-rc1'
 cfg.log_ident=arg[1] or 'xupnpd'
 cfg.pid_file='/var/run/'..cfg.log_ident..'.pid'
 cfg.www_root='./www/'
-cfg.version='1.0-beta6'
+cfg.tmp_path='/tmp/'
+cfg.plugin_path='./plugins/'
+cfg.config_path='./config/'
+cfg.playlists_path='./playlists/'
+--cfg.feeds_path='/tmp/xupnpd-feeds/'
+cfg.ui_path='./ui/'
 
 dofile('xupnpd_main.lua')

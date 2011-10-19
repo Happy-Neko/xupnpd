@@ -309,7 +309,7 @@ static int lua_soap_serialize_vector(lua_State* L)
     return 1;
 }
 
-static void lua_m3u_parse_track_ext(lua_State* L,const char* track_ext)
+static void lua_m3u_parse_track_ext(lua_State* L,const char* track_ext,int tidx)
 {
     const char* name=0;
     int nname=0;
@@ -346,7 +346,7 @@ static void lua_m3u_parse_track_ext(lua_State* L,const char* track_ext)
                 {
                     lua_pushlstring(L,name,nname);
                     lua_pushlstring(L,value,nvalue);
-                    lua_rawset(L,-3);
+                    lua_rawset(L,tidx);
                 }
 
                 nname=0;
@@ -369,7 +369,7 @@ static void lua_m3u_parse_track_ext(lua_State* L,const char* track_ext)
                 {
                     lua_pushlstring(L,name,nname);
                     lua_pushlstring(L,value,nvalue);
-                    lua_rawset(L,-3);
+                    lua_rawset(L,tidx);
                 }
 
                 nname=0;
@@ -395,6 +395,7 @@ t.elements[i].url  - element url
 */
 static int lua_m3u_parse(lua_State* L)
 {
+//printf("* %i\n",lua_gettop(L));
     const char* name=lua_tostring(L,1);
     if(!name)
         name="";
@@ -470,6 +471,7 @@ static int lua_m3u_parse(lua_State* L)
             {
                 p++;
                 static const char tag[]="EXTINF:";
+                static const char tag_m3u[]="EXTM3U ";
                 if(!strncmp(p,tag,sizeof(tag)-1))
                 {
                     p+=sizeof(tag)-1;
@@ -498,7 +500,13 @@ static int lua_m3u_parse(lua_State* L)
                         if(n==-1 || n>=sizeof(track_name))
                             track_name[sizeof(track_name)-1]=0;
                     }
-                }
+                }else if(!strncmp(p,tag_m3u,sizeof(tag_m3u)-1))
+                {
+                    p+=sizeof(tag_m3u)-1;
+                    while(*p && *p==' ')
+                        p++;
+                    lua_m3u_parse_track_ext(L,p,2);
+                }                
             }else
             {
                 int n=snprintf(track_url,sizeof(track_url),"%s",p);
@@ -552,7 +560,7 @@ static int lua_m3u_parse(lua_State* L)
                     }
                 }
 
-                lua_m3u_parse_track_ext(L,track_ext);
+                lua_m3u_parse_track_ext(L,track_ext,-3);
 
                 lua_rawset(L,-3);
 
@@ -570,6 +578,7 @@ static int lua_m3u_parse(lua_State* L)
 
         fclose(fp);
     }
+//printf("* %i\n",lua_gettop(L));
 
     return 1;
 }

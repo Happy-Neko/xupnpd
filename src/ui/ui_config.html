@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>${fname} - config</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+<link rel="stylesheet" href="/ui?action=style">
+</head>
+
+<body>    
+
+<div class="container">
+
+
+<form method=get action="/ui">
+
+<input type="hidden" name="action" value="save_config">
+
+YouTube quality:<br>
+<select name=youtube_q>
+<option value=18>360p</option>
+<option selected value=22>720p</option>
+<option value=37>1080p</option>
+</select>
+
+<br><br>
+YouTube region:<br>
+<select name=youtube_r>
+<option selected value="*">*</option>
+<option value=AU>AU</option>
+<option value=BR>BR</option>
+<option value=CA>CA</option>
+<option value=FR>FR</option>
+<option value=DE>DE</option>
+<option value=GB>GB</option>
+<option value=NL>NL</option>
+<option value=HK>HK</option>
+<option value=IE>IE</option>
+<option value=IT>IT</option>
+<option value=JP>JP</option>
+<option value=MX>MX</option>
+<option value=NZ>NZ</option>
+<option value=PL>PL</option>
+<option value=RU>RU</option>
+<option value=KR>KR</option>
+<option value=ES>ES</option>
+<option value=TW>TW</option>
+<option value=US>US</option>
+</select>
+
+<br><br>
+
+ivi.ru quality:<br>
+<select name=ivi_q>
+<option value="MP4-lo">Low</option>
+<option selected value="MP4-hi">High</option>
+</select>
+
+<br><br>
+
+<input class="btn Primary" type=submit value=Send>
+<a class='btn info' href='/ui'>Back</a>
+</form>
+
+</div>
+
+</body>
+</html>

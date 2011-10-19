@@ -5,24 +5,29 @@
 -- 18 - 360p  (MP4,h.264/AVC)
 -- 22 - 720p  (MP4,h.264/AVC)
 -- 37 - 1080p (MP4,h.264/AVC)
-youtube_fmt=22
+cfg.youtube_fmt=22
 
 -- top_rated, top_favorites, most_viewed, most_recent, recently_featured
-function youtube_updatefeed(feed,feed_type)
+function youtube_updatefeed(feed,friendly_name)
     local rc=false
 
     local feed_url=nil
 
+    local region=''
+    if cfg.youtube_region and cfg.youtube_region~='*' then
+        region=cfg.youtube_region..'/'
+    end
+
     if feed:sub(1,1)~='@' then
-        feed_url='http://gdata.youtube.com/feeds/mobile/standardfeeds/'..feed..'?alt=json&start-index=1&max-results=50'
+        feed_url='http://gdata.youtube.com/feeds/mobile/standardfeeds/'..region..feed..'?alt=json&start-index=1&max-results=50'
     else
         feed=feed:sub(2)
         feed_url='http://gdata.youtube.com/feeds/mobile/users/'..feed..'/favorites?alt=json&start-index=1&max-results=50'
     end
 
     local feed_name='youtube_'..feed
-    local feed_m3u_path='./playlists/'..feed_name..'.m3u'
-    local tmp_m3u_path='/tmp/'..feed_name..'.m3u'
+    local feed_m3u_path=cfg.feeds_path..feed_name..'.m3u'
+    local tmp_m3u_path=cfg.tmp_path..feed_name..'.m3u'
 
     local feed_data=http.download(feed_url)
 
@@ -34,7 +39,7 @@ function youtube_updatefeed(feed,feed_type)
         if x then
             local dfd=io.open(tmp_m3u_path,'w+')
             if dfd then
-                dfd:write('#EXTM3U\n')
+                dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=youtube\n')
 
                 for i,j in ipairs(x.feed.entry) do
                     local title=j.title['$t']
@@ -49,7 +54,7 @@ function youtube_updatefeed(feed,feed_type)
                         if tonumber(jj['width'])<480 then logo=jj.url break end
                     end
 
-                    dfd:write('#EXTINF:0 logo=',logo,' type=',feed_type,' plugin=youtube,',title,'\n',url,'\n')
+                    dfd:write('#EXTINF:0 logo=',logo,' ,',title,'\n',url,'\n')
                 end
 
                 dfd:close()
@@ -83,7 +88,7 @@ function youtube_sendurl(youtube_url,range)
 
         local fmt=string.match(youtube_url,'&fmt=(%w+)$')
 
-        if not fmt then fmt=youtube_fmt end
+        if not fmt then fmt=cfg.youtube_fmt end
 
         if stream_map then
             local url_18=nil

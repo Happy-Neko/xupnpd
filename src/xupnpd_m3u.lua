@@ -2,6 +2,30 @@
 -- clark15b@gmail.com
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
+function add_playlists_from_dir(dir_path,playlist,plist)
+
+    local d=util.dir(dir_path)
+
+    if d then
+        local tt={}
+        for i,j in ipairs(playlist) do
+            local path=nil
+            if type(j)=='table' then path=j[1] else path=j end
+            tt[path]=j
+        end
+
+        for i,j in ipairs(d) do
+            if string.find(j,'^[%w_]+%.m3u$') then
+                local fname=dir_path..j
+                if not tt[fname] then
+                    table.insert(plist,fname)
+                    if cfg.debug>0 then print('found unlisted playlist \''..fname..'\'') end
+                end
+            end
+        end
+    end
+end
+
 function reload_playlists()
     playlist_data={}
     playlist_data.name='root'
@@ -10,26 +34,8 @@ function reload_playlists()
 
     local plist=clone_table(playlist)
 
-    local d=util.dir('playlists')
-
-    if d then
-        local tt={}
-        for i,j in ipairs(plist) do
-            local path=nil
-            if type(j)=='table' then path=j[1] else path=j end
-            tt[path]=j
-        end
-
-        for i,j in ipairs(d) do
-            if string.find(j,'^[%w_]+%.m3u$') then
-                local fname='playlists/'..j
-                if not tt[fname] then
-                    table.insert(plist,fname)
-                    if cfg.debug>0 then print('found unlisted playlist \''..fname..'\'') end
-                end
-            end
-        end
-    end
+    add_playlists_from_dir(cfg.playlists_path,playlist,plist)
+    if cfg.feeds_path~=cfg.playlists_path then add_playlists_from_dir(cfg.feeds_path,playlist,plist) end
 
     local groups={}
 
@@ -56,10 +62,19 @@ function reload_playlists()
             local udpxy=cfg.udpxy_url..'/udp/'
 
             for ii,jj in ipairs(pls.elements) do
-
                 jj.url=string.gsub(jj.url,'udp://@',udpxy,1)
 
-                if not jj.type then jj.type=util.getfext(jj.url) end
+                if not jj.type then
+                    if pls.type then
+                        jj.type=pls.type
+                    else
+                        jj.type=util.getfext(jj.url)
+                    end
+                end
+
+                if pls.plugin and not jj.plugin then jj.plugin=pls.plugin end
+
+                if pls.dlna_extras and not jj.dlna_extras then jj.dlna_extras=pls.dlna_extras end
 
                 local m=mime[jj.type]
 

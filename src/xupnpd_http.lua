@@ -106,7 +106,7 @@ function plugin_sendurl_from_cache(url,range)
 
     if c and c.value then
         if cfg.debug>0 then print('Cache URL: '..c.value) end
-        http.sendurl(c.value,1,range)
+        if http.sendurl(c.value,1,range)==0 then return false end
         return true
     end
 
@@ -135,8 +135,10 @@ function http_handler(what,from,port,msg)
 
     if not msg or not msg.reqline then return end
 
+    local ui_main=cfg.ui_path..'xupnpd_ui.lua'
+
     if msg.reqline[2]=='/' then
-        if util.getflen('ui/xupnpd_ui.lua') then
+        if util.getflen(ui_main) then
             msg.reqline[2]='/ui'
         else
             msg.reqline[2]='/index.html'
@@ -157,8 +159,8 @@ function http_handler(what,from,port,msg)
     local from_ip=string.match(from,'(.+):.+')
 
     if f.url=='/ui' then
-        if util.getflen('ui/xupnpd_ui.lua') then
-            dofile('ui/xupnpd_ui.lua')
+        if util.getflen(ui_main) then
+            dofile(ui_main)
             ui_handler(f.args,msg.data or '',from_ip)
         else
             http_send_headers(404)

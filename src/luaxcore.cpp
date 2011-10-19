@@ -33,7 +33,7 @@
 // TODO: TimeSeekRange.dlna.org: npt=1790.044-
 // TODO: sendfile()
 // TODO: Web inteface (path to local media)
-// TODO: YouTube err 80710091 (PS3)
+// TODO: playlist logo
 
 namespace core
 {
@@ -1540,22 +1540,6 @@ static int lua_http_sendurl(lua_State* L)
         return 1;
     }
 
-/*
--> Range: bytes=983040-12697300
-<- Content-Range: bytes 983040-12697300/12697301
-<- Content-Length: 11714261
-
--> Range: bytes=1966080-12697300
-<- Content-Range: bytes 1966080-12697300/12697301
-<- Content-Length: 10731221
-
--> Range: bytes=2949120-12697300
-<- Content-Range: bytes 2949120-12697300/12697301
-<- Content-Length: 9748181
-
-
-*/
-
     fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n",url.urn,url.vhost);
     if(range && *range)
     {
@@ -1723,6 +1707,12 @@ static int lua_http_download(lua_State* L)
     const char* s=lua_tostring(L,1);
     const char* d=lua_gettop(L)>1?lua_tostring(L,2):0;
 
+    size_t post_data_size=0;
+    const char* post_data=lua_gettop(L)>2?lua_tolstring(L,3,&post_data_size):0;
+
+    if(!post_data)
+        post_data="";
+
     int len=0;
     char location[512]="";
 
@@ -1752,7 +1742,17 @@ static int lua_http_download(lua_State* L)
             if(fp)
             {
                 fprintf(fp,
-                    "GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost);
+                    "%s %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n",*post_data?"POST":"GET",
+                        url.urn,url.vhost);
+
+                if(*post_data)
+                    fprintf(fp,"Content-Length: %d\r\n",post_data_size);
+
+                fprintf(fp,"\r\n");
+
+                if(*post_data)
+                    fwrite(post_data,post_data_size,1,fp);
+
                 fflush(fp);
                 int status=0;
                 int content_length=-1;
