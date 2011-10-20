@@ -77,7 +77,3 @@ end
 plugins['vimeo']={}
 plugins.vimeo.sendurl=vimeo_sendurl
 plugins.vimeo.updatefeed=vimeo_updatefeed
-
---vimeo_updatefeed('channel/hd','mp4')
---vimeo_updatefeed('channel/hdxs','mp4')
---vimeo_updatefeed('channel/mtb','mp4')

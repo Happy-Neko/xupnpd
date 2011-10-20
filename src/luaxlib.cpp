@@ -505,7 +505,7 @@ static int lua_m3u_parse(lua_State* L)
                     p+=sizeof(tag_m3u)-1;
                     while(*p && *p==' ')
                         p++;
-                    lua_m3u_parse_track_ext(L,p,2);
+                    lua_m3u_parse_track_ext(L,p,-5);
                 }                
             }else
             {

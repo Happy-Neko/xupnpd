@@ -100,9 +100,11 @@ end
 
 --store to cache
 function cache_store(k,v)
-    if cache[k] then cache[k].value=v return end
-
     local time=os.time()
+
+    local cc=cache[k]
+
+    if cc then cc.value=v cc.time=time return end
 
     if cache_size>=cfg.cache_size then
         local min_k=nil

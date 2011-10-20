@@ -75,7 +75,6 @@ function reload_playlists()
                 if pls.plugin and not jj.plugin then jj.plugin=pls.plugin end
 
                 if pls.dlna_extras and not jj.dlna_extras then jj.dlna_extras=pls.dlna_extras end
-
                 local m=mime[jj.type]
 
                 if not m then jj.type='mpeg' m=mime[jj.type] end

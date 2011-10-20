@@ -124,5 +124,3 @@ end
 plugins['youtube']={}
 plugins.youtube.sendurl=youtube_sendurl
 plugins.youtube.updatefeed=youtube_updatefeed
-
---youtube_updatefeed('top_rated','mp4')
