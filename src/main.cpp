@@ -33,7 +33,7 @@ int main(int argc,char** argv)
         argv[0]=(char*)p+1;
     }
 
-    const char* root=getenv("ROOT");
+    const char* root=getenv("XUPNPDROOTDIR");
     if(root && *root)
         rc=chdir(root);        
 

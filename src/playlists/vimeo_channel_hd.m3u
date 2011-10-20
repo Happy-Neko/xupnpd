@@ -1,4 +1,8 @@
 #EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/205/675/205675060_200.jpg ,Shobby Shobby Do Yah
+http://vimeo.com/30604075
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/206/514/206514697_200.jpg ,20 Hz
+http://vimeo.com/30668685
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/202/722/202722789_200.jpg ,M83 | Midnight City
 http://vimeo.com/30198629
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/205/751/205751980_200.jpg ,WindMills
@@ -35,7 +39,3 @@ http://vimeo.com/30291111
 http://vimeo.com/21929292
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/201/970/201970000_200.jpg ,Aerostat
 http://vimeo.com/30067977
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/202/416/202416269_200.jpg ,Dynamic Blooms
-http://vimeo.com/30126264
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/201/373/201373097_200.jpg ,Page 23 (English subtitles)
-http://vimeo.com/30016668
