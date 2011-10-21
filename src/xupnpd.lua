@@ -66,10 +66,10 @@ playlist=
 -- feeds list (plugin, feed name, feed type)
 feeds=
 {
-    { 'vimeo',   'channel/hd',   'Vimeo HD Channel' },
-    { 'vimeo',   'channel/hdxs', 'HD Xtreme sports' },
-    { 'vimeo',   'channel/mtb',  'Mountain Bike Channel' },
-    { 'youtube', 'top_rated',    'YouTube Top Rated' },
+    { 'vimeo',   'channel/hd',          'Vimeo HD Channel' },
+    { 'vimeo',   'channel/hdxs',        'HD Xtreme sports' },
+    { 'vimeo',   'channel/mtb',         'Mountain Bike Channel' },
+    { 'youtube', 'channel/top_rated',   'YouTube Top Rated' },
 }
 
 -- log ident, pid file end www root

@@ -18,6 +18,15 @@ function clone_table(t)
     return tt
 end
 
+function split_string(s,d)
+    local t={}
+    d='([^'..d..']+)'
+    for i in string.gmatch(s,d) do
+        table.insert(t,i)
+    end
+    return t
+end
+
 function load_plugins(path,what)
     local d=util.dir(path)
 

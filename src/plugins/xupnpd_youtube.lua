@@ -8,30 +8,65 @@
 cfg.youtube_fmt=22
 cfg.youtube_region='*'
 
--- top_rated, top_favorites, most_viewed, most_recent, recently_featured
--- users/USERNAME/favorites
+youtube_api_url='http://gdata.youtube.com/feeds/mobile/'
+youtube_common='alt=json&start-index=1&max-results=50'  -- &racy=include&restriction=??
+
+
+function youtube_find_playlist(user,playlist)
+    local feed_data=http.download(youtube_api_url..'users/'..user..'/playlists?'..youtube_common)
+
+    if not feed_data then return nil end
+
+    local x=json.decode(feed_data)
+    feed_data=nil
+
+    if not x or not x.feed or not x.feed.entry then return nil end
+
+    for i,j in ipairs(x.feed.entry) do
+        if j.title['$t']==playlist then
+            return string.match(j.id['$t'],'.+/(%w+)$')
+        end
+    end
+
+    return nil
+end
+
+-- username
+-- favorites/username
+-- playlist/username/playlistname
+-- channel/channelname  - top_rated, top_favorites, most_viewed, most_recent, recently_featured
 function youtube_updatefeed(feed,friendly_name)
     local rc=false
 
     local feed_url=nil
+    local feed_urn=nil
+
+    local tfeed=split_string(feed,'/')
 
     local feed_name='youtube_'..string.lower(string.gsub(feed,'/','_'))
 
-    if not string.find(feed,'/',1,true) then
+    if tfeed[1]=='channel' then
         local region=''
-        if cfg.youtube_region and cfg.youtube_region~='*' then
-            region=cfg.youtube_region..'/'
-        end
+        if cfg.youtube_region and cfg.youtube_region~='*' then region=cfg.youtube_region..'/' end
+        feed_urn='standardfeeds/'..region..tfeed[2]..'?'..youtube_common
+    elseif tfeed[1]=='favorites' then
+        feed_urn='users/'..tfeed[2]..'/favorites'..'?'..youtube_common
+    elseif tfeed[1]=='playlist' then
+        local playlist_id=youtube_find_playlist(tfeed[2],tfeed[3])
 
-        feed='standardfeeds/'..region..feed    
+        if not playlist_id then return false end
+
+        feed_urn='playlists/'..playlist_id..'?'..youtube_common
+
+    elseif tfeed[1]=='subscriptions' then
+    else
+        feed_urn='videos?author='..tfeed[1]..'&'..youtube_common
     end
-
-    feed_url='http://gdata.youtube.com/feeds/mobile/'..feed..'?alt=json&start-index=1&max-results=50'
 
     local feed_m3u_path=cfg.feeds_path..feed_name..'.m3u'
     local tmp_m3u_path=cfg.tmp_path..feed_name..'.m3u'
 
-    local feed_data=http.download(feed_url)
+    local feed_data=http.download(youtube_api_url..feed_urn)
 
     if feed_data then
         local x=json.decode(feed_data)
