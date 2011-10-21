@@ -19,6 +19,8 @@ http_mime['png']='image/png'
 http_mime['ico']='image/vnd.microsoft.icon'
 http_mime['mpeg']='video/mpeg'
 http_mime['css']='text/css'
+http_mime['json']='application/json'
+http_mime['js']='application/javascript'
 
 -- http http_error list
 http_err[100]='Continue'

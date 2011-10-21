@@ -413,6 +413,10 @@ static int lua_m3u_parse(lua_State* L)
     {
         lua_newtable(L);
 
+        lua_pushstring(L,"path");
+        lua_pushstring(L,name);
+        lua_rawset(L,-3);
+
         char playlist_name[64]="";
 
         {

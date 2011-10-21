@@ -6,6 +6,8 @@
         <minor>0</minor>
     </specVersion>
     <device>
+        <dlna:X_DLNADOC xmlns:dlna="urn:schemas-dlna-org:device-1-0">DMS-1.50</dlna:X_DLNADOC>
+        <dlna:X_DLNADOC xmlns:dlna="urn:schemas-dlna-org:device-1-0">M-DMS-1.50</dlna:X_DLNADOC>
         <deviceType>urn:schemas-upnp-org:device:MediaServer:1</deviceType>
         <friendlyName>${fname}</friendlyName>
         <manufacturer>${manufacturer}</manufacturer>
@@ -16,6 +18,7 @@
         <modelURL>${url}</modelURL>
         <serialNumber>xupnpd-${version}</serialNumber>
         <UDN>uuid:${uuid}</UDN>
+        <UPC></UPC>
         <iconList>
            <icon>
                 <mimetype>image/png</mimetype>
