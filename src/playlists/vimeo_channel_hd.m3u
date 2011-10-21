@@ -1,4 +1,4 @@
-#EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo logo=http://127.0.0.1:4044/logo_vimeo.jpeg
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/207/525/207525740_200.jpg ,This Isreal
 http://vimeo.com/30861381
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/206/333/206333351_200.jpg ,The Carpenter

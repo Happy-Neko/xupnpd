@@ -8,16 +8,17 @@ services.cms={}
 services.msr={}
 
 function playlist_item_to_xml(id,parent_id,pls)
+    local logo=''
+
+    if pls.logo then logo=string.format('<upnp:albumArtURI dlna:profileID=\"JPEG_TN\">%s</upnp:albumArtURI>',util.xmlencode(pls.logo)) end
+
     if pls.elements then
         return string.format(
-            '<container id=\"%s\" childCount=\"%i\" parentID=\"%s\" restricted=\"true\"><dc:title>%s</dc:title><upnp:class>object.container</upnp:class></container>',
-            id,pls.size or 0,parent_id,util.xmlencode(pls.name))
+            '<container id=\"%s\" childCount=\"%i\" parentID=\"%s\" restricted=\"true\"><dc:title>%s</dc:title><upnp:class>object.container</upnp:class>%s</container>',
+            id,pls.size or 0,parent_id,util.xmlencode(pls.name),logo)
     else
-        local logo=''
         local artist=''
         local url=pls.url or ''
-
-        if pls.logo then logo=string.format('<upnp:albumArtURI dlna:profileID=\"JPEG_TN\">%s</upnp:albumArtURI>',util.xmlencode(pls.logo)) end
 
         if pls.parent then
             if pls.mime[1]==1 then

@@ -1,4 +1,4 @@
-#EXTM3U name="YouTube Top Rated" type=mp4 plugin=youtube
+#EXTM3U name="YouTube Top Rated" type=mp4 plugin=youtube logo=http://127.0.0.1:4044/logo_youtube.jpeg
 #EXTINF:0 logo=http://i.ytimg.com/vi/kffacxfA7G4/1.jpg ,Justin Bieber - Baby ft. Ludacris
 http://www.youtube.com/watch?v=kffacxfA7G4&feature=youtube_gdata
 #EXTINF:0 logo=http://i.ytimg.com/vi/KQ6zr6kCPj8/1.jpg ,LMFAO - Party Rock Anthem ft. Lauren Bennett, GoonRock

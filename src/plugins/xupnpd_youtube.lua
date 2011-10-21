@@ -75,7 +75,7 @@ function youtube_updatefeed(feed,friendly_name)
             local dfd=io.open(tmp_m3u_path,'w+')
 
             if dfd then
-                dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=youtube\n')
+                dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=youtube logo='..www_location..'/logo_youtube.jpeg\n')
 
                 for i,j in ipairs(x.feed.entry) do
                     local title=j.title['$t']

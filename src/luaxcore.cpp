@@ -33,8 +33,6 @@
 // TODO: TimeSeekRange.dlna.org: npt=1790.044-
 // TODO: sendfile()
 // TODO: Web inteface (path to local media, ajax)
-// TODO: playlist logo
-// TODO: YouTube playlists
 // TODO: V Kontakte
 
 namespace core
