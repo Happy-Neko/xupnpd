@@ -11,7 +11,6 @@ cfg.youtube_region='*'
 youtube_api_url='http://gdata.youtube.com/feeds/mobile/'
 youtube_common='alt=json&start-index=1&max-results=50'  -- &racy=include&restriction=??
 
-
 function youtube_find_playlist(user,playlist)
     local feed_data=http.download(youtube_api_url..'users/'..user..'/playlists?'..youtube_common)
 
@@ -31,10 +30,8 @@ function youtube_find_playlist(user,playlist)
     return nil
 end
 
--- username
--- favorites/username
--- playlist/username/playlistname
--- channel/channelname  - top_rated, top_favorites, most_viewed, most_recent, recently_featured
+-- username, favorites/username, playlist/username/playlistname, channel/channelname, search/searchstring
+-- channels: top_rated, top_favorites, most_viewed, most_recent, recently_featured
 function youtube_updatefeed(feed,friendly_name)
     local rc=false
 
@@ -43,7 +40,7 @@ function youtube_updatefeed(feed,friendly_name)
 
     local tfeed=split_string(feed,'/')
 
-    local feed_name='youtube_'..string.lower(string.gsub(feed,'/','_'))
+    local feed_name='youtube_'..string.lower(string.gsub(feed,"[/ \'\"]",'_'))
 
     if tfeed[1]=='channel' then
         local region=''
@@ -58,7 +55,8 @@ function youtube_updatefeed(feed,friendly_name)
 
         feed_urn='playlists/'..playlist_id..'?'..youtube_common
 
-    elseif tfeed[1]=='subscriptions' then
+    elseif tfeed[1]=='search' then
+        feed_urn='videos?vq='..util.urlencode(tfeed[2])..'&'..youtube_common
     else
         feed_urn='videos?author='..tfeed[1]..'&'..youtube_common
     end
