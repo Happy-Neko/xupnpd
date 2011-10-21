@@ -21,7 +21,7 @@ function vimeo_updatefeed(feed,friendly_name)
         if x then
             local dfd=io.open(tmp_m3u_path,'w+')
             if dfd then
-                dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=vimeo logo='..www_location..'/logo_vimeo.jpeg\n')
+                dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=vimeo\n')
 
                 for i,j in ipairs(x) do
                     dfd:write('#EXTINF:0 logo=',j.thumbnail_medium,' ,',j.title,'\n',j.url,'\n')

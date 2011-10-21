@@ -1,4 +1,4 @@
-#EXTM3U name="Mountain Bike Channel" type=mp4 plugin=vimeo logo=http://127.0.0.1:4044/logo_vimeo.jpeg
+#EXTM3U name="Mountain Bike Channel" type=mp4 plugin=vimeo
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/197/005/19700592_200.jpg ,BOOTLEG
 http://vimeo.com/5701809
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/202/130/202130719_200.jpg ,3 Minute Gaps iTunes Release

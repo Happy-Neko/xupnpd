@@ -1,4 +1,4 @@
-#EXTM3U name="HD Xtreme sports" type=mp4 plugin=vimeo logo=http://127.0.0.1:4044/logo_vimeo.jpeg
+#EXTM3U name="HD Xtreme sports" type=mp4 plugin=vimeo
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/194/195/194195591_200.jpg ,Raiffeisen Lausanne Street Bowl Contest 2011
 http://vimeo.com/29032796
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/191/431/191431967_200.jpg ,Handel
