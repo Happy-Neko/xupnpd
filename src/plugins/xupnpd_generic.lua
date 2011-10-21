@@ -4,9 +4,9 @@
 
 function generic_updatefeed(feed,friendly_name)
 
-    local feed_name=string.match(feed,'.+/(.+)$')
-    local feed_path=cfg.feeds_path..feed_name
-    local tmp_path=cfg.tmp_path..feed_name
+    local feed_name=string.match(feed,'.+/(.+).m3u$')
+    local feed_path=cfg.feeds_path..feed_name..'.m3u'
+    local tmp_path=cfg.tmp_path..feed_name..'.m3u'
 
     if http.download(feed,tmp_path)<=0 then
         return false

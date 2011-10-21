@@ -2,12 +2,12 @@
 -- clark15b@gmail.com
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
--- feed example: 'channel/hd'
+-- username, channel/channelname, group/groupname, album/album_id
 function vimeo_updatefeed(feed,friendly_name)
     local rc=false
 
     local feed_url='http://vimeo.com/api/v2/'..feed..'/videos.json'
-    local feed_name='vimeo_'..string.gsub(feed,'/','_',1)
+    local feed_name='vimeo_'..string.gsub(feed,'/','_')
     local feed_m3u_path=cfg.feeds_path..feed_name..'.m3u'
     local tmp_m3u_path=cfg.tmp_path..feed_name..'.m3u'
 

@@ -1,4 +1,8 @@
 #EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/207/525/207525740_200.jpg ,This Isreal
+http://vimeo.com/30861381
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/206/333/206333351_200.jpg ,The Carpenter
+http://vimeo.com/30698649
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/205/675/205675060_200.jpg ,Shobby Shobby Do Yah
 http://vimeo.com/30604075
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/206/514/206514697_200.jpg ,20 Hz
@@ -35,7 +39,3 @@ http://vimeo.com/30302943
 http://vimeo.com/30271240
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/203/394/203394969_200.jpg ,Vermont.
 http://vimeo.com/30291111
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/141/646/141646156_200.jpg ,BLACK
-http://vimeo.com/21929292
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/201/970/201970000_200.jpg ,Aerostat
-http://vimeo.com/30067977

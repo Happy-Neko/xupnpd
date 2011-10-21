@@ -69,7 +69,7 @@ feeds=
     { 'vimeo',   'channel/hd',   'Vimeo HD Channel' },
     { 'vimeo',   'channel/hdxs', 'HD Xtreme sports' },
     { 'vimeo',   'channel/mtb',  'Mountain Bike Channel' },
-    { 'youtube', 'top_rated',    'YouTube Top Rated' }
+    { 'youtube', 'top_rated',    'YouTube Top Rated' },
 }
 
 -- log ident, pid file end www root

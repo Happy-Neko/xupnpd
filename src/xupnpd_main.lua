@@ -247,7 +247,7 @@ http.timeout(cfg.http_timeout)
 
 -- start feeds update system
 if cfg.feeds_update_interval>0 then
-    core.timer(5,'update_feeds')
+    core.timer(3,'update_feeds')
 end
 
 core.mainloop()

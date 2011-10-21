@@ -6,26 +6,28 @@
 -- 22 - 720p  (MP4,h.264/AVC)
 -- 37 - 1080p (MP4,h.264/AVC)
 cfg.youtube_fmt=22
+cfg.youtube_region='*'
 
 -- top_rated, top_favorites, most_viewed, most_recent, recently_featured
+-- users/USERNAME/favorites
 function youtube_updatefeed(feed,friendly_name)
     local rc=false
 
     local feed_url=nil
 
-    local region=''
-    if cfg.youtube_region and cfg.youtube_region~='*' then
-        region=cfg.youtube_region..'/'
+    local feed_name='youtube_'..string.lower(string.gsub(feed,'/','_'))
+
+    if not string.find(feed,'/',1,true) then
+        local region=''
+        if cfg.youtube_region and cfg.youtube_region~='*' then
+            region=cfg.youtube_region..'/'
+        end
+
+        feed='standardfeeds/'..region..feed    
     end
 
-    if feed:sub(1,1)~='@' then
-        feed_url='http://gdata.youtube.com/feeds/mobile/standardfeeds/'..region..feed..'?alt=json&start-index=1&max-results=50'
-    else
-        feed=feed:sub(2)
-        feed_url='http://gdata.youtube.com/feeds/mobile/users/'..feed..'/favorites?alt=json&start-index=1&max-results=50'
-    end
+    feed_url='http://gdata.youtube.com/feeds/mobile/'..feed..'?alt=json&start-index=1&max-results=50'
 
-    local feed_name='youtube_'..feed
     local feed_m3u_path=cfg.feeds_path..feed_name..'.m3u'
     local tmp_m3u_path=cfg.tmp_path..feed_name..'.m3u'
 
@@ -36,8 +38,9 @@ function youtube_updatefeed(feed,friendly_name)
 
         feed_data=nil
 
-        if x then
+        if x and x.feed and x.feed.entry then
             local dfd=io.open(tmp_m3u_path,'w+')
+
             if dfd then
                 dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=youtube\n')
 
