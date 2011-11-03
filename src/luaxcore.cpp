@@ -33,7 +33,13 @@
 // TODO: TimeSeekRange.dlna.org: npt=1790.044-
 // TODO: sendfile()
 // TODO: Web inteface (path to local media, ajax)
-// TODO: V Kontakte
+// TODO: dev.xml as Twonky
+// TODO: XBox 360
+// TODO: mpeg profile: mpeg_ps_pal => mpeg1 ? (LG)
+// TODO: V Kontakte, tvigle.ru, narkom.su, kinobaza.tv
+// TODO: RTSP/RTP, RTMP ?
+// TODO: builtin udpxy?
+// TODO: mpeg_ts_sd for IPTV ?
 
 namespace core
 {
@@ -1646,6 +1652,55 @@ static int lua_http_sendurl(lua_State* L)
     return 1;
 }
 
+static int lua_http_sendmcasturl(lua_State* L)
+{
+    const char* addr=lua_tostring(L,1);
+    const char* iface=lua_gettop(L)>1?lua_tostring(L,2):0;
+    int dgsize=lua_gettop(L)>2?lua_tointeger(L,3):0;
+
+    if(dgsize<=0)
+        dgsize=4096;
+
+    int rc=0;
+
+    if(!addr || !core::http_client_fp)
+        { lua_pushinteger(L,rc); return 1; }
+
+    alarm(core::http_timeout);
+
+
+    mcast::mcast_grp grp;
+    grp.init(addr,iface,1,1);
+
+    int fd=grp.join();
+
+    if(fd!=-1)
+    {
+        char* buf=(char*)malloc(dgsize);
+
+        if(buf)
+        {
+            int n;
+            while((n=recvfrom(fd,buf,dgsize,0,0,0))>=0)
+            {
+                alarm(core::http_timeout);
+
+                // TODO: extract payload and send to core::http_client_fp
+            }
+
+            free(buf);
+        }
+
+        grp.leave(fd);
+    }
+
+    alarm(0);
+
+    lua_pushinteger(L,rc);
+
+    return 1;
+}
+
 
 static int lua_http_flush(lua_State* L)
 {
@@ -1902,6 +1957,7 @@ int luaopen_luaxcore(lua_State* L)
         {"sendfile",lua_http_sendfile},
         {"sendtfile",lua_http_sendtfile},
         {"sendurl",lua_http_sendurl},
+        {"sendmcasturl",lua_http_sendmcasturl},
         {"flush",lua_http_flush},
         {"notify",lua_http_notify},
         {"download",lua_http_download},

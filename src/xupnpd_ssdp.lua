@@ -86,7 +86,12 @@ events["ssdp_timer"]=function (what,sec) ssdp_alive() core.timer(sec,what) end
 ssdp.init(cfg.ssdp_interface,1,cfg.ssdp_loop,cfg.debug)   -- interface, ttl, allow_loop, debug (0,1 or 2)
 
 www_location='http://'..ssdp.interface()..':'..cfg.http_port
-ssdp_location=www_location..'/dev.xml'
+
+if cfg.xbox360==true then
+    ssdp_location=www_location..'/wmc.xml'
+else
+    ssdp_location=www_location..'/dev.xml'
+end
 
 if not cfg.uuid then ssdp_uuid=core.uuid() else ssdp_uuid=cfg.uuid end
 

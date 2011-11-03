@@ -14,8 +14,8 @@ function playlist_item_to_xml(id,parent_id,pls)
 
     if pls.elements then
         return string.format(
-            '<container id=\"%s\" childCount=\"%i\" parentID=\"%s\" restricted=\"true\"><dc:title>%s</dc:title><upnp:class>object.container</upnp:class>%s</container>',
-            id,pls.size or 0,parent_id,util.xmlencode(pls.name),logo)
+            '<container id=\"%s\" childCount=\"%i\" parentID=\"%s\" restricted=\"true\"><dc:title>%s</dc:title><upnp:class>%s</upnp:class>%s</container>',
+            id,pls.size or 0,parent_id,util.xmlencode(pls.name),upnp_class.container,logo)
     else
         local artist=''
         local url=pls.url or ''

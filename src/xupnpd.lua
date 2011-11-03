@@ -35,6 +35,9 @@ cfg.http_timeout=15
 -- 'cfg.dlna_extras' enables DLNA extras
 cfg.dlna_extras=true
 
+-- XBox360 compatible mode
+cfg.xbox360=false
+
 -- enables UPnP/DLNA notify when reload playlist
 cfg.dlna_notify=true
 
@@ -52,6 +55,9 @@ cfg.cache_size=8
 
 -- url cache item ttl (sec)
 cfg.cache_ttl=900
+
+-- default mime type (mpeg, mpeg2, mp2t)
+cfg.default_mime_type='mp2t'
 
 -- feeds update interval (seconds, 0 - disabled)
 cfg.feeds_update_interval=0
@@ -73,7 +79,7 @@ feeds=
 }
 
 -- log ident, pid file end www root
-cfg.version='1.0-rc1'
+cfg.version='1.0-rc2'
 cfg.log_ident=arg[1] or 'xupnpd'
 cfg.pid_file='/var/run/'..cfg.log_ident..'.pid'
 cfg.www_root='./www/'

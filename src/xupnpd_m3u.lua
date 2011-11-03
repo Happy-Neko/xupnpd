@@ -59,10 +59,12 @@ function reload_playlists()
         if pls then
             if cfg.debug>0 then print('playlist \''..pls.name..'\'') end
 
-            local udpxy=cfg.udpxy_url..'/udp/'
+            local udpxy=nil
+            if cfg.udpxy_url then udpxy=cfg.udpxy_url..'/udp/' end
 
             for ii,jj in ipairs(pls.elements) do
-                jj.url=string.gsub(jj.url,'udp://@',udpxy,1)
+
+                if udpxy then jj.url=string.gsub(jj.url,'udp://@',udpxy,1) end
 
                 if not jj.type then
                     if pls.type then
@@ -77,7 +79,7 @@ function reload_playlists()
                 if pls.dlna_extras and not jj.dlna_extras then jj.dlna_extras=pls.dlna_extras end
                 local m=mime[jj.type]
 
-                if not m then jj.type='mpeg' m=mime[jj.type] end
+                if not m then jj.type=cfg.default_mime_type m=mime[jj.type] end
 
                 jj.mime=m
 

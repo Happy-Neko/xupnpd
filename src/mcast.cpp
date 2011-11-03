@@ -190,6 +190,9 @@ mcast::mcast_grp::mcast_grp(const char* addr,const char* iface,int ttl,int loop)
 
 int mcast::mcast_grp::init(const char* addr,const char* iface,int ttl,int loop)
 {
+    if(!iface)
+        iface="";
+
     mcast_ttl=ttl;
     mcast_loop=loop;
 
@@ -223,7 +226,7 @@ int mcast::mcast_grp::init(const char* addr,const char* iface,int ttl,int loop)
         if(isalpha(*p))
             { if_by_name=1; break; }
 
-    if(iface && *iface)
+    if(*iface)
     {
         if(if_by_name)
         {
