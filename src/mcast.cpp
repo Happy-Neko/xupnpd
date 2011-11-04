@@ -302,7 +302,6 @@ int mcast::mcast_grp::join(void) const
         fprintf(verb_fp,"interface '%s'\n",mcast_if_sin.sin_addr.s_addr==INADDR_ANY?"any":inet_ntoa(mcast_if_sin.sin_addr));
     }
 
-
     return -1;
 }
 

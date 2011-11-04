@@ -1668,7 +1668,6 @@ static int lua_http_sendmcasturl(lua_State* L)
 
     alarm(core::http_timeout);
 
-
     mcast::mcast_grp grp;
     grp.init(addr,iface,1,1);
 
@@ -1680,12 +1679,33 @@ static int lua_http_sendmcasturl(lua_State* L)
 
         if(buf)
         {
-            int n;
-            while((n=recvfrom(fd,buf,dgsize,0,0,0))>=0)
-            {
-                alarm(core::http_timeout);
+            fflush(core::http_client_fp);
 
-                // TODO: extract payload and send to core::http_client_fp
+            int pnum=0;
+
+            int dfd=fileno(core::http_client_fp);
+
+            int n;
+
+            sockaddr_in sin;
+            socklen_t sin_len=sizeof(sin);
+
+            rc=1;
+
+            while((n=recvfrom(fd,buf,dgsize,0,(sockaddr*)&sin,&sin_len))>0)
+            {
+                // TODO: extract payload from RTP
+
+                if(mcast::verb_fp && !pnum)
+                {
+                    fprintf(mcast::verb_fp,"multicast source: %s:%i\n",inet_ntoa(sin.sin_addr),ntohs(sin.sin_port));
+                    pnum++;
+                }  
+
+                if(write(dfd,buf,n)!=n)
+                    break;
+                else        
+                    alarm(core::http_timeout);
             }
 
             free(buf);

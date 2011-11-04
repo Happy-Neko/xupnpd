@@ -291,7 +291,11 @@ function http_handler(what,from,port,msg)
                     plugins[pls.plugin].sendurl(pls.url,msg.range)
                 else
                     http.send('Accept-Ranges: none\r\n\r\n')
-                    http.sendurl(pls.url)
+                    if string.find(pls.url,'^udp://@') then
+                        http.sendmcasturl(string.sub(pls.url,8),cfg.mcast_interface,2048)
+                    else
+                        http.sendurl(pls.url)
+                    end
                 end
             end
 

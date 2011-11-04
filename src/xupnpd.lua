@@ -22,8 +22,11 @@ cfg.embedded=false
 -- 0-off, 1-basic, 2-messages
 cfg.debug=1
 
--- 'udpxy' url for multicast playlists (udp://@...)
-cfg.udpxy_url='http://192.168.1.1:4022'
+-- external 'udpxy' url for multicast playlists (udp://@...)
+--cfg.udpxy_url='http://192.168.1.1:4022'
+
+-- downstream interface for builtin multicast proxy (comment 'cfg.udpxy_url' for processing 'udp://@...' playlists)
+cfg.mcast_interface='eth1'
 
 -- 'cfg.proxy' enables proxy for injection DLNA headers to stream
 -- 0-off, 1-radio, 2-radio/TV
