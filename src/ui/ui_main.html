@@ -1,15 +1,5 @@
-<html>
-<head>
-<title>${fname}</title>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-<link rel="stylesheet" href="/ui?action=style">
-</head>
-
-<body>    
-
-<div class="container">
-
 <h3>${fname}</h3>
+
 UUID: ${uuid}<br>
 Multicast interface: ${interface}<br>
 WWW port: ${port}<br>
@@ -17,21 +7,7 @@ Model: <a href=${url}>${name}-${version}</a><br>
 Manufacturer: ${manufacturer}<br>
 <i>${description}</i><br><br>
 
-<a class='btn Primary' href='/ui?action=config'>Config</a>
-<a class='btn Primary' href='/ui?action=reload'>Reload</a>
-<a class='btn Primary' href='/ui?action=feeds'>Feeds</a>
-<a class='btn Primary' href='/ui?action=status'>Status</a>
-<a class='btn Primary' href='/ui?action=playlist'>Playlists</a><br><br>
-
-<br><br>
-<p style='font-size: 8pt' align=left>
-<img src='/icon-48x48.png'></img><br>
-<b>License</b>: <a href='http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt'>GPL</a><br>
-Copyright (C) 2011 Anton Burdinuk<br>
-E-Mail: <a href='mailto:clark15b@gmail.com'>clark15b@gmail.com</a><br>
-</p>
-
-</div>
-
-</body>
-</html>
+<a class='btn Primary' href='/ui/playlists'>Playlists</a>
+<a class='btn Primary' href='/ui/downloads'>Downloads</a>
+<a class='btn Primary' href='/ui/config'>Config</a>
+<a class='btn Primary' href='/ui/status'>Status</a><br>

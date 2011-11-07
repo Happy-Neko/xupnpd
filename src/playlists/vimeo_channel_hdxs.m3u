@@ -1,4 +1,16 @@
 #EXTM3U name="HD Xtreme sports" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/213/249/213249498_200.jpg ,BrOADER TV ep.130: The Parkflicks #3
+http://vimeo.com/31616026
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/213/237/213237845_200.jpg ,BrOADER TV ep.129: Moreboards Stubai Premiere 2011
+http://vimeo.com/31614244
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/213/226/213226011_200.jpg ,BrOADER TV ep.128: The Parkflicks #1
+http://vimeo.com/31612232
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/213/212/213212674_200.jpg ,BrOADER TV ep.127: Moreboards Stubai Premiere 2011 Teaser 3
+http://vimeo.com/31611143
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/213/132/213132953_200.jpg ,BrOADER TV ep.126: Moreboards Stubai Premiere 2011 Teaser 2
+http://vimeo.com/31601031
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/213/128/213128993_200.jpg ,BrOADER TV ep.125: Moreboards Stubai Premiere 2011 Teaser 1
+http://vimeo.com/31600589
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/194/195/194195591_200.jpg ,Raiffeisen Lausanne Street Bowl Contest 2011
 http://vimeo.com/29032796
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/191/431/191431967_200.jpg ,Handel
@@ -27,15 +39,3 @@ http://vimeo.com/26312940
 http://vimeo.com/26261256
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/170/788/170788749_200.jpg ,Nobres em HD
 http://vimeo.com/25896434
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/164/886/164886528_200.jpg ,LOW
-http://vimeo.com/25081024
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/158/200/158200559_200.jpg ,BrOADER TV ep.124: Roxy Snowcamp
-http://vimeo.com/24183942
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/157/063/157063990_200.jpg ,Korea day 4 part 2
-http://vimeo.com/23901138
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/155/896/155896682_200.jpg ,BrOADER TV ep.123: Keep Snowboarding
-http://vimeo.com/23875119
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/153/580/153580479_200.jpg ,"BREATHE"
-http://vimeo.com/23569694
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/152/955/152955764_200.jpg ,cross rochehaut-hasselt
-http://vimeo.com/23487490

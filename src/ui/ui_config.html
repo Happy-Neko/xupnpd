@@ -1,21 +1,9 @@
-<html>
-<head>
-<title>${fname} - config</title>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
-<link rel="stylesheet" href="/ui?action=style">
-</head>
-
-<body>    
-
-<div class="container">
-
-
-<form method=get action="/ui">
-
-<input type="hidden" name="action" value="save_config">
+<h3>Config</h3>
+<br>
+<form method=get action="/ui/apply">
 
 YouTube quality:<br>
-<select name=youtube_q>
+<select name=youtube_q id=youtube_q>
 <option value=18>360p</option>
 <option selected value=22>720p</option>
 <option value=37>1080p</option>
@@ -23,7 +11,7 @@ YouTube quality:<br>
 
 <br><br>
 YouTube region:<br>
-<select name=youtube_r>
+<select name=youtube_r id=youtube_r>
 <option selected value="*">*</option>
 <option value=AU>AU</option>
 <option value=BR>BR</option>
@@ -49,18 +37,31 @@ YouTube region:<br>
 <br><br>
 
 ivi.ru quality:<br>
-<select name=ivi_q>
+<select name=ivi_q id=ivi_q>
 <option value="MP4-lo">Low</option>
 <option selected value="MP4-hi">High</option>
 </select>
 
-<br><br>
+<br><br><br>
 
-<input class="btn Primary" type=submit value=Send>
+<input class="btn Primary" type=submit value=Apply>
 <a class='btn info' href='/ui'>Back</a>
 </form>
 
-</div>
-
-</body>
-</html>
+<script>
+    function set_select_selected(id,value)
+    {
+        var z=document.getElementById(id)
+        for(i=0;i<z.length;i++)
+        {
+            if(z.options[i].value==value)
+            {
+                z.options[i].selected=true;
+                break;
+            }
+        }
+    }
+    set_select_selected('youtube_q','${youtube_fmt}');
+    set_select_selected('youtube_r','${youtube_region}');
+    set_select_selected('ivi_q','${ivi_fmt}');
+</script>

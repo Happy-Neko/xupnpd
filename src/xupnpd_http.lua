@@ -161,10 +161,10 @@ function http_handler(what,from,port,msg)
 
     local from_ip=string.match(from,'(.+):.+')
 
-    if f.url=='/ui' then
+    if string.find(f.url,'^/ui/?') then
         if util.getflen(ui_main) then
             dofile(ui_main)
-            ui_handler(f.args,msg.data or '',from_ip)
+            ui_handler(f.args,msg.data or '',from_ip,f.url)
         else
             http_send_headers(404)
         end
