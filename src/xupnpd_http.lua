@@ -21,6 +21,7 @@ http_mime['mpeg']='video/mpeg'
 http_mime['css']='text/css'
 http_mime['json']='application/json'
 http_mime['js']='application/javascript'
+http_mime['m3u']='audio/x-mpegurl'
 
 -- http http_error list
 http_err[100]='Continue'

@@ -9,7 +9,11 @@ function ui_handler(args,data,ip)
         return
     end
 
-    http_send_headers(200,'html')
+    if args.action=='download' then
+        http_send_headers(200,'m3u')
+    else
+        http_send_headers(200,'html')
+    end
 
     if not args.action then
         http.sendtfile(cfg.ui_path..'ui_main.html',ui_vars)
@@ -90,6 +94,18 @@ function ui_handler(args,data,ip)
    
             ui_vars.playlists=show_playlists
             http.sendtfile(cfg.ui_path..'ui_playlist.html',ui_vars)   
+        elseif args.action=='playlist2' then
+
+            function show_playlists()
+                http.send('<table>\n')
+                for i,j in ipairs(playlist_data.elements) do
+                    http.send(string.format('<tr><td><a href=\'/ui?action=download&id=%s\'>%s</a></td></tr>\n',i,j.name))
+                end
+                http.send('</table>\n')
+            end
+   
+            ui_vars.playlists=show_playlists
+            http.sendtfile(cfg.ui_path..'ui_playlist.html',ui_vars)   
         elseif args.action=='show' then
             ui_vars.return_url='/ui?action=playlist'
 
@@ -115,6 +131,25 @@ function ui_handler(args,data,ip)
                 http.sendtfile(cfg.ui_path..'ui_show.html',ui_vars)
             else
                 http.sendtfile(cfg.ui_path..'ui_error.html',ui_vars)
+            end
+        elseif args.action=='download' then
+            local pls=playlist_data.elements[tonumber(args.id)]
+
+            if pls then
+                http.send('#EXTM3U\n')
+                for i,j in ipairs(pls.elements) do
+                    local url=j.url or ''
+                    if j.path then
+                        url=www_location..'/stream?s='..util.urlencode(j.objid)
+                    else
+                        if cfg.proxy>0 then
+                            if cfg.proxy>1 or pls.mime[1]==2 then
+                                url=www_location..'/proxy?s='..util.urlencode(j.objid)
+                            end
+                        end
+                    end
+                    http.send('#EXTINF:0,'..j.name..'\n'..url..'\n')
+                end
             end
         elseif args.action=='remove' then
             ui_vars.return_url='/ui?action=playlist'
