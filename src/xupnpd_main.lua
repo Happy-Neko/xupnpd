@@ -243,6 +243,8 @@ events['unsubscribe']=unsubscribe
 events['update_feeds']=update_feeds
 events['status']=set_child_status
 events['config']=function() load_plugins(cfg.config_path,'config') cache={} cache_size=0 end
+events['remove_feed']=function(id) table.remove(feeds,tonumber(id)) end
+events['add_feed']=function(plugin,feed,name) table.insert(feeds,{[1]=plugin,[2]=feed,[3]=name}) end
 
 
 if cfg.embedded==true then print=function () end end

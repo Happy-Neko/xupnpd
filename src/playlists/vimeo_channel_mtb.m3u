@@ -1,6 +1,10 @@
 #EXTM3U name="Mountain Bike Channel" type=mp4 plugin=vimeo
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/197/005/19700592_200.jpg ,BOOTLEG
 http://vimeo.com/5701809
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/214/174/214174314_200.jpg ,INTO THIN AIR
+http://vimeo.com/31503776
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/214/061/214061529_200.jpg ,Mad Hatters do Mont Ventoux
+http://vimeo.com/31735101
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/202/130/202130719_200.jpg ,3 Minute Gaps iTunes Release
 http://vimeo.com/30118953
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/198/509/198509283_200.jpg ,Giant Maestro Suspension
@@ -35,7 +39,3 @@ http://vimeo.com/20306725
 http://vimeo.com/19228414
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/110/000/110000543_200.jpg ,Erster Eindruck: Alutech Fanes Enduro Prototyp
 http://vimeo.com/17646579
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/107/734/107734519_200.jpg ,Kona Aggy's Journey
-http://vimeo.com/17358243
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/909/863/90986343_200.jpg ,Where The Trail Ends
-http://vimeo.com/15179993

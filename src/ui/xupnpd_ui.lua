@@ -80,9 +80,38 @@ function ui_playlists()
     http.send('<br><h3>Upload *.m3u file</h3>')
     http.send('<form method=post action="/ui/upload" enctype="multipart/form-data">')
     http.send('<input type=file name=m3ufile>')
-    http.send('<input class="btn Primary" type=submit value=Send>')
+    http.send('<input class="btn primary" type=submit value=Send>')
     http.send('</form><hr>')
-    http.send('<br><a class="btn Primary" href="/ui/reload">Reload</a> <a class="btn Primary" href="/ui/feeds">Reload feeds</a> <a class="btn info" href="/ui">Back</a>')
+    http.send('<br><a class="btn primary" href="/ui/reload">Reload</a> <a class="btn primary" href="/ui/reload_feeds?return_url=/ui/playlists">Reload feeds</a> <a class="btn info" href="/ui">Back</a>')
+end
+
+function ui_feeds()
+    http.send('<h3>Feeds</h3>')
+    http.send('<br><table>')
+
+    for i,j in ipairs(feeds) do
+        http.send(string.format('<tr><td>%s [<a href="/ui/remove_feed?id=%s">x</a>]</td></tr>\n',j[3],i))
+    end
+
+    http.send('</table>')
+
+    http.send('<h3>Add feed</h3>')
+    http.send('<form method=get action="/ui/add_feed">')
+
+    http.send('<div class="row"><div class="span8">')
+
+    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="generic">Generic</option></select></div></div><br>')
+
+    http.send('<div class="row"><div class="span2">Feed</div><div class="span4"><input name="feed"></div></div><br>')
+
+    http.send('<div class="row"><div class="span2">Description</div><div class="span4"><input name="name"></div></div><br>')
+
+    http.send('</div><div class="span8"><b>Vimeo</b>: username, channel/channelname, group/groupname, album/album_id;<br><b>YouTube</b>: username, favorites/username, playlist/username/playlistname, channel/channelname, search/searchstring;<br><b>Generic</b>: m3u_url;<hr><b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured.</div></div>')
+
+    http.send('<input class="btn primary" type=submit value=Add>')
+    http.send('</form><hr>')
+
+    http.send('<br><a class="btn primary" href="/ui/save_feeds">Save</a> <a class="btn primary" href="/ui/reload_feeds?return_url=/ui/feeds">Reload feeds</a> <a class="btn info" href="/ui">Back</a>')
 end
 
 function ui_show()
@@ -115,6 +144,50 @@ function ui_remove()
     http.send('<br><a class="btn info" href="/ui/playlists">Back</a>')
 end
 
+function ui_remove_feed()
+    if ui_args.id and feeds[tonumber(ui_args.id)] then
+        core.sendevent('remove_feed',ui_args.id)
+        http.send('<h3>OK</h3>')
+    else
+        http.send('<h3>Fail</h3>')
+    end
+
+    http.send('<br><a class="btn info" href="/ui/feeds">Back</a>')
+end
+
+function ui_add_feed()
+    if ui_args.plugin and ui_args.feed then
+        if not ui_args.name or string.len(ui_args.name)==0 then ui_args.name=string.gsub(ui_args.feed,'/',' ') end
+        core.sendevent('add_feed',ui_args.plugin,ui_args.feed,ui_args.name)
+        http.send('<h3>OK</h3>')
+    else
+        http.send('<h3>Fail</h3>')
+    end
+
+    http.send('<br><a class="btn info" href="/ui/feeds">Back</a>')
+end
+
+function ui_save_feeds()
+
+    local f=io.open(cfg.config_path..'feeds.lua','w')
+    if f then
+        f:write('feeds=\n{\n')
+
+        for i,j in ipairs(feeds) do
+            f:write(string.format('   { "%s", "%s", "%s" },\n',j[1],j[2],j[3]))
+        end
+
+        f:write('}\n')
+
+        f:close()
+        http.send('<h3>OK</h3>')
+    else
+        http.send('<h3>Fail</h3>')
+    end
+
+    http.send('<br><a class="btn info" href="/ui/feeds">Back</a>')
+end
+
 function ui_reload()
     core.sendevent('reload')
     http.send('<h3>OK</h3>')
@@ -124,7 +197,7 @@ end
 function ui_reload_feeds()
     update_feeds_async()
     http.send('<h3>OK</h3>')
-    http.send('<br><a class="btn info" href="/ui/playlists">Back</a>')
+    http.send('<br><a class="btn info" href="'.. (ui_args.return_url or '/ui') ..'">Back</a>')
 end
 
 function ui_config()
@@ -219,10 +292,14 @@ ui_actions=
     ['error']           = { 'xupnpd - error', ui_error },
     ['downloads']       = { 'xupnpd - downloads', ui_downloads },
     ['playlists']       = { 'xupnpd - playlists', ui_playlists },
+    ['feeds']           = { 'xupnpd - feeds', ui_feeds },
     ['show']            = { 'xupnpd - show', ui_show },
     ['remove']          = { 'xupnpd - remove', ui_remove },
+    ['remove_feed']     = { 'xupnpd - remove feed', ui_remove_feed },
     ['reload']          = { 'xupnpd - reload', ui_reload },
-    ['feeds']           = { 'xupnpd - reload feeds', ui_reload_feeds },
+    ['reload_feeds']    = { 'xupnpd - reload feeds', ui_reload_feeds },
+    ['save_feeds']      = { 'xupnpd - save feeds', ui_save_feeds },
+    ['add_feed']        = { 'xupnpd - add feed', ui_add_feed },
     ['config']          = { 'xupnpd - config', ui_config },
     ['status']          = { 'xupnpd - status', ui_status },
     ['kill']            = { 'xupnpd - kill', ui_kill },

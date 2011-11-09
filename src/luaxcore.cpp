@@ -30,16 +30,12 @@
 
 // TODO: cache to proxy?
 // TODO: local media tree (events!)?
-// TODO: TimeSeekRange.dlna.org: npt=1790.044-
 // TODO: sendfile()
-// TODO: Web inteface (path to local media, ajax)
-// TODO: dev.xml as Twonky
 // TODO: XBox 360
-// TODO: mpeg profile: mpeg_ps_pal => mpeg1 ? (LG)
 // TODO: V Kontakte, tvigle.ru, narkom.su, kinobaza.tv
-// TODO: RTSP/RTP, RTMP ?
-// TODO: builtin udpxy?
-// TODO: mpeg_ts_sd for IPTV ?
+// TODO: RTSP/RTP, RTMP
+// TODO: RTP to builtin udpxy
+// TODO: SO_SNDBUF
 
 namespace core
 {

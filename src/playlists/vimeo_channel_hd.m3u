@@ -1,4 +1,12 @@
 #EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/177/001/177001259_200.jpg ,DefectLeak 『Awaking』　music video
+http://vimeo.com/26754518
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/210/029/210029299_200.jpg ,The Reformed Troglodyte
+http://vimeo.com/31191754
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/204/313/204313094_200.jpg ,Au Loin - Le film
+http://vimeo.com/30409329
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/214/219/214219820_200.jpg ,"The Game of Things" by Cristian Straub for Ethel Vaughn
+http://vimeo.com/31112081
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/167/927/167927400_200.jpg ,Tourist Trophy, Isle of Man
 http://vimeo.com/25338900
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/211/555/211555219_200.jpg ,Amon Tobin - Calculate
@@ -31,11 +39,3 @@ http://vimeo.com/31202391
 http://vimeo.com/31074237
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/206/648/206648331_200.jpg ,French Movie
 http://vimeo.com/30741093
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/205/165/205165305_200.jpg ,2011: A Space Adventure
-http://vimeo.com/30395151
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/199/766/199766812_200.jpg ,Mimi Goese & Ben Neill - Cusp
-http://vimeo.com/29781924
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/209/100/209100335_200.jpg ,Booths & Bodies: The life and work of Anthony Vizzari
-http://vimeo.com/31064478
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/208/919/208919360_200.jpg ,SUPAKITCH & KORALIE "Euphorie" Paris
-http://vimeo.com/31044044
