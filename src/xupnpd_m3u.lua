@@ -39,6 +39,8 @@ function reload_playlists()
 
     local groups={}
 
+    local pls_id=0
+
     for i,j in ipairs(plist) do
 
         local pls
@@ -57,6 +59,8 @@ function reload_playlists()
 
 
         if pls then
+            pls_id=pls_id+1
+
             if cfg.debug>0 then print('playlist \''..pls.name..'\'') end
 
             local udpxy=nil
@@ -119,9 +123,9 @@ function reload_playlists()
 
             end
 
-            playlist_data.elements[i]=pls
-            playlist_data.elements[i].id=i
-            playlist_data.elements[i].objid='0/'..i
+            playlist_data.elements[pls_id]=pls
+            playlist_data.elements[pls_id].id=pls_id
+            playlist_data.elements[pls_id].objid='0/'..pls_id
             playlist_data.size=playlist_data.size+1
         end
     end
