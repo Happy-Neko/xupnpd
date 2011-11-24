@@ -9,7 +9,7 @@ http_vars={}
 -- http_mime types
 http_mime['html']='text/html'
 http_mime['htm']='text/html'
-http_mime['xml']='text/xml'
+http_mime['xml']='text/xml; charset="UTF-8"'
 http_mime['txt']='text/plain'
 http_mime['cpp']='text/plain'
 http_mime['h']='text/plain'

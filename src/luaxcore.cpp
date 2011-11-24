@@ -33,7 +33,7 @@
 // TODO: sendfile()
 // TODO: XBox 360
 // TODO: V Kontakte, tvigle.ru, narkom.su, kinobaza.tv
-// TODO: RTSP/RTP, RTMP
+// TODO: RTSP/RTP, RTMP, MMS
 // TODO: RTP to builtin udpxy
 // TODO: SO_SNDBUF
 
