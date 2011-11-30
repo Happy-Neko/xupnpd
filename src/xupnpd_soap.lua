@@ -104,12 +104,14 @@ function services.cds.Browse(args,ip)
 
     table.insert(items,'<DIDL-Lite xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns:dlna=\"urn:schemas-dlna-org:metadata-1-0\">')
 
-    local pls=find_playlist_object(args.ObjectID)
+    local objid=args.ObjectID or args.ContainerID
+
+    local pls=find_playlist_object(objid)
 
     if pls then
 
         if args.BrowseFlag=='BrowseMetadata' then
-            table.insert(items,playlist_item_to_xml(args.ObjectID,get_playlist_item_parent(args.ObjectID),pls))
+            table.insert(items,playlist_item_to_xml(objid,get_playlist_item_parent(objid),pls))
             count=1
             total=1
         else
@@ -122,7 +124,7 @@ function services.cds.Browse(args,ip)
                 for i,j in ipairs(pls.elements) do
                     if i>from and i<=to then
                         if not j.acl or acl_validate(j.acl,ip) then
-                            table.insert(items,playlist_item_to_xml(args.ObjectID..'/'..i,args.ObjectID,j))
+                            table.insert(items,playlist_item_to_xml(objid..'/'..i,objid,j))
                             count=count+1
                         end
                     end
