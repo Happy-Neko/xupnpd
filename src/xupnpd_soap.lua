@@ -106,6 +106,8 @@ function services.cds.Browse(args,ip)
 
     local objid=args.ObjectID or args.ContainerID
 
+    if cfg.xbox360==true and not string.find(objid,'/') then objid='0' end
+
     local pls=find_playlist_object(objid)
 
     if pls then
