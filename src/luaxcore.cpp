@@ -36,6 +36,7 @@
 // TODO: RTSP/RTP, RTMP, MMS
 // TODO: RTP to builtin udpxy
 // TODO: SO_SNDBUF
+// TODO: '/stream?s=objid' => '/stream/objid'
 
 namespace core
 {
@@ -47,6 +48,7 @@ namespace core
         char vhost[128];
         int port;
         char urn[512];
+        char auth[256];
     };
 
     struct timer_event
@@ -738,9 +740,52 @@ namespace core
         }
     }
 
+    int base64enc(unsigned char* src,int nsrc,unsigned char* dst,int ndst);
 
+}
 
+int core::base64enc(unsigned char* src,int nsrc,unsigned char* dst,int ndst)
+{
+    int x=nsrc*4;
+    int y=x%3;
+    int nndst=x/3+(y?4-y:0);
 
+    if(ndst<=nndst)
+	return -1;
+
+    static const char tbl[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+    x=nsrc/3;
+    for(unsigned long i=0;i<x;i++)
+    {
+        dst[0]=tbl[(src[0]>>2)&0x3f];
+	dst[1]=tbl[(src[1]>>4&0x0f)|(src[0]<<4&0x30)];
+	dst[2]=tbl[(src[1]<<2&0x3c)|(src[2]>>6&0x03)];
+	dst[3]=tbl[src[2]&0x3f];
+	src+=3;
+	dst+=4;
+    }
+
+    nsrc-=x*3;
+    if(nsrc==1)
+    {
+	dst[0]=tbl[(src[0]>>2)&0x3f];
+	dst[1]=tbl[(src[0]<<4&0x30)];
+	dst[2]='=';
+	dst[3]='=';
+	dst+=4;
+    }else if(nsrc==2)
+    {
+        dst[0]=tbl[(src[0]>>2)&0x3f];
+	dst[1]=tbl[(src[1]>>4&0x0f)|(src[0]<<4&0x30)];
+	dst[2]=tbl[(src[1]<<2&0x3c)];
+	dst[3]='=';
+	dst+=4;
+
+    }
+    *dst=0;
+
+    return 0;
 }
 
 static int lua_core_openlog(lua_State* L)
@@ -1456,6 +1501,12 @@ static int lua_http_get_url_data(const char* url,core::url_data* d)
 {
     char tmp[1024];
 
+    *d->host=0;
+    *d->vhost=0;
+    d->port=0;
+    *d->urn=0;
+    *d->auth=0;                                        
+
     int n=snprintf(tmp,sizeof(tmp),"%s",url);
     if(n<0 || n>=sizeof(tmp))
         return -1;
@@ -1471,7 +1522,7 @@ static int lua_http_get_url_data(const char* url,core::url_data* d)
         *p=0;
 
         if(strcasecmp(host,"http"))
-            return 0;
+            return -1;
 
         host=p+sizeof(proto_tag)-1;
 
@@ -1485,6 +1536,16 @@ static int lua_http_get_url_data(const char* url,core::url_data* d)
     else
         urn=(char*)"";
 
+    char* pp=strchr(host,'@');
+    if(pp)
+    {
+        *pp=0;
+
+        if(core::base64enc((unsigned char*)host,strlen(host),(unsigned char*)d->auth,sizeof(d->auth)))
+            return -1;
+
+        host=pp+1;
+    }
     n=snprintf(d->vhost,sizeof(d->vhost),"%s",host);
     if(n<0 || n>=sizeof(d->vhost))
         return -1;
@@ -1544,10 +1605,11 @@ static int lua_http_sendurl(lua_State* L)
 
     fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n",url.urn,url.vhost);
     if(range && *range)
-    {
         fprintf(fp,"Range: %s\r\n",range);
-//printf("-> Range: %s\n",range);
-    }
+
+    if(*url.auth)
+        fprintf(fp,"Authorization: Basic %s\r\n",url.auth);
+
     fprintf(fp,"\r\n");
     fflush(fp);
 
@@ -1996,4 +2058,3 @@ int luaopen_luaxcore(lua_State* L)
 
     return 0;
 }
-
