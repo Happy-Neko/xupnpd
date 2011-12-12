@@ -93,7 +93,7 @@ function reload_playlists()
                     jj.dlna_extras=m[5]
                 end
 
-                jj.objid='0/'..i..'/'..ii
+                jj.objid='0/'..pls_id..'/'..ii
 
                 jj.parent=pls
 
