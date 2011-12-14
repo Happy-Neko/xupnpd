@@ -264,6 +264,18 @@ function http_handler(what,from,port,msg)
                 os.date('!%a, %d %b %Y %H:%M:%S GMT'),ssdp_server))
 
     elseif msg.reqline[1]=='GET' then
+
+        if cfg.xbox360==true then
+            local t=split_string(f.url,'/')
+
+            if table.maxn(t)==2 then
+                if not f.args then f.args={} end
+                f.args['s']=util.urldecode(t[2])
+
+                if t[1]=='p' then f.url='/proxy' elseif t[1]=='s' then f.url='/stream' end
+            end
+        end
+
         if f.url=='/proxy' then
 
             local pls=find_playlist_object(f.args['s'] or '')
