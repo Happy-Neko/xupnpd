@@ -15,7 +15,8 @@ function add_playlists_from_dir(dir_path,playlist,plist)
         end
 
         for i,j in ipairs(d) do
-            if string.find(j,'^[%w_]+%.m3u$') then
+--            if string.find(j,'^[%w_]+%.m3u$') then
+            if string.find(j,'.-%.m3u$') then
                 local fname=dir_path..j
                 if not tt[fname] then
                     table.insert(plist,fname)

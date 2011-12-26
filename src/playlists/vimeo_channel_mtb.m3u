@@ -1,6 +1,8 @@
 #EXTM3U name="Mountain Bike Channel" type=mp4 plugin=vimeo
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/197/005/19700592_200.jpg ,BOOTLEG
 http://vimeo.com/5701809
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/229/329/229329100_200.jpg ,Specialized Hunter Lone Wolf
+http://vimeo.com/33751891
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/218/502/218502102_200.jpg ,Coming Home - Tobias Woggon
 http://vimeo.com/32306765
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/214/174/214174314_200.jpg ,INTO THIN AIR
@@ -37,5 +39,3 @@ http://vimeo.com/20306725
 http://vimeo.com/19228414
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/110/000/110000543_200.jpg ,Erster Eindruck: Alutech Fanes Enduro Prototyp
 http://vimeo.com/17646579
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/909/863/90986343_200.jpg ,Where The Trail Ends
-http://vimeo.com/15179993
