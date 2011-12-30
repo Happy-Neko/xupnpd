@@ -75,14 +75,22 @@ playlist=
 -- feeds list (plugin, feed name, feed type)
 feeds=
 {
-    { 'vimeo',   'channel/hd',          'Vimeo HD Channel' },
-    { 'vimeo',   'channel/hdxs',        'HD Xtreme sports' },
-    { 'vimeo',   'channel/mtb',         'Mountain Bike Channel' },
-    { 'youtube', 'channel/top_rated',   'YouTube Top Rated' },
+    { 'vimeo',          'channel/hd',           'Vimeo HD Channel' },
+    { 'vimeo',          'channel/hdxs',         'HD Xtreme sports' },
+    { 'vimeo',          'channel/mtb',          'Mountain Bike Channel' },
+    { 'youtube',        'channel/top_rated',    'YouTube Top Rated' },
+    { 'gametrailers',   'ps3/review',           'GT - PS3 - Review' },
+    { 'gametrailers',   'ps3/preview',          'GT - PS3 - Preview' },
+    { 'gametrailers',   'ps3/gameplay',         'GT - PS3 - Gameplay' },
+    { 'gametrailers',   'ps3/interview',        'GT - PS3 - Interview' },
+    { 'gametrailers',   'ps3/feature',          'GT - PS3 - Feature' },
+    { 'gametrailers',   'psv/all',              'GT - PS Vita - All' },
+    { 'gametrailers',   'xb360/all',            'GT - Xbox 360 - All' },
+    { 'gametrailers',   'all/all',              'GT - All - All' },
 }
 
 -- log ident, pid file end www root
-cfg.version='1.0-rc4'
+cfg.version='1.0-rc5'
 cfg.log_ident=arg[1] or 'xupnpd'
 cfg.pid_file='/var/run/'..cfg.log_ident..'.pid'
 cfg.www_root='./www/'

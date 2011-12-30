@@ -7,6 +7,7 @@ function add_playlists_from_dir(dir_path,playlist,plist)
     local d=util.dir(dir_path)
 
     if d then
+        table.sort(d)
         local tt={}
         for i,j in ipairs(playlist) do
             local path=nil

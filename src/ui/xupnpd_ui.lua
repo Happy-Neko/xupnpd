@@ -100,13 +100,13 @@ function ui_feeds()
 
     http.send('<div class="row"><div class="span8">')
 
-    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="generic">Generic</option></select></div></div><br>')
+    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="gametrailers">GameTrailers</option><option value="generic">Generic</option></select></div></div><br>')
 
     http.send('<div class="row"><div class="span2">Feed</div><div class="span4"><input name="feed"></div></div><br>')
 
     http.send('<div class="row"><div class="span2">Description</div><div class="span4"><input name="name"></div></div><br>')
 
-    http.send('</div><div class="span8"><b>Vimeo</b>: username, channel/channelname, group/groupname, album/album_id;<br><b>YouTube</b>: username, favorites/username, playlist/username/playlistname, channel/channelname, search/searchstring;<br><b>Generic</b>: m3u_url;<hr><b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured.</div></div>')
+    http.send('</div><div class="span8"><b>Vimeo</b>: username, channel/channelname, group/groupname, album/album_id;<br><b>YouTube</b>: username, favorites/username, playlist/username/playlistname, channel/channelname, search/searchstring;<br><b>GameTrailers</b>: platform/type;<br /><b>Generic</b>: m3u_url;<hr><b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured.<hr><b>GameTrailers platforms</b>: all, ps3, xb360, wii, pc, psv, psp, ds, gba, ps2, gc, xbox, classic, mob.<br /><b>GameTrailers types</b>: all, review, preview, interview, gameplay, feature.</div></div>')
 
     http.send('<input class="btn primary" type=submit value=Add>')
     http.send('</form><hr>')

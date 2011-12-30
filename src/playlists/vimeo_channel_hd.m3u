@@ -1,4 +1,34 @@
 #EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/198/143/198143384_200.jpg ,Plato
+http://vimeo.com/29504730
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/232/668/232668361_200.jpg ,TO UNDERSTAND IS TO PERCEIVE PATTERNS
+http://vimeo.com/34182381
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/232/551/232551912_200.jpg ,Manawai - Endless summer
+http://vimeo.com/34177255
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/228/497/228497154_200.jpg ,CHLLNGR - Music Video - "Change"
+http://vimeo.com/33641450
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/227/863/227863422_200.jpg ,Greetings from London
+http://vimeo.com/33224168
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/232/282/232282582_200.jpg ,Москва'2011(Moscow/Russia)
+http://vimeo.com/34134308
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/231/770/231770887_200.jpg ,Share The Joy. Répandez la Joie.
+http://vimeo.com/34075855
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/230/990/230990216_200.jpg ,Splice Holiday Video 2011
+http://vimeo.com/33971928
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/228/452/228452084_200.jpg ,O NIGHT DIVINE
+http://vimeo.com/33635713
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/226/235/226235968_200.jpg ,Three Cubes Colliding
+http://vimeo.com/33342571
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/107/701/107701337_200.jpg ,The Bellows March (2009)
+http://vimeo.com/17314292
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/231/637/231637804_200.jpg ,Drake ~ The Motto Featuring Lil Wayne & Tyga (Official Video)
+http://vimeo.com/34057762
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/164/403/164403650_200.jpg ,Parallels - A Short Film
+http://vimeo.com/22870458
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/224/539/224539956_200.jpg ,Singularity. Fashion. Reincarnation.
+http://vimeo.com/33107720
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/227/788/227788278_200.jpg ,MV (Misteur Valaire) - DAN DAN (Création collective)
+http://vimeo.com/33549945
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/229/806/229806078_200.jpg ,Sheikh Zayed Grand Mosque Projections
 http://vimeo.com/33764021
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/230/366/230366783_200.jpg ,Merry Christmas
@@ -7,35 +37,5 @@ http://vimeo.com/33889512
 http://vimeo.com/33952163
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/173/817/173817532_200.jpg ,S Bahn
 http://vimeo.com/26327396
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/221/025/221025004_200.jpg ,THE LAKE
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/231/784/231784295_200.jpg ,THE LAKE
 http://vimeo.com/32646513
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/227/475/227475957_200.jpg ,Tupelo Shuffle
-http://vimeo.com/33507742
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/229/482/229482115_200.jpg ,Above and Below
-http://vimeo.com/33735037
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/210/140/210140359_200.jpg ,Lesson No. 7 Clock Opera
-http://vimeo.com/31205226
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/223/862/223862365_200.jpg ,Pierre Lelievre & Anthony Finocchiaro' in CHINA
-http://vimeo.com/33024534
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/221/197/221197317_200.jpg ,INA D MUSICVIDEO
-http://vimeo.com/29436570
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/222/396/222396409_200.jpg ,Guards "I See It Coming" is Yourstru.ly
-http://vimeo.com/32687214
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/227/621/227621019_200.jpg ,BRNO HDR
-http://vimeo.com/33526521
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/228/484/228484717_200.jpg ,RICO
-http://vimeo.com/33640130
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/220/220/220220342_200.jpg ,The Roots - UNDUN
-http://vimeo.com/32534820
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/227/794/227794986_200.jpg ,'Five Full Runs' for Retallack : The Movie
-http://vimeo.com/33549491
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/223/731/223731299_200.jpg ,New Jackson 'The Night Mail'
-http://vimeo.com/32646874
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/220/345/220345129_200.jpg ,THE WALL OF DEATH
-http://vimeo.com/32493819
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/226/992/226992783_200.jpg ,MonkeyMoon!
-http://vimeo.com/33440713
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/227/191/227191126_200.jpg ,Sparkly
-http://vimeo.com/33297013
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/227/527/227527373_200.jpg ,Cybo 'Sky Walkers'
-http://vimeo.com/33510073

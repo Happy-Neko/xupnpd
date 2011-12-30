@@ -58,7 +58,7 @@ function youtube_updatefeed(feed,friendly_name)
     elseif tfeed[1]=='search' then
         feed_urn='videos?vq='..util.urlencode(tfeed[2])..'&'..youtube_common
     else
-        feed_urn='videos?author='..tfeed[1]..'&'..youtube_common
+        feed_urn='users/'..tfeed[1]..'/uploads?orderby=published&'..youtube_common
     end
 
     local feed_m3u_path=cfg.feeds_path..feed_name..'.m3u'
