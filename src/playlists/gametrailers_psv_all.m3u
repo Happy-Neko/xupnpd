@@ -1,4 +1,12 @@
 #EXTM3U name="GT - PS Vita - All" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725411-bbcs2ecloversscr11.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Carl vs Relius Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725412
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725409-bbcs2eragnamu.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Ragna vs Mu-12 Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725410
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725407-bbcs2ehamzarelius.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Hazama vs Relius Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725408
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725405-bbcs2escrjintsubaki.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Jin vs Tsubaki Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725406
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725343-gt_uncharted_psv_exploreandpuzzle_gp2_thumb.jpg,Uncharted: Golden Abyss - Explore and Puzzle Gameplay (Cam) HD
 http://www.gametrailers.com/video/explore-and-uncharted-golden/725344
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725341-gt_uncharted_psv_platformandcombat_gp1.jpg,Uncharted: Golden Abyss - Platform and Combat Gameplay (Cam) HD
@@ -91,11 +99,3 @@ http://www.gametrailers.com/video/review-hd-rayman-origins/723803
 http://www.gametrailers.com/video/meet-the-rayman-origins/723745
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723535-t_raymanorigins_10waystodiepegi_gp_thumb.jpg,Rayman Origins - 10 Ways to Die Trailer HD
 http://www.gametrailers.com/video/10-ways-rayman-origins/723536
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723487-f1thumb.jpg,F1 2011 - 3DS Trailer HD
-http://www.gametrailers.com/video/3ds-trailer-f1-2011/723488
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723466-gt_ultimatemvc3_newcharacters_wt_thumb.jpg,Ultimate Marvel vs Capcom 3 - New Characters Walkthrough HD
-http://www.gametrailers.com/video/new-characters-ultimate-marvel/723467
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723345-t_ultimatemarvelvscapcom_frankwestvsraccoon_gp2_thumb.jpg,Ultimate Marvel vs Capcom 3 - Frank West vs. Thor Gameplay HD
-http://www.gametrailers.com/video/frank-west-ultimate-marvel/723346
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723324-thumb-_hd.jpg,Ultimate Marvel vs Capcom 3 - Rocket Raccoon Vignette HD
-http://www.gametrailers.com/video/rocket-raccoon-ultimate-marvel/723325

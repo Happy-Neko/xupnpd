@@ -1,4 +1,12 @@
 #EXTM3U name="GT - Xbox 360 - All" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725411-bbcs2ecloversscr11.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Carl vs Relius Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725412
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725409-bbcs2eragnamu.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Ragna vs Mu-12 Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725410
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725407-bbcs2ehamzarelius.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Hazama vs Relius Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725408
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725405-bbcs2escrjintsubaki.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Jin vs Tsubaki Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725406
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725378-blockzombiests.jpg,Block Zombies - Teaser Trailer HD
 http://www.gametrailers.com/video/teaser-trailer-block-zombies/725379
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725376-t_selfdefensetrainingcamp_launch_thumb.jpg,Self-Defense Training Camp - Launch Trailer HD
@@ -91,11 +99,3 @@ http://www.gametrailers.com/video/exclusive-vendettas-the-darkness/725081
 http://www.gametrailers.com/video/exclusive-vendettas-the-darkness/725079
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725066-t_motionsports_adrenalineurbanjungle_DLC.jpg,MotionSports Adrenaline - Urban Jungle DLC HD
 http://www.gametrailers.com/video/urban-jungle-motionsports-adrenaline/725067
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725032-t_metalgearrising_thetruthbehindthegamefeaturette_thumb.jpg,Metal Gear Rising: Revengeance - The Truth Behind the Game Featurette HD
-http://www.gametrailers.com/video/the-truth-metal-gear/725033
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725016-t_syndicate_agenttechtrailer.jpg,Syndicate - Deep-Dive: Agent Tech Trailer HD
-http://www.gametrailers.com/video/deep-dive-agent-syndicate/725017
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725010-t_residenteviloperationracooncity_hereoesmodemultiplayertrailer.jpg,Resident Evil: Operation Raccoon City - Heroes Mode Multi-Player Trailer HD
-http://www.gametrailers.com/video/heroes-mode-resident-evil/725011
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724998-t_finalfantasyxiii-2_mastersofmonsters.jpg,Final Fantasy XIII-2 - Masters of Monsters HD
-http://www.gametrailers.com/video/masters-of-final-fantasy/724999

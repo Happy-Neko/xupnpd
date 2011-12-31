@@ -1,4 +1,12 @@
 #EXTM3U name="GT - PS3 - Feature" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725411-bbcs2ecloversscr11.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Carl vs Relius Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725412
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725409-bbcs2eragnamu.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Ragna vs Mu-12 Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725410
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725407-bbcs2ehamzarelius.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Hazama vs Relius Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725408
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725405-bbcs2escrjintsubaki.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Jin vs Tsubaki Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725406
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724840-gt_bioshockinfinite_vga11_popblock_em_12-11_6am.jpg,BioShock Infinite - GT Pop-Block: VGA 2011 Exclusive Trailer HD
 http://www.gametrailers.com/video/gt-pop-block-bioshock-infinite/724841
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724366-t_battlefield3_frenchtvep3_fr.jpg,Battlefield 3 - Battlefield 3 TV: Episode 3 (French) HD
@@ -91,11 +99,3 @@ http://www.gametrailers.com/video/create-a-sim-developer-the-sims-3/722106
 http://www.gametrailers.com/video/unlimited-mode-trine-2/722102
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/722049-t_binarydomain_consequencesystem_wt_doc.jpg,Binary Domain - Consequence System Featurette HD
 http://www.gametrailers.com/video/consequence-system-binary-domain/722050
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/722003-tales3thumb.jpg,Tales of Graces F - Combat Mechanics Walkthrough: Part 3 (Cam) HD
-http://www.gametrailers.com/video/combat-mechanics-tales-of/722004
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/722000-talesof1thumb.jpg,Tales of Graces F - Combat Mechanics Walkthrough: Part 1 (Cam) HD
-http://www.gametrailers.com/video/combat-mechanics-tales-of/722002
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/721999-tales2thumb.jpg,Tales of Graces F - Combat Mechanics Walkthrough: Part 2 (Cam) HD
-http://www.gametrailers.com/video/combat-mechanics-tales-of/722001
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/721994-inversion2thumb.jpg,Inversion - Gravity Mechanices Walkthrough: Part 2 (Cam) HD
-http://www.gametrailers.com/video/gravity-mechanices-inversion/721995

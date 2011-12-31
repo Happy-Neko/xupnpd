@@ -1,4 +1,14 @@
 #EXTM3U name="GT - All - All" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725413-gttv_int_promo_12-30.jpg,GT.TV - Ocean Marketing Interview Promo HD
+http://www.gametrailers.com/video/ocean-marketing-gt-tv/725414
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725411-bbcs2ecloversscr11.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Carl vs Relius Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725412
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725409-bbcs2eragnamu.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Ragna vs Mu-12 Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725410
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725407-bbcs2ehamzarelius.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Hazama vs Relius Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725408
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725405-bbcs2escrjintsubaki.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Jin vs Tsubaki Gameplay HD
+http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725406
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725403-dropoflifedb.jpg,Drop of Life - Debut Trailer HD
 http://www.gametrailers.com/video/debut-trailer-drop-of-life/725404
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725401-voidscapeslaunch.jpg,voidScapes - Launch Trailer HD
@@ -7,6 +17,8 @@ http://www.gametrailers.com/video/launch-trailer-voidscapes/725402
 http://www.gametrailers.com/video/video-game-screwattack/725400
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725399-terrorhedronlaunch.jpg,Terrorhedron - Launch Trailer
 http://www.gametrailers.com/video/launch-trailer-terrorhedron/725399
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725397-gt_popfiction_ep19_ff6_kaiserdrachen_em_12_30_2011_9am_thumb.jpg,Pop-Fiction - Episode 19: Kaiser Drachen HD
+http://www.gametrailers.com/video/episode-19-pop-fiction/725398
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725395-t_lexiv_launchtrailer_thumb.jpg,Lexiv - Launch Trailer HD
 http://www.gametrailers.com/video/launch-trailer-lexiv/725396
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725393-t_fireflyvegas_sticknmove_gp_thumb.jpg,FireFly Vegas - Stick and Move Gameplay HD
@@ -87,15 +99,3 @@ http://www.gametrailers.com/video/nests-style-king-of/725328
 http://www.gametrailers.com/video/beta-multiplayer-starhawk/725326
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725323-kofxiii_video_mrkarate_movesshowcase_thumb.jpg,King of Fighters XIII - Mr. Karate Moves Showcase HD
 http://www.gametrailers.com/video/mr-karate-king-of/725324
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725321-gt_ffxiii2_import_tough_boss_battle_gp12_em12_23.jpg,Final Fantasy XIII-2 - Japanese Tutorial Boss Battle Gameplay HD
-http://www.gametrailers.com/video/japanese-tutorial-final-fantasy/725322
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725319-gt_ffiii2_import_major_boss_battle_gp10_em12_23.jpg,Final Fantasy XIII-2 - Japanese Major Boss Battle Gameplay HD
-http://www.gametrailers.com/video/japanese-major-final-fantasy/725320
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725317-kofxiii_video_mrkarate_combosshowcase_thumb.jpg,King of Fighters XIII - Mr. Karate Combos Showcase HD
-http://www.gametrailers.com/video/mr-karate-king-of/725318
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725315-gt_tekkentagtourney2_socalregionals_gp_jun-leo_christie-eddygordo_thumb.jpg,Tekken Tag Tournament 2 - SoCal Regionals 2011: Jun-Leo vs Christie-Eddy HD
-http://www.gametrailers.com/video/socal-regionals-tekken-tag/725316
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725313-Awesomenaut_Showcase_Voltar_the_Omniscient.jpg,Awesomenauts - Voltar The Omniscient Showcase  HD
-http://www.gametrailers.com/video/voltar-the-awesomenauts/725314
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725311-gt_tekkentagtourney2_socalregionals_gp_miguel-heiachi_eddygordo-zafina_thumb.jpg,Tekken Tag Tournament 2 - SoCal Regionals 2011: Miguel-Heihachi vs Eddy-Zafina HD
-http://www.gametrailers.com/video/socal-regionals-tekken-tag/725312

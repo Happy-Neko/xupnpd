@@ -1,4 +1,6 @@
 #EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/229/274/229274598_200.jpg ,Dick laurent is dead feat. FINK - Colour in your hands
+http://vimeo.com/33587202
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/198/143/198143384_200.jpg ,Plato
 http://vimeo.com/29504730
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/232/668/232668361_200.jpg ,TO UNDERSTAND IS TO PERCEIVE PATTERNS
@@ -37,5 +39,3 @@ http://vimeo.com/33889512
 http://vimeo.com/33952163
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/173/817/173817532_200.jpg ,S Bahn
 http://vimeo.com/26327396
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/231/784/231784295_200.jpg ,THE LAKE
-http://vimeo.com/32646513

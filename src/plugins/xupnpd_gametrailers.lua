@@ -1,5 +1,7 @@
 -- Copyright (C) 2011 I. Sokolov
 -- happy.neko@gmail.com
+-- Licensed under GNU GPL version 2 
+-- https://www.gnu.org/licenses/gpl-2.0.html
 
 -- config example:
 --feeds=
@@ -14,7 +16,6 @@
 --    { "gametrailers", "all/all", "GT - All - All" }
 --}
 
---www.gametrailers.com/rssgenerate.php?s1=&favplats[ps3]=ps3&quality[either]=on&orderby=newest&limit=50
 gametrailers_download_url='http://gametrailers.com/download'
 gametrailers_images_url='http://gametrailers.mtvnimages.com/images'
 blastcasta_url='http://www.blastcasta.com/feed-to-json.aspx?feedurl=' -- RSS to JSON converter
@@ -40,7 +41,7 @@ function gametrailers_updatefeed(feed,friendly_name)
     else
         article='&type['..tfeed[2]..']=on'
     end
-    local feed_url=blastcasta_url..util.urlencode('www.gametrailers.com/rssgenerate.php?s1='..article..platform..'&quality[either]=on&orderby=newest&limit=50')
+    feed_url=blastcasta_url..util.urlencode('www.gametrailers.com/rssgenerate.php?s1='..article..platform..'&quality[either]=on&orderby=newest&limit=50')
 
     local feed_data=http.download(feed_url)
 
@@ -49,7 +50,7 @@ function gametrailers_updatefeed(feed,friendly_name)
 
         feed_data=nil
 
-        if x.rss and x.rss.channel and x.rss.channel then
+        if x and x.rss and x.rss.channel then
             local dfd=io.open(tmp_m3u_path,'w+')
             if dfd then
                 dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=gametrailers\n')
@@ -60,7 +61,7 @@ function gametrailers_updatefeed(feed,friendly_name)
                             --local image_url_rc=false
                             --image_url_rc,image_url=http.sendurl(jj['exInfo:image'],1)
                             local image_url=nil
-                            image_url=string.match(jj['exInfo:image'],'(/moses/.+%.jpg)')
+                            image_url=string.match(jj['exInfo:image'],'(/moses/.-%.jpg)')
                             if image_url then
                                 dfd:write('#EXTINF:0 logo=',gametrailers_images_url,image_url,',',jj.title,'\n',jj.link,'\n')
                             else
@@ -92,12 +93,12 @@ function gametrailers_sendurl(gametrailers_page_url,range)
 
     if plugin_sendurl_from_cache(gametrailers_page_url,range) then return end
 
-    local gametrailers_id=string.match(gametrailers_page_url,'.+/video/[%w%-]+/(%d+)')
+    local gametrailers_id=string.match(gametrailers_page_url,'.+/video/[%w%-]-/(%d+)')
 
     local clip_page=http.download(gametrailers_page_url)
 
     if clip_page then
-        local filename_mp4=string.match(clip_page,'/download/'..gametrailers_id..'/([%w_%-]+%.mp4)')
+        local filename_mp4=string.match(clip_page,'/download/'..gametrailers_id..'/([%w_%-]-%.mp4)')
         clip_page=nil
 
         if filename_mp4 then
