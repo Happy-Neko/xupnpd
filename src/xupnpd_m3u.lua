@@ -31,6 +31,7 @@ end
 function reload_playlists()
     playlist_data={}
     playlist_data.name='root'
+    playlist_data.objid='0'
     playlist_data.size=0
     playlist_data.elements={}
 

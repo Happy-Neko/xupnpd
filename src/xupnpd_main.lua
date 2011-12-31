@@ -178,14 +178,20 @@ end
 
 
 -- ContentDirectory event deliver (child process)
+function subscr_notify_iterate_tree(pls,tt)
+    if pls.elements then
+        table.insert(tt,pls.objid..','..update_id)
+
+        for i,j in ipairs(pls.elements) do
+            subscr_notify_iterate_tree(j,tt)
+        end
+    end    
+end
+
 function subscr_notify_async(t)
 
     local tt={}
-    table.insert(tt,'0,'..update_id)
-
-    for i,j in ipairs(playlist_data.elements) do
-        table.insert(tt,j.objid..','..update_id)
-    end
+    subscr_notify_iterate_tree(playlist_data,tt)
 
     local data=string.format(
         '<e:propertyset xmlns:e=\"urn:schemas-upnp-org:event-1-0\"><e:property><SystemUpdateID>%s</SystemUpdateID><ContainerUpdateIDs>%s</ContainerUpdateIDs></e:property></e:propertyset>',

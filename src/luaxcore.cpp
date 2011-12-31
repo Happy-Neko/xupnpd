@@ -28,15 +28,12 @@
 #include <netdb.h>
 #include <ctype.h>
 
-// TODO: cache to proxy?
-// TODO: local media tree (events!)?
-// TODO: sendfile()
+// TODO: m3u tree by group-title (grp/subgrp1/subgrp2 => reload_playlists)
+// TODO: local media tree
 // TODO: XBox 360
 // TODO: V Kontakte, tvigle.ru, narkom.su, kinobaza.tv
 // TODO: RTSP/RTP, RTMP, MMS
 // TODO: RTP to builtin udpxy
-// TODO: SO_SNDBUF
-// TODO: '/stream?s=objid' => '/stream/objid'
 
 namespace core
 {
