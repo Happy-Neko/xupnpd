@@ -16,7 +16,6 @@ function add_playlists_from_dir(dir_path,playlist,plist)
         end
 
         for i,j in ipairs(d) do
---            if string.find(j,'^[%w_]+%.m3u$') then
             if string.find(j,'.-%.m3u$') then
                 local fname=dir_path..j
                 if not tt[fname] then
@@ -26,6 +25,27 @@ function add_playlists_from_dir(dir_path,playlist,plist)
             end
         end
     end
+end
+
+function playlist_new_folder(parent,name)
+    local child={}
+    parent.size=parent.size+1
+    child.name=name
+    child.objid=parent.objid..'/'..parent.size
+    child.id=parent.size
+    child.parent=parent
+    child.size=0
+    child.elements={}
+    parent.elements[parent.size]=child
+    return child
+end
+
+function playlist_attach(parent,pls)
+    parent.size=parent.size+1
+    pls.objid=parent.objid..'/'..parent.size
+    pls.id=parent.size
+    pls.parent=parent
+    parent.elements[parent.size]=pls
 end
 
 function reload_playlists()
@@ -40,9 +60,10 @@ function reload_playlists()
     add_playlists_from_dir(cfg.playlists_path,playlist,plist)
     if cfg.feeds_path~=cfg.playlists_path then add_playlists_from_dir(cfg.feeds_path,playlist,plist) end
 
-    local groups={}
+    local pls_folder=playlist_new_folder(playlist_data,'Playlists')
+    local folder=nil
 
-    local pls_id=0
+    local groups={}
 
     for i,j in ipairs(plist) do
 
@@ -50,19 +71,18 @@ function reload_playlists()
 
         if type(j)=='table' then
 
-            if string.find(j[1],'(.+).m3u$') then pls=m3u.parse(j[1]) else pls=m3u.scan(j[1]) end
+            if string.find(j[1],'(.+).m3u$') then pls=m3u.parse(j[1]) folder=pls_folder else pls=m3u.scan(j[1]) folder=playlist_data end
 
             if pls then
                 if j[2] then pls.name=j[2] end
                 if j[3] then pls.acl=j[3] end
             end
         else
-            if string.find(j,'(.+).m3u$') then pls=m3u.parse(j) else pls=m3u.scan(j) end
+            if string.find(j,'(.+).m3u$') then pls=m3u.parse(j) folder=pls_folder else pls=m3u.scan(j) folder=playlist_data end
         end
 
-
         if pls then
-            pls_id=pls_id+1
+            playlist_attach(folder,pls)
 
             if cfg.debug>0 then print('playlist \''..pls.name..'\'') end
 
@@ -96,12 +116,11 @@ function reload_playlists()
                     jj.dlna_extras=m[5]
                 end
 
-                jj.objid='0/'..pls_id..'/'..ii
+                jj.objid=pls.objid..'/'..ii
 
                 jj.parent=pls
 
                 if cfg.debug>1 then print('\''..jj.name..'\' '..jj.url..' <'..jj.mime[3]..'>') end
-
 
                 if cfg.group==true then
                     local group_title=jj['group-title']
@@ -125,11 +144,6 @@ function reload_playlists()
                 end
 
             end
-
-            playlist_data.elements[pls_id]=pls
-            playlist_data.elements[pls_id].id=pls_id
-            playlist_data.elements[pls_id].objid='0/'..pls_id
-            playlist_data.size=playlist_data.size+1
         end
     end
 
@@ -138,13 +152,10 @@ function reload_playlists()
 
             if cfg.debug>0 then print('group \''..j.name..'\'') end
 
-            playlist_data.size=playlist_data.size+1
-            j.id=playlist_data.size
-            j.objid='0/'..j.id
-            playlist_data.elements[j.id]=j
+            playlist_attach(playlist_data,j)
 
             for ii,jj in ipairs(j.elements) do
-                jj.objid='0/'..j.id..'/'..ii
+                jj.objid=j.objid..'/'..ii
             end
         end
     end
