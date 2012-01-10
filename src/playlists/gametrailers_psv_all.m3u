@@ -1,4 +1,12 @@
 #EXTM3U name="GT - PS Vita - All" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725504-t_dynastywarriornext_weiactiontrailer_thumb.jpg,Dynasty Warriors Next - UK Wei Kingdom Trailer
+http://www.gametrailers.com/video/uk-wei-dynasty-warriors/725504
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725503-t_dynastywarriornext_wuactiontrailer_thumb.jpg,Dynasty Warriors Next - UK Wu Kingdom Trailer
+http://www.gametrailers.com/video/uk-wu-dynasty-warriors/725503
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725499-t_dynastywarriorsnext_shuactiontrailer_thumb.jpg,Dynasty Warriors Next - UK Shu Kingdom Trailer
+http://www.gametrailers.com/video/uk-shu-dynasty-warriors/725499
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725492-thumb-_hd.jpg,Army Corps of Hell - Japanese Gameplay (Cam) HD
+http://www.gametrailers.com/video/japanese-gameplay-army-corps/725493
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725411-bbcs2ecloversscr11.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Carl vs Relius Gameplay HD
 http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725412
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725409-bbcs2eragnamu.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Ragna vs Mu-12 Gameplay HD
@@ -91,11 +99,3 @@ http://www.gametrailers.com/video/review-pod-ultimate-marvel/723920
 http://www.gametrailers.com/video/launch-trailer-lego-harry/723901
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723814-gt_raymanorigins_granniesfromheck_gp_em_11-10_9am_thumb.jpg,Rayman Origins - Grannies From Heck Gameplay HD
 http://www.gametrailers.com/video/grannies-from-rayman-origins/723815
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723812-gt_raymanorigins_4playerco-op_gp_em_11-10_9am_thumb.jpg,Rayman Origins - 4-Player Co-op Gameplay HD
-http://www.gametrailers.com/video/4-player-co-op-rayman-origins/723813
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723802-raymanthumb.jpg,Rayman Origins - Review HD
-http://www.gametrailers.com/video/review-hd-rayman-origins/723803
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723744-t_raymanorigins_meetthenewcrazy_trailer_thumb.jpg,Rayman Origins - Meet the New Crazy Trailer HD
-http://www.gametrailers.com/video/meet-the-rayman-origins/723745
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723535-t_raymanorigins_10waystodiepegi_gp_thumb.jpg,Rayman Origins - 10 Ways to Die Trailer HD
-http://www.gametrailers.com/video/10-ways-rayman-origins/723536

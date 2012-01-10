@@ -1,4 +1,8 @@
 #EXTM3U name="GT - PS3 - Feature" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725536-gt_soulcaliber5_gp01.jpg,Soul Calibur V - Ivy Gameplay HD
+http://www.gametrailers.com/video/ivy-gameplay-soul-calibur/725537
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725534-gt_soulcaliber5_gp03.jpg,Soul Calibur V - Hilde Gameplay  HD
+http://www.gametrailers.com/video/hilde-gameplay-soul-calibur/725535
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725411-bbcs2ecloversscr11.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Carl vs Relius Gameplay HD
 http://www.gametrailers.com/video/socal-regionals-blazblue-continuum/725412
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725409-bbcs2eragnamu.jpg,BlazBlue: Continuum Shift 2 Extend - SoCal Regionals 2011: Ragna vs Mu-12 Gameplay HD
@@ -95,7 +99,3 @@ http://www.gametrailers.com/video/aspari-raid-syndicate/722286
 http://www.gametrailers.com/video/multiplayer-featurette-mass-effect/722154
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/722105-t_thesims3pets_producerstoryvideo.jpg,The Sims 3 Pets - Create-a-Sim Developer Diary HD
 http://www.gametrailers.com/video/create-a-sim-developer-the-sims-3/722106
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/722101-trinethumb.jpg,Trine 2 - Unlimited Mode Walkthrough HD
-http://www.gametrailers.com/video/unlimited-mode-trine-2/722102
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/722049-t_binarydomain_consequencesystem_wt_doc.jpg,Binary Domain - Consequence System Featurette HD
-http://www.gametrailers.com/video/consequence-system-binary-domain/722050

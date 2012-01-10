@@ -12,19 +12,25 @@ youtube_api_url='http://gdata.youtube.com/feeds/mobile/'
 youtube_common='alt=json&start-index=1&max-results=50'  -- &racy=include&restriction=??
 
 function youtube_find_playlist(user,playlist)
-    local feed_data=http.download(youtube_api_url..'users/'..user..'/playlists?'..youtube_common)
+    local start_index=1
+    local max_results=50
 
-    if not feed_data then return nil end
+    while(true) do
+        local feed_data=http.download(youtube_api_url..'users/'..user..'/playlists?alt=json&start-index='..start_index..'&max-results='..max_results)
 
-    local x=json.decode(feed_data)
-    feed_data=nil
+        if not feed_data then break end
 
-    if not x or not x.feed or not x.feed.entry then return nil end
+        local x=json.decode(feed_data)
+        feed_data=nil
 
-    for i,j in ipairs(x.feed.entry) do
-        if j.title['$t']==playlist then
-            return string.match(j.id['$t'],'.+/(%w+)$')
+        if not x or not x.feed or not x.feed.entry then break end
+
+        for i,j in ipairs(x.feed.entry) do
+            if j.title['$t']==playlist then
+                return string.match(j.id['$t'],'.+/(%w+)$')
+            end
         end
+        start_index=start_index+max_results
     end
 
     return nil
@@ -40,7 +46,7 @@ function youtube_updatefeed(feed,friendly_name)
 
     local tfeed=split_string(feed,'/')
 
-    local feed_name='youtube_'..string.lower(string.gsub(feed,"[/ \'\"]",'_'))
+    local feed_name='youtube_'..string.lower(string.gsub(feed,"[/ :\'\"]",'_'))
 
     if tfeed[1]=='channel' then
         local region=''

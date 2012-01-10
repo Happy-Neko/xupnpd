@@ -1,4 +1,14 @@
 #EXTM3U name="HD Xtreme sports" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/236/239/236239597_200.jpg ,"Into The White"
+http://vimeo.com/34652088
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/235/666/235666487_200.jpg ,GoPro snowboarding session in les Arcs, France
+http://vimeo.com/34587606
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/228/701/228701453_200.jpg ,old town longboarding
+http://vimeo.com/33667153
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/223/663/223663921_200.jpg ,Rehab Blues
+http://vimeo.com/32991213
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/234/116/234116178_200.jpg ,Mystic Rothenbachkopf
+http://vimeo.com/34306424
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/228/643/228643716_200.jpg ,Rip Curl Gum Movie - Full Edit
 http://vimeo.com/33650883
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/230/594/230594297_200.jpg ,Big airs and naked ass in Stuttgart
@@ -29,13 +39,3 @@ http://vimeo.com/32264298
 http://vimeo.com/29420457
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/218/138/218138058_200.jpg ,BrOADER TV ep.131: The Parkflicks #5
 http://vimeo.com/32262372
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/214/469/214469392_200.jpg ,Štěpánovo ohlédnutí za paraglidingovou sezónou 2011
-http://vimeo.com/31777347
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/213/249/213249498_200.jpg ,BrOADER TV ep.130: The Parkflicks #3
-http://vimeo.com/31616026
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/213/237/213237845_200.jpg ,BrOADER TV ep.129: Moreboards Stubai Premiere 2011
-http://vimeo.com/31614244
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/213/226/213226011_200.jpg ,BrOADER TV ep.128: The Parkflicks #1
-http://vimeo.com/31612232
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/213/212/213212674_200.jpg ,BrOADER TV ep.127: Moreboards Stubai Premiere 2011 Teaser 3
-http://vimeo.com/31611143
