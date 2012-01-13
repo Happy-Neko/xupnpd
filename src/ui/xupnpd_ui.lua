@@ -79,7 +79,7 @@ function ui_playlists()
 
     http.send('<br><h3>Upload *.m3u file</h3>')
     http.send('<form method=post action="/ui/upload" enctype="multipart/form-data">')
-    http.send('<input type=file name=m3ufile>')
+    http.send('<input type=file name=m3ufile><br /><br />')
     http.send('<input class="btn primary" type=submit value=Send>')
     http.send('</form><hr>')
     http.send('<br><a class="btn primary" href="/ui/reload">Reload</a> <a class="btn primary" href="/ui/reload_feeds?return_url=/ui/playlists">Reload feeds</a> <a class="btn info" href="/ui">Back</a>')
@@ -100,13 +100,13 @@ function ui_feeds()
 
     http.send('<div class="row"><div class="span8">')
 
-    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="gametrailers">GameTrailers</option><option value="generic">Generic</option></select></div></div><br>')
+    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="vkontakte">VKontakte</option><option value="gametrailers">GameTrailers</option><option value="giantbomb">Giant Bomb</option><option value="generic">Generic</option></select></div></div><br>')
 
     http.send('<div class="row"><div class="span2">Feed</div><div class="span4"><input name="feed"></div></div><br>')
 
     http.send('<div class="row"><div class="span2">Description</div><div class="span4"><input name="name"></div></div><br>')
 
-    http.send('</div><div class="span8"><b>Vimeo</b>: username, channel/channelname, group/groupname, album/album_id;<br><b>YouTube</b>: username, favorites/username, playlist/username/playlistname, channel/channelname, search/searchstring;<br><b>GameTrailers</b>: platform/type;<br /><b>Generic</b>: m3u_url;<hr><b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured.<hr><b>GameTrailers platforms</b>: all, ps3, xb360, wii, pc, psv, psp, ds, gba, ps2, gc, xbox, classic, mob.<br /><b>GameTrailers types</b>: all, review, preview, interview, gameplay, feature.</div></div>')
+    http.send('</div><div class="span8"><b>Vimeo</b>: <i>username</i>, channel/<i>channelname</i>, group/<i>groupname</i>, album/<i>album_id</i><br><b>YouTube</b>: <i>username</i>, favorites/<i>username</i>, playlist/<i>username</i>/<i>playlistname</i>, channel/<i>channelname</i>, search/<i>search_string</i><br><b>VKontakte</b>: my, group/<i>group_id</i>, group/<i>group_id</i>/<i>album_id</i>, user/<i>user_id</i>, user/<i>user_id</i>/<i>album_id</i>, search/<i>search_order</i>/<i>search_string</i>, search_hd/<i>search_order</i>/<i>search_string</i><br /><b>GameTrailers</b>: <i>platform</i>/<i>type</i><br /><b>Giant Bomb</b>: <i>channel</i><br /><b>Generic</b>: <i>m3u_url</i><hr><b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured.<hr><b>VKontakte</b>: <a onclick="window.open(this.href,\'newwin\',\'width=450,scrollbars=yes,toolbar=no,menubar=no\'); return false;" href="/ui/vk_status">view groups, friends and plugin help</a>.<hr><b>GameTrailers platforms</b>: all, ps3, xb360, wii, pc, psv, psp, ds, gba, ps2, gc, xbox, classic, mob.<br /><b>GameTrailers types</b>: all, review, preview, interview, gameplay, feature.<hr><b>Giant Bomb channels</b>: all, quicklook, review, feature, trailer, event, endurance, tang.</div></div>')
 
     http.send('<input class="btn primary" type=submit value=Add>')
     http.send('</form><hr>')
@@ -115,16 +115,19 @@ function ui_feeds()
 end
 
 function ui_show()
-    if ui_args.fname and string.find(ui_args.fname,'^[%w_]+%.m3u$') then
-        local pls=m3u.parse(cfg.playlists_path..ui_args.fname)
+    if ui_args.fname then
+        local real_name=util.urldecode(ui_args.fname)
+        if string.find(real_name,'^[^-/\]+%.m3u$') then
+            local pls=m3u.parse(cfg.playlists_path..real_name)
 
-        if pls then
-            http.send('<h3>'..pls.name..'</h3>')
-            http.send('<br><table>')
-            for i,j in ipairs(pls.elements) do
-                http.send(string.format('<tr><td><a href="%s">%s</a></td></tr>',j.url,j.name))
+            if pls then
+                http.send('<h3>'..pls.name..'</h3>')
+                http.send('<br><table>')
+                for i,j in ipairs(pls.elements) do
+                    http.send(string.format('<tr><td><a href="%s">%s</a></td></tr>',j.url,j.name))
+                end
+                http.send('</table>')
             end
-            http.send('</table>')
         end
     end
 
@@ -132,12 +135,15 @@ function ui_show()
 end
 
 function ui_remove()
-    if ui_args.fname and string.find(ui_args.fname,'^[%w_]+%.m3u$') then
-        if os.remove(cfg.playlists_path..ui_args.fname) then
-            core.sendevent('reload')
-            http.send('<h3>OK</h3>')
-        else
-            http.send('<h3>Fail</h3>')
+    if ui_args.fname then
+        local real_name=util.urldecode(ui_args.fname)
+        if string.find(real_name,'^[^-/\]+%.m3u$') then
+            if os.remove(cfg.playlists_path..real_name) then
+                core.sendevent('reload')
+                http.send('<h3>OK</h3>')
+            else
+                http.send('<h3>Fail</h3>')
+            end
         end
     end
 
@@ -204,6 +210,12 @@ function ui_config()
     http_vars.youtube_fmt=cfg.youtube_fmt
     http_vars.youtube_region=cfg.youtube_region
     http_vars.ivi_fmt=cfg.ivi_fmt
+    local vk_name=plugins.vkontakte.vk_get_name()
+    if vk_name then
+        http_vars.vk_auth_link='You are signed as <b>'..vk_name..'</b> <a class="btn info" href="'..plugins.vkontakte.vk_api_request_auth(www_location)..'">sign-in as another user</a>'
+    else
+        http_vars.vk_auth_link='<a class="btn info" href="'..plugins.vkontakte.vk_api_request_auth(www_location)..'">VKontakte sign-in</a>'
+    end
     http.sendtfile(cfg.ui_path..'ui_config.html',http_vars)
 end
 
@@ -217,6 +229,61 @@ function ui_apply()
 
     http.send('<h3>OK</h3>')
     http.send('<br><a class="btn info" href="/ui/config">Back</a>')
+end
+
+function ui_vk_landing()
+    http.send("<script>location.href = document.URL.replace('vk_landing', 'vk_update').replace('#', '?');</script>")
+end
+
+function ui_vk_update()
+    local f=io.open(cfg.config_path..'vkontakte.lua','w')
+    if f then
+        if ui_args.access_token and ui_args.secret and ui_args.user_id then
+            f:write('cfg.vk_api_access_token="',ui_args.access_token,'"\ncfg.vk_api_secret="',ui_args.secret,
+                '"\ncfg.vk_api_user_id="',ui_args.user_id,'"\n')
+            http.send('<h3>VKontakte sign-in OK</h3>')
+        else
+            f:write('cfg.vk_api_access_token=""\ncfg.vk_api_secret=""\ncfg.vk_api_user_id=""\n')
+            http.send('<h3>VKontakte sign-in FAILED</h3>')
+            http.send('Error: '..util.urldecode(ui_args.error)..'<br />Error description: '..util.urldecode(ui_args.error_description)..'<br />')
+        end
+        f:close()
+        core.sendevent('config')
+    else
+        http.send('<h3>Error opening config file</h3>')
+    end
+    http.send('<br><a class="btn info" href="/ui/config">Back</a>')
+end
+
+function ui_vk_status()
+    http.send('<h3>VKontakte Status</h3>')
+    local vk_name=plugins.vkontakte.vk_get_name()
+    if vk_name then
+        http.send('You are signed as <b>'..vk_name..'</b> <a class="btn info" href="'..plugins.vkontakte.vk_api_request_auth(www_location)..'">sign-in as another user</a>')
+        http.send('<h4>Groups</h4>')
+        http.send('<table width="400"><tr><th width="300">group name</th><th>groip id</th></tr>')
+        local vk_groups=plugins.vkontakte.vk_get_groups()
+        if vk_groups then
+            for group_id,group_name in pairs(vk_groups) do
+                http.send(string.format('<tr><td><a href="http://vkontakte.ru/club%s">%s</a></td><td>%s</td></tr>',group_id,group_name,group_id))
+            end
+        end
+        http.send('</table>')
+        http.send('<h4>Firiends</h4>')
+        http.send('<table width="400"><tr><th width="300">friend name</th><th>user id</th></tr>')
+        local vk_friends=plugins.vkontakte.vk_get_friends()
+        if vk_friends then
+            for user_id,user_name in pairs(vk_friends) do
+                http.send(string.format('<tr><td><a href="http://vkontakte.ru/id%s">%s</a></td><td>%s</td></tr>',user_id,user_name,user_id))
+            end
+        end
+        http.send('</table>')
+    else
+        http.send('You are not signed in.')
+        http.send('<a class="btn info" href="'..plugins.vkontakte.vk_api_request_auth(www_location)..'">VKontakte sign-in</a>')
+    end
+
+    http.send('<br><a class="btn primary" href="/ui/vk_status">Refresh</a>')
 end
 
 function ui_status()
@@ -304,7 +371,10 @@ ui_actions=
     ['status']          = { 'xupnpd - status', ui_status },
     ['kill']            = { 'xupnpd - kill', ui_kill },
     ['upload']          = { 'xupnpd - upload', ui_upload },
-    ['apply']           = { 'xupnpd - apply', ui_apply }
+    ['apply']           = { 'xupnpd - apply', ui_apply },
+    ['vk_landing']      = { 'xupnpd - vkontakte sign-in redirect', ui_vk_landing },
+    ['vk_update']       = { 'xupnpd - vkontakte sign-in result', ui_vk_update },
+    ['vk_status']       = { 'xupnpd - vkontakte status', ui_vk_status }
 }
 
 function ui_handler(args,data,ip,url)

@@ -117,13 +117,22 @@ function youtube_updatefeed(feed,friendly_name)
 end
 
 function youtube_sendurl(youtube_url,range)
-
     local url=nil
-
     if plugin_sendurl_from_cache(youtube_url,range) then return end
 
-    local clip_page=http.download(youtube_url)
+    url=youtube_get_video_url(youtube_url)
+    if url then
+        if cfg.debug>0 then print('YouTube Real URL: '..url) end
+        plugin_sendurl(youtube_url,url,range)
+    else
+        if cfg.debug>0 then print('YouTube Real URL is not found') end
+    end
+end
 
+function youtube_get_video_url(youtube_url)
+    local url=nil
+
+    local clip_page=plugin_download(youtube_url)
     if clip_page then
         local stream_map=util.urldecode(string.match(clip_page,'url_encoded_fmt_stream_map=(.-)&amp;'))
         clip_page=nil
@@ -150,19 +159,14 @@ function youtube_sendurl(youtube_url,range)
             end
             if not url then url=url_18 end
         end
+        return url
     else
         if cfg.debug>0 then print('YouTube Clip is not found') end
-    end
-
-    if url then
-        if cfg.debug>0 then print('YouTube Real URL: '..url) end
-
-        plugin_sendurl(youtube_url,url,range)
-    else
-        if cfg.debug>0 then print('YouTube Real URL is not found)') end
+        return nil
     end
 end
 
 plugins['youtube']={}
 plugins.youtube.sendurl=youtube_sendurl
 plugins.youtube.updatefeed=youtube_updatefeed
+plugins.youtube.getvideourl=youtube_get_video_url

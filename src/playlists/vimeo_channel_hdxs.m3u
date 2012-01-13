@@ -1,4 +1,6 @@
 #EXTM3U name="HD Xtreme sports" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/238/402/238402448_200.jpg ,Powder Alert with AFM, Xavier and Victor de Le Rue, TimeLine S02E01
+http://vimeo.com/34751339
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/236/239/236239597_200.jpg ,"Into The White"
 http://vimeo.com/34652088
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/235/666/235666487_200.jpg ,GoPro snowboarding session in les Arcs, France
@@ -37,5 +39,3 @@ http://vimeo.com/32742622
 http://vimeo.com/32264298
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/216/716/216716100_200.jpg ,Lakai The Kid
 http://vimeo.com/29420457
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/218/138/218138058_200.jpg ,BrOADER TV ep.131: The Parkflicks #5
-http://vimeo.com/32262372

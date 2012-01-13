@@ -1,4 +1,20 @@
 #EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/234/665/234665026_200.jpg ,The travel diaries 2011
+http://vimeo.com/34427040
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/238/071/238071838_200.jpg ,GRAVITY // UN RÊVE DE DEMAIN
+http://vimeo.com/34896859
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/237/129/237129015_200.jpg ,M I N E
+http://vimeo.com/34774654
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/210/325/210325509_200.jpg ,Vorare
+http://vimeo.com/31231033
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/237/710/237710524_200.jpg ,The Future Belongs to the Curious
+http://vimeo.com/34853044
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/230/179/230179357_200.jpg ,Girl Walk // All Day: Chapter 12
+http://vimeo.com/33861362
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/236/220/236220372_200.jpg ,BIRDBOY Short film/ Birdboy el Cortometraje
+http://vimeo.com/34658195
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/237/326/237326832_200.jpg ,Fanfarlo "Shiny Things"
+http://vimeo.com/34755995
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/236/926/236926181_200.jpg ,Network
 http://vimeo.com/34750078
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/212/564/212564933_200.jpg ,The Provo Bros - mining powder at Retallack, British Columbia
@@ -23,19 +39,3 @@ http://vimeo.com/32282580
 http://vimeo.com/34400428
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/218/797/218797031_200.jpg ,MutantLand
 http://vimeo.com/32351069
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/233/730/233730816_200.jpg ,Youth Lagoon - July
-http://vimeo.com/34332459
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/235/108/235108285_200.jpg ,Fade
-http://vimeo.com/34518694
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/214/384/214384514_200.jpg ,Hyper Geography (2011)
-http://vimeo.com/31768818
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/190/541/190541201_200.jpg ,We move lightly
-http://vimeo.com/28543744
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/234/340/234340895_200.jpg ,The Holstee Manifesto Lifecycle Video
-http://vimeo.com/34414313
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/234/175/234175280_200.jpg ,The Last Waterman of Wittman
-http://vimeo.com/32708012
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/234/431/234431977_200.jpg ,Sphere
-http://vimeo.com/34426858
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/233/802/233802637_200.jpg ,Barefoot in Folsom
-http://vimeo.com/34067307

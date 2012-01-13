@@ -1,4 +1,20 @@
 #EXTM3U name="GT - PS3 - Gameplay" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725683-t_residentevilracooncity_multiplayergameplayvignette.jpg,Resident Evil: Operation Raccoon City - Multiplayer Gameplay Vignette  HD
+http://www.gametrailers.com/video/multiplayer-gameplay-resident-evil/725684
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725639-gt_asuras_wrath_demo_episode_5_hollow_victory_gp.jpg,Asura's Wrath - Episode 5: Hollow Victory Demo Gameplay HD
+http://www.gametrailers.com/video/episode-5-asuras-wrath/725640
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725637-gt_grand_slam_tennis_2_demo_nadal_vs_djokovic_gp.jpg,Grand Slam Tennis 2 - Nadal vs. Djokovic Demo Gameplay HD
+http://www.gametrailers.com/video/nadal-vs-grand-slam/725638
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725635-gt_final_fantasy_xiii_2_demo_atlas_boss_battle_gp.jpg,Final Fantasy XIII-2 - Atlas Boss Demo Gameplay HD
+http://www.gametrailers.com/video/atlas-boss-final-fantasy/725636
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725633-gt_final_fantasy_xiii_2_demo_alpha_paradox_boss_battle_gp.jpg,Final Fantasy XIII-2 - Alpha Paradox Boss Demo Gameplay HD
+http://www.gametrailers.com/video/alpha-paradox-final-fantasy/725634
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725631-gt_final_fantasy_xiii_2_demo_temporal_rift_battles_gp.jpg,Final Fantasy XIII-2 - Temporal Rift Demo Gameplay HD
+http://www.gametrailers.com/video/temporal-rift-final-fantasy/725632
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725629-gt_asuras_wrath_demo_episode_11_the_final_lesson_gp.jpg,Asura's Wrath - Episode 11: The Final Lesson Demo Gameplay HD
+http://www.gametrailers.com/video/episode-11-asuras-wrath/725630
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725627-gt_final_fantasy_xiii_2_demo_bresha_ruins_battles_gp.jpg,Final Fantasy XIII-2 - Bresha Ruins Demo Gameplay HD
+http://www.gametrailers.com/video/bresha-ruins-final-fantasy/725628
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725337-gt_marvelvscapcom3_psv_arcademode_gp_thumb.jpg,Ultimate Marvel vs Capcom 3 - PS Vita Arcade Mode Gameplay (Cam) HD
 http://www.gametrailers.com/video/ps-vita-ultimate-marvel/725338
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725331-gt_starhawk_multiplayer_beta_gp2.jpg,Starhawk - Beta Multiplayer Gameplay Part 2 HD
@@ -79,23 +95,7 @@ http://www.gametrailers.com/video/dino-rang-skylanders-spyros/723863
 http://www.gametrailers.com/video/hex-trailer-skylanders-spyros/723861
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723858-t_skylanders_wreckingballtrailer_gp_thumb.jpg,Skylanders: Spyro's Adventure - Wrecking Ball Trailer HD
 http://www.gametrailers.com/video/wrecking-ball-skylanders-spyros/723859
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723834-t_ucf3_ito_pridemode_thumb.jpg,UFC Undisputed 3 - Henderson vs Shogun Gameplay HD
-http://www.gametrailers.com/video/henderson-vs-ufc-undisputed/723835
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723830-t_theelderscrollsskyrim_combatanim_uk_thumb.jpg,Elder Scrolls V: Skyrim - Combat Gameplay HD
 http://www.gametrailers.com/video/combat-gameplay-elder-scrolls/723831
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723828-t_saintsrowtt_bikejump_trim_thumb.jpg,Saints Row: The Third - Cherished Memories: Bike Jumping HD
 http://www.gametrailers.com/video/cherished-memories-saints-row/723829
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723824-t_dynastywarriors7xl_pangdetrailaer_gp_thumb.jpg,Dynasty Warriors 7: Xtreme Legends - Pang De Gameplay HD
-http://www.gametrailers.com/video/pang-de-dynasty-warriors/723825
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723822-t_getupamddamce_trailer2_gp_thumb.jpg,Get Up and Dance: Let's Party - Launch Trailer HD
-http://www.gametrailers.com/video/launch-trailer-get-up-and/723823
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723820-montagethumb.jpg,Elder Scrolls V: Skyrim - Exploration and Combat Gameplay HD
-http://www.gametrailers.com/video/exploration-and-elder-scrolls/723821
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723814-gt_raymanorigins_granniesfromheck_gp_em_11-10_9am_thumb.jpg,Rayman Origins - Grannies From Heck Gameplay HD
-http://www.gametrailers.com/video/grannies-from-rayman-origins/723815
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723812-gt_raymanorigins_4playerco-op_gp_em_11-10_9am_thumb.jpg,Rayman Origins - 4-Player Co-op Gameplay HD
-http://www.gametrailers.com/video/4-player-co-op-rayman-origins/723813
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723808-t_ufc3undis_sightsim_cainvsdos_thumb.jpg,UFC Undisputed 3 - Velasquez vs Dos Santos Simulation HD
-http://www.gametrailers.com/video/velasquez-vs-ufc-undisputed/723809
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723806-gp_callofdutymw3_gp_teamdeathmatch-multiplayer-gameplay_bootleg_thumb.jpg,Call of Duty: Modern Warfare 3 - Team Deathmatch Mode Gameplay HD
-http://www.gametrailers.com/video/team-deathmatch-call-of/723807

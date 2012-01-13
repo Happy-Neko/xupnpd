@@ -442,7 +442,7 @@ static int lua_m3u_parse(lua_State* L)
         lua_newtable(L);
         int idx=1;
 
-        char track_name[64]="";
+        char track_name[256]="";
         char track_ext[512]="";
         char track_url[256]="";
 
@@ -1086,6 +1086,38 @@ static int lua_util_dir(lua_State* L)
     return 1;
 }
 
+static int lua_util_md5_string_hash(lua_State* L)
+{
+    size_t l=0;
+    const char* s=lua_tolstring(L,1,&l);
+
+    if(!s)
+        lua_pushnil(L);
+    else
+    {
+        MD5_CTX ctx;
+        MD5_Init(&ctx);            
+        MD5_Update(&ctx,(unsigned char*)s,l);
+
+        unsigned char tmp[16];
+        MD5_Final(tmp,&ctx);
+
+        char buf[sizeof(tmp)*2];
+
+        static const char hex[]="0123456789abcdef";
+        for(int i=0,j=0;i<sizeof(tmp);i++)
+        {
+            buf[j++]=hex[(tmp[i]>>4)&0x0f];
+            buf[j++]=hex[tmp[i]&0x0f];
+        }
+
+        lua_pushlstring(L,buf,sizeof(buf));
+    }
+
+    return 1;
+}
+
+
 static int lua_util_md5(lua_State* L)
 {
     const char* path=lua_tostring(L,1);
@@ -1129,7 +1161,6 @@ static int lua_util_md5(lua_State* L)
     return 1;
 }
 
-
 static int lua_util_unlink(lua_State* L)
 {
     const char* path=lua_tostring(L,1);
@@ -1170,6 +1201,7 @@ int luaopen_luaxlib(lua_State* L)
         {"multipart_split",lua_util_multipart_split},
         {"dir",lua_util_dir},
         {"md5",lua_util_md5},
+        {"md5_string_hash",lua_util_md5_string_hash},
         {"unlink",lua_util_unlink},
         {0,0}
     };

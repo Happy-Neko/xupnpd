@@ -133,6 +133,23 @@ function plugin_sendurl(url,real_url,range)
     end
 end
 
+function plugin_download(url)
+    local data,location
+
+    location=url
+
+    for i=1,5,1 do
+        data,location=http.download(location)
+
+        if not location then
+            return data
+        else
+            if cfg.debug>0 then print('Redirect #'..i..' to: '..location) end
+        end
+    end
+
+    return nil
+end
 
 function http_handler(what,from,port,msg)
 

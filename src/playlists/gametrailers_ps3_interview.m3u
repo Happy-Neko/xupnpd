@@ -1,4 +1,8 @@
 #EXTM3U name="GT - PS3 - Interview" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725673-gt_hitmanabsolution_instinctsofanassassin_interview.jpg,Hitman: Absolution - Instincts of an Assassin  HD
+http://www.gametrailers.com/video/instincts-of-hitman-absolution/725674
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725587-gt_ces2012_sony_kazhirai_interview.jpg,Sony - CES 2012: Kaz Hirai Interview HD
+http://www.gametrailers.com/video/ces-2012-sony/725588
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724977-gt_koareckoning_interview.jpg,Kingdoms of Amalur: Reckoning - Game Design Interview  HD
 http://www.gametrailers.com/video/game-design-kingdoms-of/724978
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724869-gt_rainbow6patriots_therien_designtactics_intv.jpg,Rainbow Six: Patriots - Design Tactics Interview  HD
@@ -95,7 +99,3 @@ http://www.gametrailers.com/video/pax-2011-mass-effect/720081
 http://www.gametrailers.com/video/pax-2011-elder-scrolls/720075
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/720020-gt_batmanarkhamcity_paxp11_plus_int_excl_1280x720_3500_h32.jpg,Batman: Arkham City - PAX 2011: New Game Plus Interview HD
 http://www.gametrailers.com/video/pax-2011-batman-arkham/720021
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/720008-gt_overstrike_gc11_overview_int_1280x720_3500_h32.jpg,OverStrike - GC 11: Synopsis Interview HD
-http://www.gametrailers.com/video/gc-11-overstrike/720009
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/719930-gt_needforspeedtherun_gc11_delong_avalancheandgamemodes_int_1280x720_3500_h32.jpg,Need for Speed: The Run - GC 11: Avalanche & Game Modes Interview HD
-http://www.gametrailers.com/video/gc-11-need-for/719931

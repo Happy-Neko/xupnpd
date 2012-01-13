@@ -1,16 +1,54 @@
 #EXTM3U name="GT - Xbox 360 - All" type=mp4 plugin=gametrailers
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725569-t_ssx_charactershowcase_mac.jpg,SSX - Mac Fraser Signature Uber HD
-http://www.gametrailers.com/video/mac-fraser-ssx/725570
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725733-t_thegunstringer_bigshootin_dlctrailer.jpg,The Gunstringer - Real Big Shootin' DLC Trailer HD
+http://www.gametrailers.com/video/real-big-the-gunstringer/725734
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725695-t_ninjagaiden3_multiplayervignette_thumb.jpg,Ninja Gaiden 3 - Multiplayer Vignette HD
+http://www.gametrailers.com/video/multiplayer-vignette-ninja-gaiden/725696
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725683-t_residentevilracooncity_multiplayergameplayvignette.jpg,Resident Evil: Operation Raccoon City - Multiplayer Gameplay Vignette  HD
+http://www.gametrailers.com/video/multiplayer-gameplay-resident-evil/725684
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725681-t_lollipopchainsaw_swanvignette_thumb.jpg,Lollipop Chainsaw - Swan Vignette HD
+http://www.gametrailers.com/video/swan-vignette-lollipop-chainsaw/725682
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725679-t_kingdomsofalamurreckoning_demounlockablestrailer.jpg,Kingdoms of Amalur: Reckoning - Demo Unlockables Trailer  HD
+http://www.gametrailers.com/video/demo-unlockables-kingdoms-of/725680
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725673-gt_hitmanabsolution_instinctsofanassassin_interview.jpg,Hitman: Absolution - Instincts of an Assassin  HD
+http://www.gametrailers.com/video/instincts-of-hitman-absolution/725674
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725649-gt_final_fantasy_xiii_2_us_demo_trailer.jpg,Final Fantasy XIII-2 - Gameplay Overview Trailer HD
+http://www.gametrailers.com/video/gameplay-overview-final-fantasy/725650
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725645-t_binarydomain_biggerthanyouthinktrailer_thumb.jpg,Binary Domain - Bigger Than You Think Trailer HD
+http://www.gametrailers.com/video/bigger-than-binary-domain/725646
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725642-gt_finalfantasy13-2_ces12party_trlr_str.jpg,Final Fantasy XIII-2 - CES 2012: Exclusive All Access Party Trailer (Stream)
+http://www.gametrailers.com/video/ces-2012-final-fantasy/725642
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725639-gt_asuras_wrath_demo_episode_5_hollow_victory_gp.jpg,Asura's Wrath - Episode 5: Hollow Victory Demo Gameplay HD
+http://www.gametrailers.com/video/episode-5-asuras-wrath/725640
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725637-gt_grand_slam_tennis_2_demo_nadal_vs_djokovic_gp.jpg,Grand Slam Tennis 2 - Nadal vs. Djokovic Demo Gameplay HD
+http://www.gametrailers.com/video/nadal-vs-grand-slam/725638
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725635-gt_final_fantasy_xiii_2_demo_atlas_boss_battle_gp.jpg,Final Fantasy XIII-2 - Atlas Boss Demo Gameplay HD
+http://www.gametrailers.com/video/atlas-boss-final-fantasy/725636
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725633-gt_final_fantasy_xiii_2_demo_alpha_paradox_boss_battle_gp.jpg,Final Fantasy XIII-2 - Alpha Paradox Boss Demo Gameplay HD
+http://www.gametrailers.com/video/alpha-paradox-final-fantasy/725634
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725631-gt_final_fantasy_xiii_2_demo_temporal_rift_battles_gp.jpg,Final Fantasy XIII-2 - Temporal Rift Demo Gameplay HD
+http://www.gametrailers.com/video/temporal-rift-final-fantasy/725632
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725629-gt_asuras_wrath_demo_episode_11_the_final_lesson_gp.jpg,Asura's Wrath - Episode 11: The Final Lesson Demo Gameplay HD
+http://www.gametrailers.com/video/episode-11-asuras-wrath/725630
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725627-gt_final_fantasy_xiii_2_demo_bresha_ruins_battles_gp.jpg,Final Fantasy XIII-2 - Bresha Ruins Demo Gameplay HD
+http://www.gametrailers.com/video/bresha-ruins-final-fantasy/725628
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725623-t_ufcfight_simulationtrailer.jpg,UFC Undisputed 3 - Aldo vs. Mendes Fight Simulation HD
+http://www.gametrailers.com/video/aldo-vs-ufc-undisputed/725624
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725617-t_tigerwoodspgatour13_sizzletrailer_thumb.jpg,Tiger Woods PGA 13 - Debut Trailer HD
+http://www.gametrailers.com/video/debut-trailer-tiger-woods/725618
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725613-t_ffxiii2_playabledemo_trailer_thumb.jpg,Final Fantasy XIII-2 - Playable Demo Trailer HD
+http://www.gametrailers.com/video/playable-demo-final-fantasy/725614
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725583-t_asuraswrath_playabledemotrailer.jpg,Asura's Wrath - Demo Trailer HD
+http://www.gametrailers.com/video/demo-trailer-asuras-wrath/725584
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725581-t_callofdutymw3_contentseason12_btskickoff_doc_j4oua8d4.jpg,Call of Duty: Modern Warfare 3 - Content Season 2012 Trailer HD
+http://www.gametrailers.com/video/content-season-call-of/725582
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725567-t_microsoftxbla_houseparty_sizzlereel_trailer_ces2012.jpg,Microsoft - CES 2012: House Party Line-Up Trailer  HD
 http://www.gametrailers.com/video/ces-2012-microsoft/725568
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725565-t_kingdomsofamalur_skillsandcombattrailer.jpg,Kingdoms of Amalur: Reckoning - A Heroes Guide to Amalur: Skills and Crafting HD
+http://www.gametrailers.com/video/a-heroes-kingdoms-of/725566
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725561-t_bigbangracing_carclasstrailer.jpg,Bang Bang Racing - Car Class Trailer HD
 http://www.gametrailers.com/video/car-class-bang-bang/725562
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725553-t_ssx_accoladestrailer_uk.jpg,SSX - UK Accolades Trailer HD
-http://www.gametrailers.com/video/uk-accolades-ssx/725554
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725551-t_residenteviloperationracooncity_triplethreattrailer.jpg,Resident Evil: Operation Raccoon City - Triple Impact Trailer HD
 http://www.gametrailers.com/video/triple-impact-resident-evil/725552
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725549-t_ssx_travisricesurviveit_uk.jpg,SSX - Travis Rice UK Trailer HD
-http://www.gametrailers.com/video/travis-rice-ssx/725550
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725540-15336:t_grandslamtennis2_demotrailer_em_1_9_12_6am_thumb.jpg,Grand Slam Tennis 2 - Exclusive Demo Trailer HD
 http://www.gametrailers.com/video/exclusive-demo-grand-slam/725541
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725538-gt_soulcaliber5_gp02.jpg,Soul Calibur V - Natsu Gameplay HD
@@ -31,8 +69,6 @@ http://www.gametrailers.com/video/uk-critical-soul-calibur/725448
 http://www.gametrailers.com/video/m55-argus-mass-effect/725446
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725434-t_kofxiii_videotutorial2_thumb.jpg,King of Fighters XIII - Video Tutorial Part 2 HD
 http://www.gametrailers.com/video/video-tutorial-king-of/725435
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725429-t_ufc3undisputed_overeemcharacterreveal_thumb.jpg,UFC Undisputed 3 - Alistair Overeem Character Trailer HD
-http://www.gametrailers.com/video/alistair-overeem-ufc-undisputed/725430
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725425-t_reckoning_insidethecombattrailer_thumb.jpg,Kingdoms of Amalur: Reckoning - Inside Reckoning: Combat Trailer HD
 http://www.gametrailers.com/video/inside-reckoning-kingdoms-of/725426
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725423-t_grandslamtennis2_wimbledonvenuetrailer_thumb.jpg,Grand Slam Tennis 2 - Wimbledon Venue Trailer HD
@@ -63,39 +99,3 @@ http://www.gametrailers.com/video/nests-style-king-of/725330
 http://www.gametrailers.com/video/nests-style-king-of/725328
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725323-kofxiii_video_mrkarate_movesshowcase_thumb.jpg,King of Fighters XIII - Mr. Karate Moves Showcase HD
 http://www.gametrailers.com/video/mr-karate-king-of/725324
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725321-gt_ffxiii2_import_tough_boss_battle_gp12_em12_23.jpg,Final Fantasy XIII-2 - Japanese Tutorial Boss Battle Gameplay HD
-http://www.gametrailers.com/video/japanese-tutorial-final-fantasy/725322
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725319-gt_ffiii2_import_major_boss_battle_gp10_em12_23.jpg,Final Fantasy XIII-2 - Japanese Major Boss Battle Gameplay HD
-http://www.gametrailers.com/video/japanese-major-final-fantasy/725320
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725317-kofxiii_video_mrkarate_combosshowcase_thumb.jpg,King of Fighters XIII - Mr. Karate Combos Showcase HD
-http://www.gametrailers.com/video/mr-karate-king-of/725318
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725309-gt_ffxiii2_import_time_labyrinth_gp11_em12_23.jpg,Final Fantasy XIII-2 - Japanese Time Labyrinth Gameplay HD
-http://www.gametrailers.com/video/japanese-time-final-fantasy/725310
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725304-kofxiii_video_tutorial.jpg,King of Fighters XIII - Tutorial Video Part 1
-http://www.gametrailers.com/video/tutorial-video-king-of/725304
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725298-t_ufc3_lesnarvsovereemsim_thumb.jpg,UFC Undisputed 3 - Lesnar vs Overeem Simulation HD
-http://www.gametrailers.com/video/lesnar-vs-ufc-undisputed/725299
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725293-t_narutoshippudenunsg_featurestrailer.jpg,Naruto Shippuden: Ultimate Ninja Storm Generations - Features Trailer HD
-http://www.gametrailers.com/video/features-trailer-naruto-shippuden/725294
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725291-t_ssx_firstlookgameplayteaser.jpg,SSX - First Look Gameplay Teaser HD
-http://www.gametrailers.com/video/first-look-ssx/725292
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725289-t_disneyuniverse_downloadablecontenttrailer.jpg,Disney Universe - DLC Trailer HD
-http://www.gametrailers.com/video/dlc-trailer-disney-universe/725290
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725279-gt_ffxiii2_import_behemeoth_battle_gp07_em_12_22_thumb.jpg,Final Fantasy XIII-2 - Japanese Behemoth Battle Gameplay HD
-http://www.gametrailers.com/video/japanese-behemoth-final-fantasy/725280
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725277-gt_ffxiii2_import_hand_boss_battle_gp08_em_12_22.jpg,Final Fantasy XIII-2 - Japanese Hand Boss Battle Scene Gameplay HD
-http://www.gametrailers.com/video/japanese-hand-final-fantasy/725278
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725275-gt_ffxiii2_import_rainy_town_battle_gp09_em_12_22.jpg,Final Fantasy XIII-2 - Japanese Rainy Battle Gameplay HD
-http://www.gametrailers.com/video/japanese-rainy-final-fantasy/725276
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725269-t_gameofthrones_thewalltrailer.jpg,Game of Thrones - The Wall Trailer HD
-http://www.gametrailers.com/video/the-wall-game-of/725270
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725265-gt_finalfantasyiii-2_importleapoffaithcinema_gp06_thumb.jpg,Final Fantasy XIII-2 - Japanese Leap of Faith Cinematic HD
-http://www.gametrailers.com/video/japanese-leap-final-fantasy/725266
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725261-gt_finalfantasyiii-2_importcinematicbattlesequence_gp05_thumb.jpg,Final Fantasy XIII-2 - Japanese Cinematic Battle Scene HD
-http://www.gametrailers.com/video/japanese-cinematic-final-fantasy/725262
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725259-gt_finalfantasyiii-2_importaerialbattle_gp04_thumb.jpg,Final Fantasy XIII-2 - Japanese Aerial Battle Gameplay HD
-http://www.gametrailers.com/video/japanese-aerial-final-fantasy/725260
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725203-t_jurassicpark_deluxeunboxing.jpg,Jurassic Park - Deluxe Un-Boxing
-http://www.gametrailers.com/video/deluxe-un-boxing-jurassic-park/725203
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725201-t_finalfantasyxiii-2_actiongameplaytrailer_thumb.jpg,Final Fantasy XIII-2 - Action Gameplay Trailer HD
-http://www.gametrailers.com/video/action-gameplay-final-fantasy/725202

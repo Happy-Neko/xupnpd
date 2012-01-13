@@ -87,6 +87,7 @@ feeds=
     { 'gametrailers',   'psv/all',              'GT - PS Vita - All' },
     { 'gametrailers',   'xb360/all',            'GT - Xbox 360 - All' },
     { 'gametrailers',   'all/all',              'GT - All - All' },
+    { 'giantbomb',      'all',                  'GiantBomb - All' },
 }
 
 -- log ident, pid file end www root

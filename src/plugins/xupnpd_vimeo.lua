@@ -52,7 +52,7 @@ function vimeo_sendurl(vimeo_url,range)
 
     local vimeo_id=string.match(vimeo_url,'.+/(%w+)$')
 
-    local clip_page=http.download(vimeo_url)
+    local clip_page=plugin_download(vimeo_url)
 
     if clip_page then
         local sig,ts=string.match(clip_page,'"signature":"(%w+)","timestamp":(%w+),')

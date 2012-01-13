@@ -1,4 +1,16 @@
 #EXTM3U name="GT - PS Vita - All" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725713-gt_ces2012_hotshots_gp01_vita_bogusbogey_cam_thumb.jpg,Hot Shots Golf - CES 12: Triple Bogey Gameplay (Cam) HD
+http://www.gametrailers.com/video/ces-12-hot-shots/725714
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725711-gt_ces2012_gravityrush_gp01_vita_freefalling_cam.jpg,Gravity Rush - CES 2012: Freefalling Gameplay (Cam) HD
+http://www.gametrailers.com/video/ces-2012-gravity-rush/725712
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725709-gt_ces2012_littlebigplanet_gp01_vita_features_cam_thumb.jpg,LittleBigPlanet Vita - CES 12: Features Gameplay (Cam) HD
+http://www.gametrailers.com/video/ces-12-littlebigplanet-vita/725710
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725653-t_armycorpsofhell_charactersandcustomizationtrailer.jpg,Army Corps of Hell - Characters and Customization Trailer HD
+http://www.gametrailers.com/video/characters-and-army-corps/725654
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725641-gt_playstationvita_ces12_allaccesslive_wt_str.jpg,PlayStation Vita - CES 2012: All Access Live Interview (Stream)
+http://www.gametrailers.com/video/ces-2012-playstation-vita/725641
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725587-gt_ces2012_sony_kazhirai_interview.jpg,Sony - CES 2012: Kaz Hirai Interview HD
+http://www.gametrailers.com/video/ces-2012-sony/725588
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725504-t_dynastywarriornext_weiactiontrailer_thumb.jpg,Dynasty Warriors Next - UK Wei Kingdom Trailer
 http://www.gametrailers.com/video/uk-wei-dynasty-warriors/725504
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725503-t_dynastywarriornext_wuactiontrailer_thumb.jpg,Dynasty Warriors Next - UK Wu Kingdom Trailer
@@ -87,15 +99,3 @@ http://www.gametrailers.com/video/speedway-trailer-f1-2011/724079
 http://www.gametrailers.com/video/shake-it-f1-2011/724077
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724034-t_army-corps-of-hell_scylla_gp_jp_thumb.jpg,Army Corps of Hell - Japanese Scylla Trailer
 http://www.gametrailers.com/video/japanese-scylla-army-corps/724034
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724031-t_army-corps-of-hell_demon_gp_jp_thumb.jpg,Army Corps of Hell - Japanese Demon Trailer
-http://www.gametrailers.com/video/japanese-demon-army-corps/724031
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724030-t_army-corps-of-hell_alchemy_gp_jp_thumb.jpg,Army Corps of Hell - Japanese Alchemy Trailer
-http://www.gametrailers.com/video/japanese-alchemy-army-corps/724030
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724029-t_army-corps-of-hell_action_gp_thumb.jpg,Army Corps of Hell - Japanese High Action Trailer
-http://www.gametrailers.com/video/japanese-high-army-corps/724029
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723919-gt_ultimatemarvelvscapcom3_reviewpod_embargo_11-14_8am.jpg,Ultimate Marvel vs Capcom 3 - Review Pod HD
-http://www.gametrailers.com/video/review-pod-ultimate-marvel/723920
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723900-harrythumb.jpg,LEGO Harry Potter: Years 5-7 - Launch Trailer HD
-http://www.gametrailers.com/video/launch-trailer-lego-harry/723901
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723814-gt_raymanorigins_granniesfromheck_gp_em_11-10_9am_thumb.jpg,Rayman Origins - Grannies From Heck Gameplay HD
-http://www.gametrailers.com/video/grannies-from-rayman-origins/723815
