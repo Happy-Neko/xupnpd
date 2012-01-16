@@ -62,7 +62,7 @@ function vimeo_sendurl(vimeo_url,range)
             url=string.format('http://player.vimeo.com/play_redirect?clip_id=%s&sig=%s&time=%s&quality=hd&codecs=H264&type=moogaloop_local&embed_location=',vimeo_id,sig,ts)
         end
     else
-        if cfg.debug>0 then print('Vimeo Clip '..vimeo_id..' is not found') end
+        if cfg.debug>0 then print('Vimeo clip '..vimeo_id..' is not found') end
     end
 
     if url then
@@ -71,6 +71,8 @@ function vimeo_sendurl(vimeo_url,range)
         plugin_sendurl(vimeo_url,url,range)
     else
         if cfg.debug>0 then print('Vimeo Real URL is not found') end
+
+        plugin_sendfile('www/corrupted.mp4')
     end
 end
 

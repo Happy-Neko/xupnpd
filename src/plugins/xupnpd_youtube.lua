@@ -123,9 +123,12 @@ function youtube_sendurl(youtube_url,range)
     url=youtube_get_video_url(youtube_url)
     if url then
         if cfg.debug>0 then print('YouTube Real URL: '..url) end
+
         plugin_sendurl(youtube_url,url,range)
     else
-        if cfg.debug>0 then print('YouTube Real URL is not found') end
+        if cfg.debug>0 then print('YouTube clip is not found') end
+
+        plugin_sendfile('www/corrupted.mp4')
     end
 end
 
@@ -161,7 +164,7 @@ function youtube_get_video_url(youtube_url)
         end
         return url
     else
-        if cfg.debug>0 then print('YouTube Clip is not found') end
+        if cfg.debug>0 then print('YouTube clip is not found') end
         return nil
     end
 end

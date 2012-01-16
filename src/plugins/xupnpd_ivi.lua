@@ -44,7 +44,7 @@ function ivi_sendurl(ivi_url,range)
             if not url then url=url_lo end
         end
     else
-        if cfg.debug>0 then print('IVI Clip '..ivi_id..' is not found') end
+        if cfg.debug>0 then print('IVI clip '..ivi_id..' is not found') end
     end
 
     if url then
@@ -53,6 +53,8 @@ function ivi_sendurl(ivi_url,range)
         plugin_sendurl(ivi_url,url,range)
     else
         if cfg.debug>0 then print('IVI Real URL is not found') end
+
+        plugin_sendfile('www/corrupted.mp4')
     end
 end
 

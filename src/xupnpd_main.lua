@@ -261,6 +261,7 @@ print("start "..cfg.log_ident)
 core.timer(300,'sys_gc')
 
 http.timeout(cfg.http_timeout)
+http.user_agent(cfg.user_agent)
 
 -- start feeds update system
 if cfg.feeds_update_interval>0 then

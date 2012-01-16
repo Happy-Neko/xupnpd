@@ -39,6 +39,8 @@ namespace core
 {
     int http_timeout=15;
 
+    char user_agent[256]="xupnpd";
+
     struct url_data
     {
         char host[128];
@@ -1600,7 +1602,7 @@ static int lua_http_sendurl(lua_State* L)
         return 1;
     }
 
-    fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n",url.urn,url.vhost);
+    fprintf(fp,"GET %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: %s\r\nConnection: close\r\nCache-Control: no-cache\r\n",url.urn,url.vhost,core::user_agent);
     if(range && *range)
         fprintf(fp,"Range: %s\r\n",range);
 
@@ -1816,8 +1818,8 @@ static int lua_http_notify(lua_State* L)
     }
 
     fprintf(fp,
-        "NOTIFY %s HTTP/1.1\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nContent-Type: text/xml\r\nContent-Length: %i\r\n"
-        "NT: upnp:event\r\nNTS: upnp:propchange\r\nSID: uuid:%s\r\nSEQ: %i\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost,len,sid,seq);
+        "NOTIFY %s HTTP/1.1\r\nHost: %s\r\nUser-Agent: %s\r\nConnection: close\r\nContent-Type: text/xml\r\nContent-Length: %i\r\n"
+        "NT: upnp:event\r\nNTS: upnp:propchange\r\nSID: uuid:%s\r\nSEQ: %i\r\nCache-Control: no-cache\r\n\r\n",url.urn,url.vhost,core::user_agent,len,sid,seq);
     fwrite(data,len,1,fp);
     fflush(fp);
 
@@ -1872,8 +1874,8 @@ static int lua_http_download(lua_State* L)
             if(fp)
             {
                 fprintf(fp,
-                    "%s %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: xupnpd\r\nConnection: close\r\nCache-Control: no-cache\r\n",*post_data?"POST":"GET",
-                        url.urn,url.vhost);
+                    "%s %s HTTP/1.0\r\nHost: %s\r\nUser-Agent: %s\r\nConnection: close\r\nCache-Control: no-cache\r\n",*post_data?"POST":"GET",
+                        url.urn,url.vhost,core::user_agent);
 
                 if(*post_data)
                     fprintf(fp,"Content-Length: %d\r\n",post_data_size);
@@ -1997,6 +1999,20 @@ static int lua_http_timeout(lua_State* L)
     return 0;
 }
 
+static int lua_http_user_agent(lua_State* L)
+{
+    const char* s=lua_tostring(L,1);
+
+    if(s && *s)
+    {
+        int n=snprintf(core::user_agent,sizeof(core::user_agent),"%s",s);
+        if(n==-1 || n>=sizeof(core::user_agent))
+            core::user_agent[sizeof(core::user_agent)-1]=0;
+    }
+
+    return 0;
+}
+
 
 int luaopen_luaxcore(lua_State* L)
 {
@@ -2037,6 +2053,7 @@ int luaopen_luaxcore(lua_State* L)
         {"notify",lua_http_notify},
         {"download",lua_http_download},
         {"timeout",lua_http_timeout},
+        {"user_agent",lua_http_user_agent},
         {0,0}
     };
 

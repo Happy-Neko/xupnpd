@@ -74,15 +74,16 @@ function gb_sendurl(gb_page_url,range)
             if url then
                 if cfg.debug>0 then print('Giant Bomb Real URL: '..url) end
                 plugin_sendurl(gb_page_url,url,range)
-            else
-                if cfg.debug>0 then print('Giant Bomb Real URL is not found') end
             end
-        else
-            if cfg.debug>0 then print('Giant Bomb Clip Id is not found') end
         end
-    else
-        if cfg.debug>0 then print('Giant Bomb Clip page is not found') end
     end
+
+    if not url then
+        if cfg.debug>0 then print('Giant Bomb clip is not found') end
+
+        plugin_sendfile('www/corrupted.mp4')
+    end
+
 end
 
 plugins['giantbomb']={}

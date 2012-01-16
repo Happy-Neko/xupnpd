@@ -133,6 +133,16 @@ function plugin_sendurl(url,real_url,range)
     end
 end
 
+function plugin_sendfile(path)
+    local len=util.getflen(path)
+    if len then
+        http.send(string.format('Content-Length: %s\r\n\r\n',len))
+        http.sendfile(path)
+    else
+        http.send('\r\n')
+    end
+end
+
 function plugin_download(url)
     local data,location
 

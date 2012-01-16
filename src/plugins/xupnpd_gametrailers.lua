@@ -105,15 +105,17 @@ function gametrailers_sendurl(gametrailers_page_url,range)
             url=gametrailers_download_url..'/'..gametrailers_id..'/'..filename_mp4
         end
     else
-        if cfg.debug>0 then print('GameTrailers Clip '..gametrailers_id..' page is not found') end
+        if cfg.debug>0 then print('GameTrailers clip '..gametrailers_id..' page is not found') end
     end
 
     if url then
-        if cfg.debug>0 then print('GameTrailers Clip '..gametrailers_id..' real URL: '..url) end
+        if cfg.debug>0 then print('GameTrailers clip '..gametrailers_id..' real URL: '..url) end
 
         plugin_sendurl(gametrailers_page_url,url,range)
     else
-        if cfg.debug>0 then print('GameTrailers Clip '..gametrailers_id..' real URL is not found') end
+        if cfg.debug>0 then print('GameTrailers clip '..gametrailers_id..' real URL is not found') end
+
+        plugin_sendfile('www/corrupted.mp4')
     end
 end
 
