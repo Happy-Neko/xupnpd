@@ -1,4 +1,12 @@
 #EXTM3U name="GT - Xbox 360 - All" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725775-725689-BR_601_movieID.jpg,Bonus Round - 2012 Industry Preview: PS Vita HD
+http://www.gametrailers.com/episode/bonusround/601?ch=1_960x540_3500_m31
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725763-gt_darkness2_demo_montage.jpg,The Darkness II - Disturbing Dismemberment Montage HD
+http://www.gametrailers.com/video/disturbing-dismemberment-the-darkness/725764
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725745-t_soulcalibur5_flightclubeventfeaturette.jpg,Soul Calibur V - Fight Club Event Featurette HD
+http://www.gametrailers.com/video/fight-club-soul-calibur/725746
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725741-t_tropico4moderntimes_debutexpansiontrailer.jpg,Tropico 4: Modern Times - Debut Expansion Trailer HD
+http://www.gametrailers.com/video/debut-expansion-tropico-4/725742
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725733-t_thegunstringer_bigshootin_dlctrailer.jpg,The Gunstringer - Real Big Shootin' DLC Trailer HD
 http://www.gametrailers.com/video/real-big-the-gunstringer/725734
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725695-t_ninjagaiden3_multiplayervignette_thumb.jpg,Ninja Gaiden 3 - Multiplayer Vignette HD
@@ -91,11 +99,3 @@ http://www.gametrailers.com/video/launch-trailer-self-defense-training/725377
 http://www.gametrailers.com/video/trailer-offstage-uprising-44/725375
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725354-t_gameofthrones_winter_trailer_thumb.jpg,Game of Thrones - Winter Trailer HD
 http://www.gametrailers.com/video/winter-trailer-game-of/725355
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725337-gt_marvelvscapcom3_psv_arcademode_gp_thumb.jpg,Ultimate Marvel vs Capcom 3 - PS Vita Arcade Mode Gameplay (Cam) HD
-http://www.gametrailers.com/video/ps-vita-ultimate-marvel/725338
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725329-t_kofxiii_video_nestskyo_combosshowcase_thumb.jpg,King of Fighters XIII - Nests Style Kyo Combos Showcase HD
-http://www.gametrailers.com/video/nests-style-king-of/725330
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725327-kofxiii_video_nestskyo_movesshowcase_thumb.jpg,King of Fighters XIII - Nests Style Kyo Moves Showcase HD
-http://www.gametrailers.com/video/nests-style-king-of/725328
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725323-kofxiii_video_mrkarate_movesshowcase_thumb.jpg,King of Fighters XIII - Mr. Karate Moves Showcase HD
-http://www.gametrailers.com/video/mr-karate-king-of/725324

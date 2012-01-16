@@ -1,4 +1,14 @@
 #EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/238/487/238487792_200.jpg ,A tribute to the people of Vejle
+http://vimeo.com/34952048
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/234/696/234696215_200.jpg ,Being There - Happy New Year
+http://vimeo.com/34463132
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/236/565/236565591_200.jpg ,Trieste
+http://vimeo.com/34702612
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/231/417/231417924_200.jpg ,Sony Realtime Projection Mapping 2
+http://vimeo.com/34025760
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/236/219/236219316_200.jpg ,LITTLE TOMBSTONE - ESMA 2011
+http://vimeo.com/34655941
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/234/665/234665026_200.jpg ,The travel diaries 2011
 http://vimeo.com/34427040
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/238/071/238071838_200.jpg ,GRAVITY // UN RÊVE DE DEMAIN
@@ -29,13 +39,3 @@ http://vimeo.com/33731191
 http://vimeo.com/34699752
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/234/661/234661904_200.jpg ,Lost in Tokyo
 http://vimeo.com/34447797
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/234/042/234042109_200.jpg ,Operation White Widow (2011)
-http://vimeo.com/34374715
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/198/606/198606240_200.jpg ,Elderly Animals: Photographs by Isa Leshko
-http://vimeo.com/29632448
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/236/122/236122409_200.jpg ,Locomotive - Place des Arts - Espace culturel - Teaser
-http://vimeo.com/32282580
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/234/239/234239391_200.jpg ,Time is Nothing // Around The World Time Lapse
-http://vimeo.com/34400428
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/218/797/218797031_200.jpg ,MutantLand
-http://vimeo.com/32351069

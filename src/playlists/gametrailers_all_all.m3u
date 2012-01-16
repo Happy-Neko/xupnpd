@@ -1,4 +1,40 @@
 #EXTM3U name="GT - All - All" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725775-725689-BR_601_movieID.jpg,Bonus Round - 2012 Industry Preview: PS Vita HD
+http://www.gametrailers.com/episode/bonusround/601?ch=1_960x540_3500_m31
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725771-t_skullgirls_scr11_t8rd7_baloneyosvdantarion.jpg,Skullgirls - SoCal Regionals 2011: Skullgirls Round 7: Baloney O's vs. Dantarion HD
+http://www.gametrailers.com/video/socal-regionals-skullgirls/725772
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725765-gt_iamalive_ces2012_int.jpg,I Am Alive - CES 2012: Staying Alive Interview HD
+http://www.gametrailers.com/video/ces-2012-i-am-alive/725766
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725763-gt_darkness2_demo_montage.jpg,The Darkness II - Disturbing Dismemberment Montage HD
+http://www.gametrailers.com/video/disturbing-dismemberment-the-darkness/725764
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725760-gt_iw_193_thumb.jpg,Invisible Walls - Episode 193
+http://www.gametrailers.com/video/episode-193-invisible-walls/725760
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725758-gt_ces2012_starhawk_wt03_cam.jpg,Starhawk - CES 2012: Gameplay Walkthrough Part 3 (Cam) HD
+http://www.gametrailers.com/video/ces-2012-starhawk/725759
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725754-gt_ces2012_starhawk_wt01_cam.jpg,Starhawk - CES 2012: Gameplay Walkthrough Part 1 (Cam) HD
+http://www.gametrailers.com/video/ces-2012-starhawk/725755
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725752-gt_ces2012_starhawk_wt02_cam.jpg,Starhawk - CES 2012: Gameplay Walkthrough Part 2 (Cam) HD
+http://www.gametrailers.com/video/ces-2012-starhawk/725753
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725750-gt_ces2012_sorcery_wt_cam_thumb.jpg,Sorcery - CES 2012: Battle Tactics Walkthrough (Cam) HD
+http://www.gametrailers.com/video/ces-2012-sorcery/725751
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725748-t_shinobido2_featuresandcharacters_trailer.jpg,Shinobido 2: Revenge of Zen - Characters and Features Trailer  HD
+http://www.gametrailers.com/video/characters-and-shinobido-2/725749
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725747-t_blackwellseries_debuttrailer.jpg,Blackwell Series - Series Trailer
+http://www.gametrailers.com/video/series-trailer-blackwell-series/725747
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725745-t_soulcalibur5_flightclubeventfeaturette.jpg,Soul Calibur V - Fight Club Event Featurette HD
+http://www.gametrailers.com/video/fight-club-soul-calibur/725746
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725744-t_crush3d_trainingfeaturette_uk.jpg,CRUSH3D - Training Featurette
+http://www.gametrailers.com/video/training-featurette-crush3d/725744
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725743-t_crush3d_launchtrailer_uk.jpg,CRUSH3D - UK Launch Trailer
+http://www.gametrailers.com/video/uk-launch-crush3d/725743
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725741-t_tropico4moderntimes_debutexpansiontrailer.jpg,Tropico 4: Modern Times - Debut Expansion Trailer HD
+http://www.gametrailers.com/video/debut-expansion-tropico-4/725742
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725739-t_touchmykatamari_prologuetrailer.jpg,Touch My Katamari - Prologue Trailer HD
+http://www.gametrailers.com/video/prologue-trailer-touch-my/725740
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725737-t_Supermonkeyballbananasplit_debutcgitrailer.jpg,Super Monkey Ball: Banana Splitz - Debut Trailer HD
+http://www.gametrailers.com/video/debut-trailer-super-monkey/725738
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725735-t_rayforce_debuttrailer.jpg,Rayforce - Debut Trailer HD
+http://www.gametrailers.com/video/debut-trailer-rayforce/725736
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725733-t_thegunstringer_bigshootin_dlctrailer.jpg,The Gunstringer - Real Big Shootin' DLC Trailer HD
 http://www.gametrailers.com/video/real-big-the-gunstringer/725734
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725731-t_skullgirls_scr11top8_round6_odd03vsshinatproof.jpg,Skullgirls - SoCal Regionals 2011: Skullgirls Round 6: Oddo3  vs  Shinatproof HD
@@ -31,6 +67,8 @@ http://www.gametrailers.com/video/us-trailer-wargame-european/725708
 http://www.gametrailers.com/video/developer-diary-blacklight-retribution/725706
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725703-t_wakfu_devdiarypowertotheplayer_thumb.jpg,Wakfu - Developer Diary: Power to the Player HD
 http://www.gametrailers.com/video/developer-diary-wakfu/725704
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725701-pach_thumb.jpg,Pach-Attack! - The Rise of Gamestop HD
+http://www.gametrailers.com/video/the-rise-pach-attack/725702
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725697-t_victoria2ahousedivided_devdiaryexpansiondebut.jpg,Victoria II - Developer Diary: Expansion Announcment HD
 http://www.gametrailers.com/video/developer-diary-victoria-ii/725698
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725695-t_ninjagaiden3_multiplayervignette_thumb.jpg,Ninja Gaiden 3 - Multiplayer Vignette HD
@@ -57,45 +95,7 @@ http://www.gametrailers.com/video/instincts-of-hitman-absolution/725674
 http://www.gametrailers.com/video/debut-trailer-star-marine/725672
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725670-gt_ultimate_preview_2012_promo1.jpg,Ultimate Gaming Preview 2012 - Sneak Peek  HD
 http://www.gametrailers.com/video/sneak-peek-ultimate-gaming/725671
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725669-gt_screwattack_vgv_supersmashbros_em_1-14_j5hdiuwe.jpg,ScrewAttack - Video Game Vault: Super Smash Bros.
+http://www.gametrailers.com/video/video-game-screwattack/725669
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725667-t_skullgirls_scr11top8_round3_koyunluvscopperdabbit.jpg,Skullgirls - SoCal Regionals 2011: Skullgirls Round 3: Koyunlu vs CopperDabbit HD
 http://www.gametrailers.com/video/socal-regionals-skullgirls/725668
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725665-t_skullgirls_scr11top8_round4_baloneyossvsofckingsley.jpg,Skullgirls - SoCal Regionals 2011: Skullgirls Round 4: Baloney O's vs OFC Kingsley HD
-http://www.gametrailers.com/video/socal-regionals-skullgirls/725666
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725663-ssx_thumb-_hd.jpg,SSX - Exclusive This is SSX Trailer HD
-http://www.gametrailers.com/video/exclusive-this-ssx/725664
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725661-t_overgrowth_alpha164changes_thumb.jpg,Overgrowth - Alpha 164 Changes HD
-http://www.gametrailers.com/video/alpha-164-overgrowth/725662
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725659-t_thesecretworld_illuminatiteaser_thumb.jpg,The Secret World - Exclusive Illuminati Teaser HD
-http://www.gametrailers.com/video/exclusive-illuminati-the-secret/725660
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725657-t_thecartetradingcardgame_debutteaser.jpg,The Carte: Trading Card Game - Debut Teaser HD
-http://www.gametrailers.com/video/debut-teaser-the-carte/725658
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725655-t_everquest2ageofdiscovery_flightwingstrailer_thumb.jpg,EverQuest II: Age of Discovery - Flight Wings Trailer HD
-http://www.gametrailers.com/video/flight-wings-everquest-ii/725656
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725653-t_armycorpsofhell_charactersandcustomizationtrailer.jpg,Army Corps of Hell - Characters and Customization Trailer HD
-http://www.gametrailers.com/video/characters-and-army-corps/725654
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725651-t_amy_nightmarestrailer_thumb.jpg,AMY - Nightmares Trailer HD
-http://www.gametrailers.com/video/nightmares-trailer-amy/725652
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725649-gt_final_fantasy_xiii_2_us_demo_trailer.jpg,Final Fantasy XIII-2 - Gameplay Overview Trailer HD
-http://www.gametrailers.com/video/gameplay-overview-final-fantasy/725650
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725647-t_deponia_debutteaser.jpg,Deponia - Debut Teaser HD
-http://www.gametrailers.com/video/debut-teaser-deponia/725648
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725645-t_binarydomain_biggerthanyouthinktrailer_thumb.jpg,Binary Domain - Bigger Than You Think Trailer HD
-http://www.gametrailers.com/video/bigger-than-binary-domain/725646
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725643-t_bulletasylum_launchtrailer.jpg,BulletAsylum - Launch Trailer HD
-http://www.gametrailers.com/video/launch-trailer-bulletasylum/725644
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725642-gt_finalfantasy13-2_ces12party_trlr_str.jpg,Final Fantasy XIII-2 - CES 2012: Exclusive All Access Party Trailer (Stream)
-http://www.gametrailers.com/video/ces-2012-final-fantasy/725642
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725641-gt_playstationvita_ces12_allaccesslive_wt_str.jpg,PlayStation Vita - CES 2012: All Access Live Interview (Stream)
-http://www.gametrailers.com/video/ces-2012-playstation-vita/725641
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725639-gt_asuras_wrath_demo_episode_5_hollow_victory_gp.jpg,Asura's Wrath - Episode 5: Hollow Victory Demo Gameplay HD
-http://www.gametrailers.com/video/episode-5-asuras-wrath/725640
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725637-gt_grand_slam_tennis_2_demo_nadal_vs_djokovic_gp.jpg,Grand Slam Tennis 2 - Nadal vs. Djokovic Demo Gameplay HD
-http://www.gametrailers.com/video/nadal-vs-grand-slam/725638
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725635-gt_final_fantasy_xiii_2_demo_atlas_boss_battle_gp.jpg,Final Fantasy XIII-2 - Atlas Boss Demo Gameplay HD
-http://www.gametrailers.com/video/atlas-boss-final-fantasy/725636
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725633-gt_final_fantasy_xiii_2_demo_alpha_paradox_boss_battle_gp.jpg,Final Fantasy XIII-2 - Alpha Paradox Boss Demo Gameplay HD
-http://www.gametrailers.com/video/alpha-paradox-final-fantasy/725634
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725631-gt_final_fantasy_xiii_2_demo_temporal_rift_battles_gp.jpg,Final Fantasy XIII-2 - Temporal Rift Demo Gameplay HD
-http://www.gametrailers.com/video/temporal-rift-final-fantasy/725632
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725629-gt_asuras_wrath_demo_episode_11_the_final_lesson_gp.jpg,Asura's Wrath - Episode 11: The Final Lesson Demo Gameplay HD
-http://www.gametrailers.com/video/episode-11-asuras-wrath/725630

@@ -91,6 +91,10 @@ feeds=
     { 'gametrailers',   'xb360/all',            'GT - Xbox 360 - All' },
     { 'gametrailers',   'all/all',              'GT - All - All' },
     { 'giantbomb',      'all',                  'GiantBomb - All' },
+    { 'ag',             'videos',               'AG - New' },
+    { 'ag',             'videos/top100pop',     'AG - Top100' },
+    { 'ag',             'videos/top100best',    'AG - Best100' },
+    { 'ag',             'videos/selected_by_ag','AG - ByAG' },
 }
 
 -- log ident, pid file end www root

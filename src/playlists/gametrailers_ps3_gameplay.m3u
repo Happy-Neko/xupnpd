@@ -1,4 +1,12 @@
 #EXTM3U name="GT - PS3 - Gameplay" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725763-gt_darkness2_demo_montage.jpg,The Darkness II - Disturbing Dismemberment Montage HD
+http://www.gametrailers.com/video/disturbing-dismemberment-the-darkness/725764
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725758-gt_ces2012_starhawk_wt03_cam.jpg,Starhawk - CES 2012: Gameplay Walkthrough Part 3 (Cam) HD
+http://www.gametrailers.com/video/ces-2012-starhawk/725759
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725754-gt_ces2012_starhawk_wt01_cam.jpg,Starhawk - CES 2012: Gameplay Walkthrough Part 1 (Cam) HD
+http://www.gametrailers.com/video/ces-2012-starhawk/725755
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725752-gt_ces2012_starhawk_wt02_cam.jpg,Starhawk - CES 2012: Gameplay Walkthrough Part 2 (Cam) HD
+http://www.gametrailers.com/video/ces-2012-starhawk/725753
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725683-t_residentevilracooncity_multiplayergameplayvignette.jpg,Resident Evil: Operation Raccoon City - Multiplayer Gameplay Vignette  HD
 http://www.gametrailers.com/video/multiplayer-gameplay-resident-evil/725684
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725639-gt_asuras_wrath_demo_episode_5_hollow_victory_gp.jpg,Asura's Wrath - Episode 5: Hollow Victory Demo Gameplay HD
@@ -91,11 +99,3 @@ http://www.gametrailers.com/video/wii-multiplayer-call-of/723867
 http://www.gametrailers.com/video/wii-campaign-call-of/723865
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723862-t_skylanders_dinorangtrailer_gp_thumb.jpg,Skylanders: Spyro's Adventure - Dino Rang Trailer HD
 http://www.gametrailers.com/video/dino-rang-skylanders-spyros/723863
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723860-t_skylanders_hextrailer_gp_thumb.jpg,Skylanders: Spyro's Adventure - Hex Trailer HD
-http://www.gametrailers.com/video/hex-trailer-skylanders-spyros/723861
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723858-t_skylanders_wreckingballtrailer_gp_thumb.jpg,Skylanders: Spyro's Adventure - Wrecking Ball Trailer HD
-http://www.gametrailers.com/video/wrecking-ball-skylanders-spyros/723859
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723830-t_theelderscrollsskyrim_combatanim_uk_thumb.jpg,Elder Scrolls V: Skyrim - Combat Gameplay HD
-http://www.gametrailers.com/video/combat-gameplay-elder-scrolls/723831
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723828-t_saintsrowtt_bikejump_trim_thumb.jpg,Saints Row: The Third - Cherished Memories: Bike Jumping HD
-http://www.gametrailers.com/video/cherished-memories-saints-row/723829

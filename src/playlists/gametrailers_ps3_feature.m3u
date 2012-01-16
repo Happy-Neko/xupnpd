@@ -1,4 +1,10 @@
 #EXTM3U name="GT - PS3 - Feature" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725758-gt_ces2012_starhawk_wt03_cam.jpg,Starhawk - CES 2012: Gameplay Walkthrough Part 3 (Cam) HD
+http://www.gametrailers.com/video/ces-2012-starhawk/725759
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725754-gt_ces2012_starhawk_wt01_cam.jpg,Starhawk - CES 2012: Gameplay Walkthrough Part 1 (Cam) HD
+http://www.gametrailers.com/video/ces-2012-starhawk/725755
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725752-gt_ces2012_starhawk_wt02_cam.jpg,Starhawk - CES 2012: Gameplay Walkthrough Part 2 (Cam) HD
+http://www.gametrailers.com/video/ces-2012-starhawk/725753
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725536-gt_soulcaliber5_gp01.jpg,Soul Calibur V - Ivy Gameplay HD
 http://www.gametrailers.com/video/ivy-gameplay-soul-calibur/725537
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725534-gt_soulcaliber5_gp03.jpg,Soul Calibur V - Hilde Gameplay  HD
@@ -93,9 +99,3 @@ http://www.gametrailers.com/video/shock-and-saints-row/722420
 http://www.gametrailers.com/video/nycc-11-street-fighter/722345
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/722285-syndicatethumb.jpg,Syndicate - Aspari Raid Walkthrough HD
 http://www.gametrailers.com/video/aspari-raid-syndicate/722286
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/722153-t_masseffect3_multipannounce_fr.jpg,Mass Effect 3 - Multiplayer Featurette HD
-http://www.gametrailers.com/video/multiplayer-featurette-mass-effect/722154
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/722105-t_thesims3pets_producerstoryvideo.jpg,The Sims 3 Pets - Create-a-Sim Developer Diary HD
-http://www.gametrailers.com/video/create-a-sim-developer-the-sims-3/722106
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/722101-trinethumb.jpg,Trine 2 - Unlimited Mode Walkthrough HD
-http://www.gametrailers.com/video/unlimited-mode-trine-2/722102

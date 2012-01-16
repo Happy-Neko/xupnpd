@@ -1880,6 +1880,8 @@ static int lua_http_download(lua_State* L)
                 if(*post_data)
                     fprintf(fp,"Content-Length: %d\r\n",post_data_size);
 
+//                fprintf(fp,"Accept-Charset: utf-8\r\n");
+
                 fprintf(fp,"\r\n");
 
                 if(*post_data)
