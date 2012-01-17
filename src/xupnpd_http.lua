@@ -328,6 +328,7 @@ function http_handler(what,from,port,msg)
 
                 if pls.plugin then
                     http.send('Accept-Ranges: bytes\r\n')
+                    http.flush()        -- PS3 YouTube network error fix?
                     plugins[pls.plugin].sendurl(pls.url,msg.range)
                 else
                     http.send('Accept-Ranges: none\r\n\r\n')

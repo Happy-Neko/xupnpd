@@ -1,4 +1,6 @@
 #EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/119/756/119756093_200.jpg ,Amon Tobin - "Esther's"
+http://vimeo.com/18964314
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/238/487/238487792_200.jpg ,A tribute to the people of Vejle
 http://vimeo.com/34952048
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/234/696/234696215_200.jpg ,Being There - Happy New Year
@@ -37,5 +39,3 @@ http://vimeo.com/34673916
 http://vimeo.com/33731191
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/236/546/236546178_200.jpg ,The Girl with the Dragon Tattoo Opening Titles
 http://vimeo.com/34699752
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/234/661/234661904_200.jpg ,Lost in Tokyo
-http://vimeo.com/34447797

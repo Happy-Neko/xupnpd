@@ -1,4 +1,12 @@
 #EXTM3U name="AG - New" type=mp4 plugin=ag
+#EXTINF:0,Tekken Tag Tournament 2
+http://www.ag.ru/files/videos/tekken_tag_tournament_2/58036/flash
+#EXTINF:0,City of Heroes
+http://www.ag.ru/files/videos/city_of_heroes/58035/flash
+#EXTINF:0,Grand Slam Tennis 2
+http://www.ag.ru/files/videos/grand_slam_tennis_2/58034/flash
+#EXTINF:0,C.A.R.S.: Community Assisted Rac...
+http://www.ag.ru/files/videos/c_a_r_s_community_assisted_race_sim/58033/flash
 #EXTINF:0,Secret World, The
 http://www.ag.ru/files/videos/secret_world/58032/flash
 #EXTINF:0,Tropico 4: Modern Times
@@ -21,8 +29,8 @@ http://www.ag.ru/files/videos/super_stardust_delta/58024/flash
 http://www.ag.ru/files/videos/marvel_super_hero_squad_online/58023/flash
 #EXTINF:0,Heroes of Newerth
 http://www.ag.ru/files/videos/heroes_of_newerth/58022/flash
-#EXTINF:0,Atelier Meruru: The Alchemist of...
-http://www.ag.ru/files/videos/atelier_meruru_the_alchemist_of_arland_3/58021/flash
+#EXTINF:0,Atelier Meruru: The Apprentice o...
+http://www.ag.ru/files/videos/atelier_meruru_the_apprentice_of_arland/58021/flash
 #EXTINF:0,Lost Chronicles of Zerzura
 http://www.ag.ru/files/videos/lost_chronicles_of_zerzura/58020/flash
 #EXTINF:0,Iron Grip: Marauders
@@ -91,11 +99,3 @@ http://www.ag.ru/files/videos/binary_domain/57966/flash
 http://www.ag.ru/files/videos/amy/57965/flash
 #EXTINF:0,Age of Empires Online
 http://www.ag.ru/files/videos/age_of_empires_online/57964/flash
-#EXTINF:0,Saints Row: The Third
-http://www.ag.ru/files/videos/saints_row_the_third/57963/flash
-#EXTINF:0,NFL Blitz (2012)
-http://www.ag.ru/files/videos/nfl_blitz_2012/57962/flash
-#EXTINF:0,EverQuest 2
-http://www.ag.ru/files/videos/everquest_2/57961/flash
-#EXTINF:0,Super Mario 3D Land
-http://www.ag.ru/files/videos/super_mario_3d_land/57960/flash

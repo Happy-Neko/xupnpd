@@ -3,6 +3,7 @@
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
 -- TODO: windows-1251 to utf8 in feeds
+-- http://www.ag.ru/rss/ag-videos.xml ?
 
 -- MP4-lo
 -- MP4-hi (VIP)
@@ -26,7 +27,7 @@ function ag_updatefeed(feed,friendly_name)
 
             for game,id,name in string.gmatch(feed_data,'href=/files/videos/([%w_]+)/%w+#(%w+)>(.-)</a>') do
                 local url=string.format('http://www.ag.ru/files/videos/%s/%s/flash',game,id)
-                dfd:write('#EXTINF:0,',name,'\n',url,'\n')
+                dfd:write('#EXTINF:0,',util.win1251toUTF8(name),'\n',url,'\n')
             end
 
             dfd:close()

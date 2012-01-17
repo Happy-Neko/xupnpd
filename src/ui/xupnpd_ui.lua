@@ -13,7 +13,7 @@ end
 function ui_downloads()
     http.send('<h3>Downloads</h3>')
     http.send('<br><table>')
-    for i,j in ipairs(playlist_data.elements) do
+    for i,j in ipairs(playlist_data.elements[1].elements) do
         http.send(string.format('<tr><td><a href="/ui/%s.m3u">%s</a></td></tr>',j.name,j.name))
     end
     http.send('</table>')
@@ -25,7 +25,7 @@ function ui_download(name)
 
     local pls=nil
 
-    for i,j in ipairs(playlist_data.elements) do
+    for i,j in ipairs(playlist_data.elements[1].elements) do
         if j.name==name then pls=j break end
     end
 
@@ -100,19 +100,36 @@ function ui_feeds()
 
     http.send('<div class="row"><div class="span8">')
 
-    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="vkontakte">VKontakte</option><option value="gametrailers">GameTrailers</option><option value="giantbomb">Giant Bomb</option><option value="generic">Generic</option></select></div></div><br>')
+    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="vkontakte">VKontakte</option><option value="gametrailers">GameTrailers</option><option value="giantbomb">Giant Bomb</option><option value="ag">AG.ru</option><option value="generic">Generic</option></select></div></div><br>')
 
     http.send('<div class="row"><div class="span2">Feed</div><div class="span4"><input name="feed"></div></div><br>')
 
     http.send('<div class="row"><div class="span2">Description</div><div class="span4"><input name="name"></div></div><br>')
 
-    http.send('</div><div class="span8"><b>Vimeo</b>: <i>username</i>, channel/<i>channelname</i>, group/<i>groupname</i>, album/<i>album_id</i><br><b>YouTube</b>: <i>username</i>, favorites/<i>username</i>, playlist/<i>username</i>/<i>playlistname</i>, channel/<i>channelname</i>, search/<i>search_string</i><br><b>VKontakte</b>: my, group/<i>group_id</i>, group/<i>group_id</i>/<i>album_id</i>, user/<i>user_id</i>, user/<i>user_id</i>/<i>album_id</i>, search/<i>search_order</i>/<i>search_string</i>, search_hd/<i>search_order</i>/<i>search_string</i><br /><b>GameTrailers</b>: <i>platform</i>/<i>type</i><br /><b>Giant Bomb</b>: <i>channel</i><br /><b>Generic</b>: <i>m3u_url</i><hr><b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured.<hr><b>VKontakte</b>: <a onclick="window.open(this.href,\'newwin\',\'width=450,scrollbars=yes,toolbar=no,menubar=no\'); return false;" href="/ui/vk_status">view groups, friends and plugin help</a>.<hr><b>GameTrailers platforms</b>: all, ps3, xb360, wii, pc, psv, psp, ds, gba, ps2, gc, xbox, classic, mob.<br /><b>GameTrailers types</b>: all, review, preview, interview, gameplay, feature.<hr><b>Giant Bomb channels</b>: all, quicklook, review, feature, trailer, event, endurance, tang.</div></div>')
+    http.send('</div><div class="span8"><b>Vimeo</b>: <i>username</i>, channel/<i>channelname</i>, group/<i>groupname</i>, ... <br><b>YouTube</b>: <i>username</i>, favorites/<i>username</i>, ...<br><br><a href="/ui/fhelp" target="_blank">more</a></div></div>')
 
     http.send('<input class="btn primary" type=submit value=Add>')
     http.send('</form><hr>')
 
     http.send('<br><a class="btn primary" href="/ui/save_feeds">Save</a> <a class="btn primary" href="/ui/reload_feeds?return_url=/ui/feeds">Reload feeds</a> <a class="btn info" href="/ui">Back</a>')
 end
+
+function ui_fhelp()
+    http.send('<br><br><b>Vimeo</b>: <i>username</i>, channel/<i>channelname</i>, group/<i>groupname</i>, album/<i>album_id</i><br>')
+    http.send('<b>YouTube</b>: <i>username</i>, favorites/<i>username</i>, playlist/<i>username</i>/<i>playlistname</i>, channel/<i>channelname</i>, search/<i>search_string</i><br>')
+    http.send('<b>VKontakte</b>: my, group/<i>group_id</i>, group/<i>group_id</i>/<i>album_id</i>, user/<i>user_id</i>, user/<i>user_id</i>/<i>album_id</i>, search/<i>search_order</i>/<i>search_string</i>, search_hd/<i>search_order</i>/<i>search_string</i><br />')
+    http.send('<b>GameTrailers</b>: <i>platform</i>/<i>type</i><br/>')
+    http.send('<b>Giant Bomb</b>: <i>channel</i><br/>')
+    http.send('<b>AG.ru</b>: <i>channel</i><br/>')
+    http.send('<b>Generic</b>: <i>m3u_url</i><hr>')
+
+    http.send('<b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured.<hr>')
+    http.send('<b>VKontakte</b>: <a onclick="window.open(this.href,\'newwin\',\'width=450,scrollbars=yes,toolbar=no,menubar=no\'); return false;" href="/ui/vk_status">view groups, friends and plugin help</a>.<hr>')
+    http.send('<b>GameTrailers platforms</b>: all, ps3, xb360, wii, pc, psv, psp, ds, gba, ps2, gc, xbox, classic, mob.<br/><b>GameTrailers types</b>: all, review, preview, interview, gameplay, feature.<hr>')
+    http.send('<b>Giant Bomb channels</b>: all, quicklook, review, feature, trailer, event, endurance, tang.<hr>')
+    http.send('<b>AG.ru channels</b>: videos, videos/top100pop, videos/top100best, videos/selected_by_ag.')
+end
+
 
 function ui_show()
     if ui_args.fname then
@@ -210,6 +227,7 @@ function ui_config()
     http_vars.youtube_fmt=cfg.youtube_fmt
     http_vars.youtube_region=cfg.youtube_region
     http_vars.ivi_fmt=cfg.ivi_fmt
+    http_vars.ag_fmt=cfg.ag_fmt
     local vk_name=plugins.vkontakte.vk_get_name()
     if vk_name then
         http_vars.vk_auth_link='You are signed as <b>'..vk_name..'</b> <a class="btn info" href="'..plugins.vkontakte.vk_api_request_auth(www_location)..'">sign-in as another user</a>'
@@ -222,7 +240,7 @@ end
 function ui_apply()
     local f=io.open(cfg.config_path..'common.lua','w')
     if f then
-        f:write('cfg.youtube_fmt="',ui_args.youtube_q or '18','"\ncfg.ivi_fmt="',ui_args.ivi_q or 'MP4-lo','"\ncfg.youtube_region="',ui_args.youtube_r or '*','"\n')
+        f:write('cfg.youtube_fmt="',ui_args.youtube_q or '18','"\ncfg.ivi_fmt="',ui_args.ivi_q or 'MP4-lo','"\ncfg.ag_fmt="',ui_args.ag_q or 'MP4-lo','"\ncfg.youtube_region="',ui_args.youtube_r or '*','"\n')
         f:close()
         core.sendevent('config')
     end
@@ -374,7 +392,8 @@ ui_actions=
     ['apply']           = { 'xupnpd - apply', ui_apply },
     ['vk_landing']      = { 'xupnpd - vkontakte sign-in redirect', ui_vk_landing },
     ['vk_update']       = { 'xupnpd - vkontakte sign-in result', ui_vk_update },
-    ['vk_status']       = { 'xupnpd - vkontakte status', ui_vk_status }
+    ['vk_status']       = { 'xupnpd - vkontakte status', ui_vk_status },
+    ['fhelp']           = { 'xupnpd - feeds help', ui_fhelp }
 }
 
 function ui_handler(args,data,ip,url)

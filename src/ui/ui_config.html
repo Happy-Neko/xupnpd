@@ -48,6 +48,15 @@ ivi.ru quality:<br>
 <option selected value="MP4-hi">High</option>
 </select>
 
+<br><br>
+<h4>AG.ru</h4>
+
+AG.ru quality:<br>
+<select name=ag_q id=ag_q>
+<option selected value="MP4-lo">Standart</option>
+<option value="MP4-hi">VIP</option>
+</select>
+
 <br><br><br>
 
 <input class="btn primary" type=submit value=Apply>
@@ -70,4 +79,5 @@ ivi.ru quality:<br>
     set_select_selected('youtube_q','${youtube_fmt}');
     set_select_selected('youtube_r','${youtube_region}');
     set_select_selected('ivi_q','${ivi_fmt}');
+    set_select_selected('ag_q','${ag_fmt}');
 </script>
