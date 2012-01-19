@@ -85,16 +85,9 @@ feeds=
     { 'gametrailers',   'ps3/review',           'GT - PS3 - Review' },
     { 'gametrailers',   'ps3/preview',          'GT - PS3 - Preview' },
     { 'gametrailers',   'ps3/gameplay',         'GT - PS3 - Gameplay' },
-    { 'gametrailers',   'ps3/interview',        'GT - PS3 - Interview' },
-    { 'gametrailers',   'ps3/feature',          'GT - PS3 - Feature' },
-    { 'gametrailers',   'psv/all',              'GT - PS Vita - All' },
-    { 'gametrailers',   'xb360/all',            'GT - Xbox 360 - All' },
-    { 'gametrailers',   'all/all',              'GT - All - All' },
     { 'giantbomb',      'all',                  'GiantBomb - All' },
     { 'ag',             'videos',               'AG - New' },
-    { 'ag',             'videos/top100pop',     'AG - Top100' },
-    { 'ag',             'videos/top100best',    'AG - Best100' },
-    { 'ag',             'videos/selected_by_ag','AG - ByAG' },
+    { 'ivi',            'new',                  'IVI - New' },
 }
 
 -- log ident, pid file end www root
