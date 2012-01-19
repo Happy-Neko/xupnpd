@@ -100,7 +100,7 @@ function ui_feeds()
 
     http.send('<div class="row"><div class="span8">')
 
-    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="vkontakte">VKontakte</option><option value="gametrailers">GameTrailers</option><option value="giantbomb">Giant Bomb</option><option value="ag">AG.ru</option><option value="generic">Generic</option></select></div></div><br>')
+    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="vkontakte">VKontakte</option><option value="gametrailers">GameTrailers</option><option value="giantbomb">Giant Bomb</option><option value="ag">AG.ru</option><option value="ivi">ivi.ru</option><option value="generic">Generic</option></select></div></div><br>')
 
     http.send('<div class="row"><div class="span2">Feed</div><div class="span4"><input name="feed"></div></div><br>')
 
@@ -121,13 +121,15 @@ function ui_fhelp()
     http.send('<b>GameTrailers</b>: <i>platform</i>/<i>type</i><br/>')
     http.send('<b>Giant Bomb</b>: <i>channel</i><br/>')
     http.send('<b>AG.ru</b>: <i>channel</i><br/>')
+    http.send('<b>ivi.ru</b>: new, <i>serial_name</i> or genre/<i>genre</i><br/>')
     http.send('<b>Generic</b>: <i>m3u_url</i><hr>')
 
     http.send('<b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured.<hr>')
     http.send('<b>VKontakte</b>: <a onclick="window.open(this.href,\'newwin\',\'width=450,scrollbars=yes,toolbar=no,menubar=no\'); return false;" href="/ui/vk_status">view groups, friends and plugin help</a>.<hr>')
     http.send('<b>GameTrailers platforms</b>: all, ps3, xb360, wii, pc, psv, psp, ds, gba, ps2, gc, xbox, classic, mob.<br/><b>GameTrailers types</b>: all, review, preview, interview, gameplay, feature.<hr>')
     http.send('<b>Giant Bomb channels</b>: all, quicklook, review, feature, trailer, event, endurance, tang.<hr>')
-    http.send('<b>AG.ru channels</b>: videos, videos/top100pop, videos/top100best, videos/selected_by_ag.')
+    http.send('<b>AG.ru channels</b>: videos, videos/top100pop, videos/top100best, videos/selected_by_ag.<hr>')
+    http.send('<b>ivi.ru genres</b>: arthouse, boeviki, voennye, detective, detskiy, documentary, drama, comedy, korotkometrazhki, melodramy, zolotaya_klassika, adventures, sovetskoe_kino, thriller, horror, fantastika, erotika.')
 end
 
 

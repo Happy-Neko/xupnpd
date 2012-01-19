@@ -1,4 +1,6 @@
 #EXTM3U name="ivi.ru" type=mp4 plugin=ivi
+#EXTINF:0,Ну погоди 1
+http://www.ivi.ru/watch/nu_pogodi/34679
 #EXTINF:0,Земля вампиров
 http://www.ivi.ru/video/view/?id=53921
 #EXTINF:0,Я плюю на ваши могилы

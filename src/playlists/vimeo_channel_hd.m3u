@@ -1,4 +1,16 @@
 #EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/241/201/241201356_200.jpg ,Dreaming It{aly}
+http://vimeo.com/35270855
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/130/783/130783380_200.jpg ,ZKO Rollercoaster // GREAT EMOTIONS
+http://vimeo.com/20462506
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/216/238/216238910_200.jpg ,PROTECT IP / SOPA Breaks The Internet
+http://vimeo.com/31100268
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/240/276/240276111_200.jpg ,SEBASTIEN TELLIER - PEPITO BLEU (Official Music Video)
+http://vimeo.com/35188323
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/235/264/235264974_200.jpg ,Lifetime Collective FW12
+http://vimeo.com/34522965
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/237/069/237069947_200.jpg ,Billie Jean Plexus
+http://vimeo.com/34724636
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/119/756/119756093_200.jpg ,Amon Tobin - "Esther's"
 http://vimeo.com/18964314
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/238/487/238487792_200.jpg ,A tribute to the people of Vejle
@@ -27,15 +39,3 @@ http://vimeo.com/33861362
 http://vimeo.com/34658195
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/237/326/237326832_200.jpg ,Fanfarlo "Shiny Things"
 http://vimeo.com/34755995
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/236/926/236926181_200.jpg ,Network
-http://vimeo.com/34750078
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/212/564/212564933_200.jpg ,The Provo Bros - mining powder at Retallack, British Columbia
-http://vimeo.com/31522247
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/235/946/235946239_200.jpg ,GOM - ESMA 2011
-http://vimeo.com/34602394
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/236/660/236660019_200.jpg ,Murmansk in motion
-http://vimeo.com/34673916
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/229/171/229171254_200.jpg ,FRED et marie (English subtitles)
-http://vimeo.com/33731191
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/236/546/236546178_200.jpg ,The Girl with the Dragon Tattoo Opening Titles
-http://vimeo.com/34699752

@@ -1,4 +1,6 @@
 #EXTM3U name="HD Xtreme sports" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/240/415/240415705_200.jpg ,DAKINE meets WOLLE NYVELT
+http://vimeo.com/35063067
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/239/793/239793217_200.jpg ,Powder Alert with AFM, Xavier and Victor de Le Rue, TimeLine S02E01
 http://vimeo.com/34751339
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/236/239/236239597_200.jpg ,"Into The White"
@@ -37,5 +39,3 @@ http://vimeo.com/29966081
 http://vimeo.com/32742622
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/218/873/218873815_200.jpg ,HIGH
 http://vimeo.com/32264298
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/216/716/216716100_200.jpg ,Lakai The Kid
-http://vimeo.com/29420457

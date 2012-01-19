@@ -1,4 +1,46 @@
 #EXTM3U name="AG - New" type=mp4 plugin=ag
+#EXTINF:0,Max Payne 3
+http://www.ag.ru/files/videos/max_payne_3/58093/flash
+#EXTINF:0,Mass Effect 3
+http://www.ag.ru/files/videos/mass_effect_3/58092/flash
+#EXTINF:0,Syndicate (2012)
+http://www.ag.ru/files/videos/syndicate_2012/58091/flash
+#EXTINF:0,Final Fantasy 13-2
+http://www.ag.ru/files/videos/final_fantasy_13_2/58090/flash
+#EXTINF:0,Total War: Shogun 2 - Fall of th...
+http://www.ag.ru/files/videos/total_war_shogun_2_fall_of_the_samurai/58089/flash
+#EXTINF:0,Street Fighter X Tekken
+http://www.ag.ru/files/videos/street_fighter_x_tekken/58088/flash
+#EXTINF:0,Gears of War 3
+http://www.ag.ru/files/videos/gears_of_war_3/58087/flash
+#EXTINF:0,Sims 3: Showtime, The
+http://www.ag.ru/files/videos/sims_3_showtime/58086/flash
+#EXTINF:0,BlazBlue: Continuum Shift Extend
+http://www.ag.ru/files/videos/blazblue_continuum_shift_extend/58085/flash
+#EXTINF:0,Sumioni: Demon Arts
+http://www.ag.ru/files/videos/sumioni_demon_arts/58084/flash
+#EXTINF:0,Army Corps of Hell
+http://www.ag.ru/files/videos/army_corps_of_hell/58083/flash
+#EXTINF:0,Snipers
+http://www.ag.ru/files/videos/snipers/58070/flash
+#EXTINF:0,Ninja Gaiden 3
+http://www.ag.ru/files/videos/ninja_gaiden_3/58069/flash
+#EXTINF:0,Battlefield Play4Free
+http://www.ag.ru/files/videos/battlefield_play4free/58068/flash
+#EXTINF:0,SoulCalibur 5
+http://www.ag.ru/files/videos/soulcalibur_5/58067/flash
+#EXTINF:0,Overgrowth
+http://www.ag.ru/files/videos/overgrowth/58066/flash
+#EXTINF:0,Sumioni: Demon Arts
+http://www.ag.ru/files/videos/sumioni_demon_arts/58065/flash
+#EXTINF:0,Pets vs. Monsters
+http://www.ag.ru/files/videos/pets_vs_monsters/58064/flash
+#EXTINF:0,League of Legends: Clash of Fates
+http://www.ag.ru/files/videos/league_of_legends_clash_of_fates/58063/flash
+#EXTINF:0,Heroes of Ruin
+http://www.ag.ru/files/videos/heroes_of_ruin/58062/flash
+#EXTINF:0,Dustforce
+http://www.ag.ru/files/videos/dustforce/58061/flash
 #EXTINF:0,Tekken Tag Tournament 2
 http://www.ag.ru/files/videos/tekken_tag_tournament_2/58036/flash
 #EXTINF:0,City of Heroes
@@ -35,7 +77,7 @@ http://www.ag.ru/files/videos/atelier_meruru_the_apprentice_of_arland/58021/flas
 http://www.ag.ru/files/videos/lost_chronicles_of_zerzura/58020/flash
 #EXTINF:0,Iron Grip: Marauders
 http://www.ag.ru/files/videos/iron_grip_marauders/58019/flash
-#EXTINF:0,Dustforce!
+#EXTINF:0,Dustforce
 http://www.ag.ru/files/videos/dustforce/58018/flash
 #EXTINF:0,Driftmoon
 http://www.ag.ru/files/videos/driftmoon/58017/flash
@@ -57,45 +99,3 @@ http://www.ag.ru/files/videos/uncharted_golden_abyss/57995/flash
 http://www.ag.ru/files/videos/shinobido_2_revenge_of_zen/57994/flash
 #EXTINF:0,Unit 13
 http://www.ag.ru/files/videos/unit_13/57993/flash
-#EXTINF:0,Blackwell Legacy, The
-http://www.ag.ru/files/videos/blackwell_legacy/57992/flash
-#EXTINF:0,Crush
-http://www.ag.ru/files/videos/crush/57991/flash
-#EXTINF:0,Cobalt
-http://www.ag.ru/files/videos/cobalt/57990/flash
-#EXTINF:0,Mass Effect 3
-http://www.ag.ru/files/videos/mass_effect_3/57983/flash
-#EXTINF:0,Resident Evil: Operation Raccoon...
-http://www.ag.ru/files/videos/resident_evil_operation_raccoon_city/57982/flash
-#EXTINF:0,Star Wars: The Old Republic
-http://www.ag.ru/files/videos/star_wars_the_old_republic/57981/flash
-#EXTINF:0,UFC Undisputed 3
-http://www.ag.ru/files/videos/ufc_undisputed_3/57980/flash
-#EXTINF:0,Lollipop Chainsaw
-http://www.ag.ru/files/videos/lollipop_chainsaw/57979/flash
-#EXTINF:0,TERA: The Exiled Realm of Arborea
-http://www.ag.ru/files/videos/tera/57978/flash
-#EXTINF:0,End of Nations
-http://www.ag.ru/files/videos/end_of_nations/57977/flash
-#EXTINF:0,Sorcery (2012)
-http://www.ag.ru/files/videos/sorcery_2012/57976/flash
-#EXTINF:0,Kinect Rush: A Disney-Pixar Adve...
-http://www.ag.ru/files/videos/kinect_rush_a_disney_pixar_adventure/57975/flash
-#EXTINF:0,Just Dance 3
-http://www.ag.ru/files/videos/just_dance_3/57974/flash
-#EXTINF:0,Tiger Woods PGA Tour 13
-http://www.ag.ru/files/videos/tiger_woods_pga_tour_13/57973/flash
-#EXTINF:0,Touch My Katamari
-http://www.ag.ru/files/videos/touch_my_katamari/57972/flash
-#EXTINF:0,Heroes of Newerth
-http://www.ag.ru/files/videos/heroes_of_newerth/57971/flash
-#EXTINF:0,League of Legends: Clash of Fates
-http://www.ag.ru/files/videos/league_of_legends_clash_of_fates/57970/flash
-#EXTINF:0,Gran Turismo 5
-http://www.ag.ru/files/videos/gran_turismo_5/57967/flash
-#EXTINF:0,Binary Domain
-http://www.ag.ru/files/videos/binary_domain/57966/flash
-#EXTINF:0,Amy
-http://www.ag.ru/files/videos/amy/57965/flash
-#EXTINF:0,Age of Empires Online
-http://www.ag.ru/files/videos/age_of_empires_online/57964/flash

@@ -1229,15 +1229,12 @@ static int lua_util_win1251toUTF8(lua_State* L)
             n=0;
         }
 
-        if(*s<256)
+        if(win2utf_lead_tab[*s])
         {
-            if(win2utf_lead_tab[*s])
-            {
-                tmp[n++]=win2utf_lead_tab[*s];
-                tmp[n++]=win2utf_tab[*s];
-            }else
-                tmp[n++]=win2utf_tab[*s];
-        }
+            tmp[n++]=win2utf_lead_tab[*s];
+            tmp[n++]=win2utf_tab[*s];
+        }else
+            tmp[n++]=win2utf_tab[*s];
 
         s++;
     }

@@ -1,6 +1,16 @@
 #EXTM3U name="GT - PS3 - Gameplay" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725905-gt_kingdomsofamalurreckoning_wellofsouls_gp.jpg,Kingdoms of Amalur: Reckoning - Well of Souls Demo Gameplay HD
+http://www.gametrailers.com/video/well-of-kingdoms-of/725906
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725901-gt_kingdomsofamalurreckoning_streetstabbingdemo_gp.jpg,Kingdoms of Amalur: Reckoning - Street Stabbing Demo Gameplay HD
+http://www.gametrailers.com/video/street-stabbing-kingdoms-of/725902
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725895-gt_sfxtekken_stabbingdemo.jpg,Street Fighter X Tekken - Xiaoyu vs Ryu Gameplay HD
+http://www.gametrailers.com/video/xiaoyu-vs-street-fighter/725896
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725832-t_maxpayne3_designandtech_targetingweapons_gp_em_9am_1_18.jpg,Max Payne 3 - Design and Technology Series: Targeting and Weapons HD
+http://www.gametrailers.com/video/design-and-max-payne-3/725833
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725763-gt_darkness2_demo_montage.jpg,The Darkness II - Disturbing Dismemberment Montage HD
 http://www.gametrailers.com/video/disturbing-dismemberment-the-darkness/725764
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725761-gt_syndicate_gp01_em_01_17_2012.jpg,Syndicate - Western Europe Co-Op Gameplay HD
+http://www.gametrailers.com/video/western-europe-syndicate/725762
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725758-gt_ces2012_starhawk_wt03_cam.jpg,Starhawk - CES 2012: Gameplay Walkthrough Part 3 (Cam) HD
 http://www.gametrailers.com/video/ces-2012-starhawk/725759
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725754-gt_ces2012_starhawk_wt01_cam.jpg,Starhawk - CES 2012: Gameplay Walkthrough Part 1 (Cam) HD
@@ -89,13 +99,3 @@ http://www.gametrailers.com/video/dragon-slaying-elder-scrolls/723927
 http://www.gametrailers.com/video/multiplayer-gameplay-oil-rush/723918
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723902-t_udraw_xboxtrailer_gp_thumb.jpg,uDraw Studio - Xbox 360 Debut Trailer HD
 http://www.gametrailers.com/video/xbox-360-udraw-studio/723903
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723896-t_wwe12_batista_revewal_trailer_thumb.jpg,WWE 12 - Batista Reveal Trailer HD
-http://www.gametrailers.com/video/batista-reveal-wwe-12/723897
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723880-gt_modernwarfare3_nintendo-ds_gp_capaine_thumb.jpg,Call of Duty: Modern Warfare 3 - DS Campaign Gameplay
-http://www.gametrailers.com/video/ds-campaign-call-of/723880
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723866-gt_modernwarfare3wii_multiplayerteamdeathmatch_gp_thumb.jpg,Call of Duty: Modern Warfare 3 - Wii Multiplayer Team Deathmatch Gameplay HD
-http://www.gametrailers.com/video/wii-multiplayer-call-of/723867
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723864-gt_modernwarfare3wii_campaign_gp_thumb.jpg,Call of Duty: Modern Warfare 3 - Wii Campaign Gameplay HD
-http://www.gametrailers.com/video/wii-campaign-call-of/723865
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723862-t_skylanders_dinorangtrailer_gp_thumb.jpg,Skylanders: Spyro's Adventure - Dino Rang Trailer HD
-http://www.gametrailers.com/video/dino-rang-skylanders-spyros/723863
