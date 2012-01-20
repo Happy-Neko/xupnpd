@@ -94,45 +94,6 @@ function ivi_updatefeed(feed,friendly_name)
     return rc
 end
 
-function ivi_updatefeed2(feed,friendly_name)
-    local rc=false
-
-    local feed_url='http://www.ag.ru/files/'..feed
-    local feed_name='ag_'..string.gsub(feed,'/','_')
-    local feed_m3u_path=cfg.feeds_path..feed_name..'.m3u'
-    local tmp_m3u_path=cfg.tmp_path..feed_name..'.m3u'
-
-    local feed_data=http.download(feed_url)
-
-    if feed_data then
-        local dfd=io.open(tmp_m3u_path,'w+')
-        if dfd then
-            dfd:write('#EXTM3U name=\"',friendly_name or feed_name,'\" type=mp4 plugin=ag\n')
-
-            for game,id,name in string.gmatch(feed_data,'href=/files/videos/([%w_]+)/%w+#(%w+)>(.-)</a>') do
-                local url=string.format('http://www.ag.ru/files/videos/%s/%s/flash',game,id)
-                dfd:write('#EXTINF:0,',util.win1251toUTF8(name),'\n',url,'\n')
-            end
-
-            dfd:close()
-
-            if util.md5(tmp_m3u_path)~=util.md5(feed_m3u_path) then
-                if os.execute(string.format('mv %s %s',tmp_m3u_path,feed_m3u_path))==0 then
-                    if cfg.debug>0 then print('AG feed \''..feed_name..'\' updated') end
-                    rc=true
-                end
-            else
-                util.unlink(tmp_m3u_path)
-            end
-        end
-
-        feed_data=nil
-    end
-
-    return rc
-end
-
-
 function ivi_sendurl(ivi_url,range)
     local url=nil
 
