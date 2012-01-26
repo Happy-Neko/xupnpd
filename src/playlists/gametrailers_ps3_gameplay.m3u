@@ -1,4 +1,6 @@
 #EXTM3U name="GT - PS3 - Gameplay" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726117-gt_azuraswrath_bewbz_gp.jpg,Asura's Wrath - Hot Springs Gameplay  HD
+http://www.gametrailers.com/video/hot-springs-asuras-wrath/726118
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725905-gt_kingdomsofamalurreckoning_wellofsouls_gp.jpg,Kingdoms of Amalur: Reckoning - Well of Souls Demo Gameplay HD
 http://www.gametrailers.com/video/well-of-kingdoms-of/725906
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725901-gt_kingdomsofamalurreckoning_streetstabbingdemo_gp.jpg,Kingdoms of Amalur: Reckoning - Street Stabbing Demo Gameplay HD
@@ -97,5 +99,3 @@ http://www.gametrailers.com/video/counterkills-montage-assassins-creed/723937
 http://www.gametrailers.com/video/dragon-slaying-elder-scrolls/723927
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723917-t_oilrush_gameplay_thumb.jpg,Oil Rush - Multiplayer Gameplay HD
 http://www.gametrailers.com/video/multiplayer-gameplay-oil-rush/723918
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723902-t_udraw_xboxtrailer_gp_thumb.jpg,uDraw Studio - Xbox 360 Debut Trailer HD
-http://www.gametrailers.com/video/xbox-360-udraw-studio/723903

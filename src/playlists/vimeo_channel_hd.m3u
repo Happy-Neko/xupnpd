@@ -1,4 +1,26 @@
 #EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/243/680/243680270_200.jpg ,Ed Sheeran - Drunk
+http://vimeo.com/35613552
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/243/845/243845170_200.jpg ,Heart Stop Beating | Jeremiah Zagar
+http://vimeo.com/33741794
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/243/354/243354687_200.jpg ,The Real McCoy
+http://vimeo.com/35431743
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/237/286/237286998_200.jpg ,Matthew Dear - "In The Middle (I Met You There) [ft. Jonny Pierce of The Drums]"
+http://vimeo.com/34797578
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/242/275/242275500_200.jpg ,A Walk in the Park - Tom Wallisch
+http://vimeo.com/35439665
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/242/135/242135466_200.jpg ,Marina Bay Sands Skypark BASE Jump. Singapore 2012.
+http://vimeo.com/34783883
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/241/944/241944027_200.jpg ,Yosemite HD
+http://vimeo.com/35396305
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/239/483/239483929_200.jpg ,3 Days in Dubai
+http://vimeo.com/35083232
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/240/442/240442831_200.jpg ,Coldplay - 'Paradise' by Shynola
+http://vimeo.com/35208320
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/202/751/202751223_200.jpg ,Ten by Ten | Bluebrain
+http://vimeo.com/30203159
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/240/775/240775763_200.jpg ,Future Land
+http://vimeo.com/35245791
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/241/201/241201356_200.jpg ,Dreaming It{aly}
 http://vimeo.com/35270855
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/130/783/130783380_200.jpg ,ZKO Rollercoaster // GREAT EMOTIONS
@@ -9,7 +31,7 @@ http://vimeo.com/31100268
 http://vimeo.com/35188323
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/235/264/235264974_200.jpg ,Lifetime Collective FW12
 http://vimeo.com/34522965
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/237/069/237069947_200.jpg ,Billie Jean Plexus
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/237/069/237069947_200.jpg ,Plexus dancing man animation
 http://vimeo.com/34724636
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/119/756/119756093_200.jpg ,Amon Tobin - "Esther's"
 http://vimeo.com/18964314
@@ -17,25 +39,3 @@ http://vimeo.com/18964314
 http://vimeo.com/34952048
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/234/696/234696215_200.jpg ,Being There - Happy New Year
 http://vimeo.com/34463132
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/236/565/236565591_200.jpg ,Trieste
-http://vimeo.com/34702612
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/231/417/231417924_200.jpg ,Sony Realtime Projection Mapping 2
-http://vimeo.com/34025760
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/236/219/236219316_200.jpg ,LITTLE TOMBSTONE - ESMA 2011
-http://vimeo.com/34655941
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/234/665/234665026_200.jpg ,The travel diaries 2011
-http://vimeo.com/34427040
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/238/071/238071838_200.jpg ,GRAVITY // UN RÊVE DE DEMAIN
-http://vimeo.com/34896859
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/237/129/237129015_200.jpg ,M I N E
-http://vimeo.com/34774654
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/210/325/210325509_200.jpg ,Vorare
-http://vimeo.com/31231033
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/237/710/237710524_200.jpg ,The Future Belongs to the Curious
-http://vimeo.com/34853044
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/230/179/230179357_200.jpg ,Girl Walk // All Day: Chapter 12
-http://vimeo.com/33861362
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/236/220/236220372_200.jpg ,BIRDBOY Short film/ Birdboy el Cortometraje
-http://vimeo.com/34658195
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/237/326/237326832_200.jpg ,Fanfarlo "Shiny Things"
-http://vimeo.com/34755995

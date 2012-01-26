@@ -150,8 +150,10 @@ function youtube_get_video_url(youtube_url)
                 local item={}
                 for j in string.gmatch(i,'([^&]+)') do
                     local name,value=string.match(j,'(%w+)=(.+)')
-                    item[name]=util.urldecode(value)
---                    print(name,util.urldecode(value))
+                    if name then
+--                        print(name,util.urldecode(value))
+                        item[name]=util.urldecode(value)
+                    end
                 end
                 if item['itag']==tostring(fmt) then
                     url=item['url']

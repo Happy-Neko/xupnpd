@@ -192,7 +192,7 @@ function ui_add_feed()
     http.send('<br><a class="btn info" href="/ui/feeds">Back</a>')
 end
 
-function ui_save_feeds()
+function save_feeds()
 
     local f=io.open(cfg.config_path..'feeds.lua','w')
     if f then
@@ -205,10 +205,15 @@ function ui_save_feeds()
         f:write('}\n')
 
         f:close()
-        http.send('<h3>OK</h3>')
-    else
-        http.send('<h3>Fail</h3>')
+        return true
     end
+
+    return false
+end
+
+
+function ui_save_feeds()
+    if save_feeds() then http.send('<h3>OK</h3>') else http.send('<h3>Fail</h3>') end
 
     http.send('<br><a class="btn info" href="/ui/feeds">Back</a>')
 end
@@ -373,6 +378,56 @@ function ui_upload()
     http.send('<br><a class="btn info" href="/ui/playlists">Back</a>')
 end
 
+function ui_api_call(args)
+    http_send_headers(200,'txt')
+
+    if args.action=='feeds' then
+        for i,j in ipairs(feeds) do http.send(string.format('%s;%s\r\n',i,j[3])) end
+    elseif args.action=='reload' then
+        core.sendevent('reload')
+        http.send('OK\r\n')
+    elseif args.action=='add_feed' then
+        core.sendevent('add_feed',args.plugin or '',args.feed or '',args.name or '')
+        http.send('OK\r\n')
+    elseif args.action=='remove_feed' then
+        core.sendevent('remove_feed',args.id)
+        http.send('OK\r\n')
+    elseif args.action=='save_feeds' then
+        save_feeds()
+        update_feeds_async()
+        http.send('OK\r\n')
+    elseif args.action=='update_feeds' then
+        update_feeds_async()
+        http.send('OK\r\n')
+    elseif args.action=='status' then
+        for i,j in pairs(childs) do
+            if j.status then
+                http.send(string.format('%s;%s\r\n',i,j.status))
+            end
+        end
+    elseif args.action=='kill' then
+        if args.pid and childs[tonumber(args.pid)] then
+            util.kill(args.pid)
+            http.send('OK\r\n')
+        else
+            http.send('ERR\r\n')
+        end
+    elseif args.action=='playlists' then
+        for i,j in ipairs(playlist_data.elements[1].elements) do
+            http.send(string.format('%s;%s\r\n',i,j.name))
+        end
+    elseif args.action=='playlist' then
+        local pls=playlist_data.elements[1].elements[tonumber(args.id)]
+        if pls then
+            for i,j in ipairs(pls.elements) do
+                http.send(string.format('%s;%s;%s\r\n',i,j.logo or '',j.name))
+            end
+        end
+    else
+        http.send('ERR\r\n')
+    end
+end
+
 ui_actions=
 {
     ['main']            = { 'xupnpd', ui_main },
@@ -404,6 +459,9 @@ function ui_handler(args,data,ip,url)
     if action=='style' then
         http_send_headers(200,'css')
         http.sendfile(cfg.ui_path..'bootstrap.min.css')
+        return
+    elseif action=='api' then
+        ui_api_call(args)
         return
     end
 
