@@ -1,4 +1,8 @@
 #EXTM3U name="GT - PS3 - Gameplay" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726218-gt_codmw3_dlc_1_liberation_gp_thumb.jpg,Call of Duty: Modern Warfare 3 - Liberation Map Gameplay HD
+http://www.gametrailers.com/video/liberation-map-call-of/726219
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726216-gt_codmw3_dlc_1_piazza_gp_thumb.jpg,Call of Duty: Modern Warfare 3 - Piazza Map Gameplay HD
+http://www.gametrailers.com/video/piazza-map-call-of/726217
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726117-gt_azuraswrath_bewbz_gp.jpg,Asura's Wrath - Hot Springs Gameplay  HD
 http://www.gametrailers.com/video/hot-springs-asuras-wrath/726118
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725905-gt_kingdomsofamalurreckoning_wellofsouls_gp.jpg,Kingdoms of Amalur: Reckoning - Well of Souls Demo Gameplay HD
@@ -95,7 +99,3 @@ http://www.gametrailers.com/video/play-both-the-sims-3/723961
 http://www.gametrailers.com/video/destiny-and-kingdoms-of/723959
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723936-gt_assassinscreedrev_counter_gp_thumb.jpg,Assassin's Creed: Revelations - Counterkills Montage HD
 http://www.gametrailers.com/video/counterkills-montage-assassins-creed/723937
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723926-dragonthumb.jpg,Elder Scrolls V: Skyrim - Dragon Slaying Gameplay HD
-http://www.gametrailers.com/video/dragon-slaying-elder-scrolls/723927
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723917-t_oilrush_gameplay_thumb.jpg,Oil Rush - Multiplayer Gameplay HD
-http://www.gametrailers.com/video/multiplayer-gameplay-oil-rush/723918

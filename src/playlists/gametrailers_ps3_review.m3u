@@ -1,4 +1,6 @@
 #EXTM3U name="GT - PS3 - Review" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726283-gt_finalfantasyxiii-2_review.jpg,Final Fantasy XIII-2 - Review HD
+http://www.gametrailers.com/video/review-hd-final-fantasy/726284
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725169-gt_trine2_reviewpod_thumb.jpg,Trine 2 - Review Pod HD
 http://www.gametrailers.com/video/review-pod-trine-2/725170
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724701-gt_Adventuresoftintin_vrpod_sa.jpg,The Adventures of Tintin - Review Pod HD
@@ -97,5 +99,3 @@ http://www.gametrailers.com/video/review-hd-dead-island/720226
 http://www.gametrailers.com/video/review-hd-nhl-12/720222
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/719820-gt_maddennfl12_vr_yw3c_thumb.jpg,Madden NFL 12 - Review HD
 http://www.gametrailers.com/video/review-hd-madden-nfl/719821
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/719501-deusehr-vr-gt_thumb.jpg,Deus Ex: Human Revolution - Review HD
-http://www.gametrailers.com/video/review-hd-deus-ex/719502

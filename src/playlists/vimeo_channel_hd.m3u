@@ -1,4 +1,20 @@
 #EXTM3U name="Vimeo HD Channel" type=mp4 plugin=vimeo
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/243/173/243173722_200.jpg ,Leeside Skateboard Mayhem
+http://vimeo.com/35557799
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/244/238/244238004_200.jpg ,Cuban Color Temperature
+http://vimeo.com/35693910
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/243/638/243638430_200.jpg ,Beautiful Day at the Dog Park
+http://vimeo.com/35616659
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/244/107/244107667_200.jpg ,Yoshi's Blend
+http://vimeo.com/35676569
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/244/375/244375561_200.jpg ,Temps Mort
+http://vimeo.com/35709739
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/744/552/74455237_200.jpg ,Junkyard Jesús
+http://vimeo.com/13050609
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/243/581/243581470_200.jpg ,Bobby Brown | Solar System
+http://vimeo.com/35609128
+#EXTINF:0 logo=http://b.vimeocdn.com/ts/244/213/244213259_200.jpg ,Upside Down, Left To Right: A Letterpress Film
+http://vimeo.com/35688592
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/243/680/243680270_200.jpg ,Ed Sheeran - Drunk
 http://vimeo.com/35613552
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/243/845/243845170_200.jpg ,Heart Stop Beating | Jeremiah Zagar
@@ -23,19 +39,3 @@ http://vimeo.com/30203159
 http://vimeo.com/35245791
 #EXTINF:0 logo=http://b.vimeocdn.com/ts/241/201/241201356_200.jpg ,Dreaming It{aly}
 http://vimeo.com/35270855
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/130/783/130783380_200.jpg ,ZKO Rollercoaster // GREAT EMOTIONS
-http://vimeo.com/20462506
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/216/238/216238910_200.jpg ,PROTECT IP / SOPA Breaks The Internet
-http://vimeo.com/31100268
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/240/276/240276111_200.jpg ,SEBASTIEN TELLIER - PEPITO BLEU (Official Music Video)
-http://vimeo.com/35188323
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/235/264/235264974_200.jpg ,Lifetime Collective FW12
-http://vimeo.com/34522965
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/237/069/237069947_200.jpg ,Plexus dancing man animation
-http://vimeo.com/34724636
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/119/756/119756093_200.jpg ,Amon Tobin - "Esther's"
-http://vimeo.com/18964314
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/238/487/238487792_200.jpg ,A tribute to the people of Vejle
-http://vimeo.com/34952048
-#EXTINF:0 logo=http://b.vimeocdn.com/ts/234/696/234696215_200.jpg ,Being There - Happy New Year
-http://vimeo.com/34463132

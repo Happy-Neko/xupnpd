@@ -1,4 +1,8 @@
 #EXTM3U name="GT - PS3 - Preview" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726281-gt_kingdomsofamalurreckoning_preview_thumb.jpg,Kingdoms of Amalur: Reckoning - Advanced Preview HD
+http://www.gametrailers.com/video/advanced-preview-kingdoms-of/726282
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726230-gt_azuraswrath_preview_thumb.jpg,Asura's Wrath - Preview HD
+http://www.gametrailers.com/video/preview-hd-asuras-wrath/726231
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726102-gt_thedarkness2_hitpoints_thumb.jpg,The Darkness II - Hit Points HD
 http://www.gametrailers.com/video/hit-points-the-darkness/726103
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/725123-gt_asuraswrath_previewlow.jpg,Asura's Wrath - Gameplay Preview  HD
@@ -95,7 +99,3 @@ http://www.gametrailers.com/video/preview-hd-quantum-theory/704657
 http://www.gametrailers.com/video/preview-hd-dead-rising/704234
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/702839-t_tomchawx2_vp_gt_hd.jpg,HAWX 2 - Preview HD
 http://www.gametrailers.com/video/preview-hd-hawx-2/702840
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/702673-t_mafia2_vp_gt_shd2_thumb.jpg,Mafia II - Preview HD
-http://www.gametrailers.com/video/preview-hd-mafia-ii/702674
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/702552-t_vanquish_vp_gt_thumb.jpg,Vanquish - Preview HD
-http://www.gametrailers.com/video/preview-hd-vanquish/702553

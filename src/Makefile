@@ -17,6 +17,13 @@ mipsel:
 ar71xx:
 	$(MAKE) embedded TARGET=ar71xx SDK=/usr/local/toolchain-mips_r2_gcc-4.3.3+cs_uClibc-0.9.30.1/usr/mips-openwrt-linux/bin PATH=$(PATH):/usr/local/toolchain-mips_r2_gcc-4.3.3+cs_uClibc-0.9.30.1/usr/libexec/gcc/mips-openwrt-linux-uclibc/4.3.3
 
+samsung_d:
+	$(MAKE) embedded TARGET=arm-v7a8 SDK=/opt/VDLinux-armv7a8/bin
+samsung_c:
+	$(MAKE) embedded TARGET=arm-v7_vfp_le SDK=/opt/arm_v7_vfp_le/bin
+
+dreambox:
+	$(MAKE) embedded TARGET=mipsel_dreambox SDK=/opt/mipsel-unknown-linux-gnu/bin
 
 
 embedded:

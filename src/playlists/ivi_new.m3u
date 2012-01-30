@@ -1,4 +1,8 @@
 #EXTM3U name="IVI - New" type=mp4 plugin=ivi
+#EXTINF:0 logo=http://img.ivi.ru/static/f2/c951/f2c9515da34af4317ead.0.jpg ,Пять невест
+http://www.ivi.ru/watch/66171
+#EXTINF:0 logo=http://img.ivi.ru/static/fa/4fbf/fa4fbfd3ee0def754a3c.0.jpg ,Ларри Краун
+http://www.ivi.ru/watch/65993
 #EXTINF:0 logo=http://img.ivi.ru/static/84/ae8a/84ae8ad7bf3fe126e12f.0.jpg ,Меланхолия
 http://www.ivi.ru/watch/63057
 #EXTINF:0 logo=http://img.ivi.ru/static/be/ceeb/beceeb4d025cf5dcd1fc.0.jpg ,2 дня
