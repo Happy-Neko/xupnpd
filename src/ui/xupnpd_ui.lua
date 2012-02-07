@@ -136,7 +136,7 @@ end
 function ui_show()
     if ui_args.fname then
         local real_name=util.urldecode(ui_args.fname)
-        if string.find(real_name,'^[^-/\]+%.m3u$') then
+        if string.find(real_name,'^[^-/\\]+%.m3u$') then
             local pls=m3u.parse(cfg.playlists_path..real_name)
 
             if pls then
@@ -156,7 +156,7 @@ end
 function ui_remove()
     if ui_args.fname then
         local real_name=util.urldecode(ui_args.fname)
-        if string.find(real_name,'^[^-/\]+%.m3u$') then
+        if string.find(real_name,'^[^-/\\]+%.m3u$') then
             if os.remove(cfg.playlists_path..real_name) then
                 core.sendevent('reload')
                 http.send('<h3>OK</h3>')
