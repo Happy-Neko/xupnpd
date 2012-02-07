@@ -5,6 +5,7 @@
  */
 
 #include "luajson.h"
+#include "luacompat.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

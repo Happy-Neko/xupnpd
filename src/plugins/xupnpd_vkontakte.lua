@@ -17,7 +17,7 @@
 
 vk_app_id='2432090'
 vk_app_scope='groups,friends,video,offline,nohttps'
-vk_api_server='http://api.vkontakte.ru'
+vk_api_server='http://api.vk.com'
 vk_api_request_get_videos='/method/video.get?width=160&count=50'
 vk_api_request_search_videos='/method/video.search?count=50'
 vk_api_request_get_user_info='/method/getProfiles?'
@@ -87,7 +87,7 @@ function vk_updatefeed(feed,friendly_name)
 
                 for i,j in pairs(x.response) do
                     if type(j) == 'table' then
-                        dfd:write('#EXTINF:0 logo=',j[logo_label],',',unescape_html_string(j.title),'\n',j.player,'\n')
+                        dfd:write('#EXTINF:0 logo=',string.gsub(j[logo_label],"vkontakte%.ru/","vk.com/"),',',unescape_html_string(j.title),'\n',string.gsub(j.player,"vkontakte%.ru/","vk.com/"),'\n')
                     end
                 end
                 dfd:close()
@@ -325,7 +325,7 @@ function get_sort_order(label)
 end
 
 function vk_api_request_auth(redirect_url)
-    return 'http://oauth.vkontakte.ru/authorize?client_id='..vk_app_id..'&scope='..vk_app_scope..'&response_type=token&redirect_uri='..
+    return 'http://oauth.vk.com/authorize?client_id='..vk_app_id..'&scope='..vk_app_scope..'&response_type=token&redirect_uri='..
         util.urlencode(redirect_url..'/ui/vk_landing')
 end
 

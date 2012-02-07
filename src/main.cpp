@@ -9,6 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "luacompat.h"
 #include "luaxlib.h"
 #include "luaxcore.h"
 #include "luajson.h"

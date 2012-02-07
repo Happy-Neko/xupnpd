@@ -1,4 +1,22 @@
 #EXTM3U name="GT - PS3 - Gameplay" type=mp4 plugin=gametrailers
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726337-gt_ff13-2_pS3_Xbox360_comparison_iththumb-_hd.jpg,Final Fantasy XIII-2 - PlayStation 3 vs Xbox 360 Comparison HD
+http://www.gametrailers.com/video/playstation-3-final-fantasy/726338
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726333-t_neverdead_bossbattlealex_thumb.jpg,NeverDead - The Duel with Alex Gameplay HD
+http://www.gametrailers.com/video/the-duel-neverdead/726334
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726331-t_neverdead_bossbattlepandabearx2_thumb.jpg,NeverDead - Deuling a Panda Bear Gameplay HD
+http://www.gametrailers.com/video/deuling-a-neverdead/726332
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726317-t_mud_cairolibelgiumgameplay_thumb.jpg,MUD - Tony Cairoli Belgium Gameplay HD
+http://www.gametrailers.com/video/tony-cairoli-mud/726318
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726315-t_mud_guarneribrasilgameplay_thumb.jpg,MUD - Davide Guarneri Brazil Gameplay HD
+http://www.gametrailers.com/video/davide-guarneri-mud/726316
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726313-t_mud_roczenfrancegameplay_thumb.jpg,MUD - Ken Rockzen France Gameplay  HD
+http://www.gametrailers.com/video/ken-rockzen-mud/726314
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726305-t_inversion_gravityslaughtergameplay_thumb.jpg,Inversion - Gravity Slaughter Gameplay HD
+http://www.gametrailers.com/video/gravity-slaughter-inversion/726306
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726303-12232:t_inversion_kingofgravitygameplay_thumb.jpg,Inversion - King of Gravity Gameplay HD
+http://www.gametrailers.com/video/king-of-inversion/726304
+#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726301-t_inversion_teamdeathmatchgameplay_thumb.jpg,Inversion - Team Deathmatch Gameplay HD
+http://www.gametrailers.com/video/team-deathmatch-inversion/726302
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726218-gt_codmw3_dlc_1_liberation_gp_thumb.jpg,Call of Duty: Modern Warfare 3 - Liberation Map Gameplay HD
 http://www.gametrailers.com/video/liberation-map-call-of/726219
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/726216-gt_codmw3_dlc_1_piazza_gp_thumb.jpg,Call of Duty: Modern Warfare 3 - Piazza Map Gameplay HD
@@ -81,21 +99,3 @@ http://www.gametrailers.com/video/speedway-trailer-f1-2011/724079
 http://www.gametrailers.com/video/shake-it-f1-2011/724077
 #EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724023-t_finalfantasyxiii-2_nycc-trailer_english_oct-13_thumb.jpg,Final Fantasy XIII-2 - Launch Trailer HD
 http://www.gametrailers.com/video/launch-trailer-final-fantasy/724024
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724017-t_syndicate_coop_new-england_trailer_thumb.jpg,Syndicate - New England Co-op Gameplay HD
-http://www.gametrailers.com/video/new-england-syndicate/724018
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724007-t_wwe12_foley_trailer_thumb.jpg,WWE 12 - Mick Foley Trailer HD
-http://www.gametrailers.com/video/mick-foley-wwe-12/724008
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/724001-t_king-of-fighters-xiii_console-combo-showcase_trim_thumb.jpg,King of Fighters XIII - Console Combo Showcase Trailer HD
-http://www.gametrailers.com/video/console-combo-king-of/724002
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723997-t_saintsrowtt_accolade_trailer_thumb.jpg,Saints Row: The Third - Accolades Trailer HD
-http://www.gametrailers.com/video/accolades-trailer-saints-row/723998
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723989-t_deadrising2otr_cosplaywarriorpack_gp_thumb.jpg,Dead Rising 2: Off the Record - Cosplay Warrior Skills Pack Trailer HD
-http://www.gametrailers.com/video/cosplay-warrior-dead-rising/723990
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723979-t_acecombatah_reception_trailer_thumb.jpg,Ace Combat: Assault Horizon - Reception Trailer HD
-http://www.gametrailers.com/video/reception-trailer-ace-combat/723980
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723960-t_sims3pets_playbothways_trailer_thumb.jpg,The Sims 3 Pets - Play Both Ways Trailer HD
-http://www.gametrailers.com/video/play-both-the-sims-3/723961
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723958-t_kindomsofalamur_destinyandfate_int_thumb.jpg,Kingdoms of Amalur: Reckoning - Destiny and Fate Interview HD
-http://www.gametrailers.com/video/destiny-and-kingdoms-of/723959
-#EXTINF:0 logo=http://gametrailers.mtvnimages.com/images/moses/moviesthumbs/723936-gt_assassinscreedrev_counter_gp_thumb.jpg,Assassin's Creed: Revelations - Counterkills Montage HD
-http://www.gametrailers.com/video/counterkills-montage-assassins-creed/723937

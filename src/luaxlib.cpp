@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <signal.h>
+#include "luacompat.h"
 #include "mem.h"
 #include "md5.h"
 

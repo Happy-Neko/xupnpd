@@ -1,4 +1,5 @@
 LUA     = lua-5.1.4
+#LUA     = lua-5.2.0
 CFLAGS  = -fno-exceptions -fno-rtti -O2 -I$(LUA) -L$(LUA)
 SRC     = main.cpp soap.cpp mem.cpp mcast.cpp luaxlib.cpp luaxcore.cpp luajson.cpp luajson_parser.cpp
 
@@ -16,6 +17,9 @@ mipsel:
 
 ar71xx:
 	$(MAKE) embedded TARGET=ar71xx SDK=/usr/local/toolchain-mips_r2_gcc-4.3.3+cs_uClibc-0.9.30.1/usr/mips-openwrt-linux/bin PATH=$(PATH):/usr/local/toolchain-mips_r2_gcc-4.3.3+cs_uClibc-0.9.30.1/usr/libexec/gcc/mips-openwrt-linux-uclibc/4.3.3
+
+ar231x:
+	$(MAKE) embedded TARGET=ar231x SDK=/usr/local/toolchain-mips_gcc-4.3.3+cs_uClibc-0.9.30.1/usr/mips-openwrt-linux/bin PATH=$(PATH):/usr/local/toolchain-mips_gcc-4.3.3+cs_uClibc-0.9.30.1/usr/libexec/gcc/mips-openwrt-linux-uclibc/4.3.3
 
 samsung_d:
 	$(MAKE) embedded TARGET=arm-v7a8 SDK=/opt/VDLinux-armv7a8/bin

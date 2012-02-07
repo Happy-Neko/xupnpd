@@ -8,4 +8,6 @@ make clean; make mipsel
 
 make clean; make ar71xx
 
+make clean; make ar231x
+
 make clean

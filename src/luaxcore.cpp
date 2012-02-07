@@ -19,6 +19,7 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 #include <sys/wait.h>
+#include "luacompat.h"
 #include "mem.h"
 #include <time.h>
 #include "mcast.h"
@@ -31,6 +32,7 @@
 // TODO: m3u tree by group-title (grp/subgrp1/subgrp2 => reload_playlists)
 // TODO: local media tree (lua_m3u_scan)
 // TODO: sendurl alarm?
+// TODO: schedule
 // TODO: XBox 360
 // TODO: tvigle.ru, narkom.su, kinobaza.tv
 // TODO: RTSP/RTP, RTMP, MMS
