@@ -18,7 +18,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <unistd.h>
 #include "mem.h"
 
@@ -186,6 +185,13 @@ mcast::mcast_grp::mcast_grp(void)
 mcast::mcast_grp::mcast_grp(const char* addr,const char* iface,int ttl,int loop)
 {
     init(addr,iface,ttl,loop);
+}
+
+int mcast::isalpha(int ch)
+{
+    if((ch>64 && ch<91) || (ch>96 && ch<123))
+        return 1;
+    return 0;
 }
 
 int mcast::mcast_grp::init(const char* addr,const char* iface,int ttl,int loop)

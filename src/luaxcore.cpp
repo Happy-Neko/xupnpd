@@ -37,6 +37,7 @@
 // TODO: tvigle.ru, narkom.su, kinobaza.tv
 // TODO: RTSP/RTP, RTMP, MMS
 // TODO: RTP to builtin udpxy
+// http://www.gupnp.org
 
 namespace core
 {

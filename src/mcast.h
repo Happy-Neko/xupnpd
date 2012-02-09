@@ -43,6 +43,8 @@ namespace mcast
     void uuid_init(void);
     void uuid_gen(char* dst);
 
+    int isalpha(int ch);
+
     int get_if_info(const char* if_name,if_info* ifi);
     int get_if_list(if_info* ifi,int nifi);
     in_addr get_best_mcast_if_addr(void);
