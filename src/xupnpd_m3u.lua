@@ -16,7 +16,7 @@ function add_playlists_from_dir(dir_path,playlist,plist)
         end
 
         for i,j in ipairs(d) do
-            if string.find(j,'.-%.m3u$') then
+            if string.find(j,'%.m3u$') then
                 local fname=dir_path..j
                 if not tt[fname] then
                     table.insert(plist,fname)
@@ -71,14 +71,14 @@ function reload_playlists()
 
         if type(j)=='table' then
 
-            if string.find(j[1],'(.+).m3u$') then pls=m3u.parse(j[1]) folder=pls_folder else pls=m3u.scan(j[1]) folder=playlist_data end
+            if string.find(j[1],'%.m3u$') then pls=m3u.parse(j[1]) folder=pls_folder else pls=m3u.scan(j[1]) folder=playlist_data end
 
             if pls then
                 if j[2] then pls.name=j[2] end
                 if j[3] then pls.acl=j[3] end
             end
         else
-            if string.find(j,'(.+).m3u$') then pls=m3u.parse(j) folder=pls_folder else pls=m3u.scan(j) folder=playlist_data end
+            if string.find(j,'%.m3u$') then pls=m3u.parse(j) folder=pls_folder else pls=m3u.scan(j) folder=playlist_data end
         end
 
         if pls then

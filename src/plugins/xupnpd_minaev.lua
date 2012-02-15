@@ -66,7 +66,7 @@ function minaev_sendurl(minaev_url,range)
 
                         if u then
                             u=u['file']
-                            if u and string.find(u,'(.+).mp4$') then
+                            if u and string.find(u,'%.mp4$') then
                                 url=u
                             end
                         end

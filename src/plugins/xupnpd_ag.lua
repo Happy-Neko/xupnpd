@@ -2,9 +2,6 @@
 -- clark15b@gmail.com
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
--- TODO: windows-1251 to utf8 in feeds
--- http://www.ag.ru/rss/ag-videos.xml ?
-
 -- MP4-lo
 -- MP4-hi (VIP)
 cfg.ag_fmt='MP4-lo'

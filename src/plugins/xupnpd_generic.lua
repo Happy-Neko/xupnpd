@@ -25,7 +25,19 @@ function generic_updatefeed(feed,friendly_name)
 end
 
 function generic_sendurl(generic_url,range)
-    http.sendurl(generic_url,1,range)
+    local rc,location
+
+    location=generic_url
+
+    for i=1,5,1 do
+        rc,location=http.sendurl(location,1,range)
+
+        if not location then
+            break
+        else
+            if cfg.debug>0 then print('Redirect #'..i..' to: '..location) end
+        end
+    end
 end
 
 plugins['generic']={}
