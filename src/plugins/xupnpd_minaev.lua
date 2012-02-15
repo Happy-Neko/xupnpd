@@ -26,7 +26,7 @@ function minaev_updatefeed(feed,friendly_name)
 
             if util.md5(tmp_m3u_path)~=util.md5(feed_m3u_path) then
                 if os.execute(string.format('mv %s %s',tmp_m3u_path,feed_m3u_path))==0 then
-                    if cfg.debug>0 then print('AG feed \''..feed_name..'\' updated') end
+                    if cfg.debug>0 then print('MinaevLive feed \''..feed_name..'\' updated') end
                     rc=true
                 end
             else

@@ -100,7 +100,7 @@ function ui_feeds()
 
     http.send('<div class="row"><div class="span8">')
 
-    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="vkontakte">VKontakte</option><option value="gametrailers">GameTrailers</option><option value="giantbomb">Giant Bomb</option><option value="ag">AG.ru</option><option value="ivi">ivi.ru</option><option value="generic">Generic</option></select></div></div><br>')
+    http.send('<div class="row"><div class="span2">Plugin</div><div class="span4"><select name="plugin"><option value="youtube">YouTube</option><option value="vimeo">Vimeo</option><option value="vkontakte">VKontakte</option><option value="gametrailers">GameTrailers</option><option value="giantbomb">Giant Bomb</option><option value="ag">AG.ru</option><option value="ivi">ivi.ru</option><option value="minaev">MinaevLive</option><option value="arjlover">arjlover.net</option><option value="generic">Generic</option></select></div></div><br>')
 
     http.send('<div class="row"><div class="span2">Feed</div><div class="span4"><input name="feed"></div></div><br>')
 
@@ -122,6 +122,8 @@ function ui_fhelp()
     http.send('<b>Giant Bomb</b>: <i>channel</i><br/>')
     http.send('<b>AG.ru</b>: <i>channel</i><br/>')
     http.send('<b>ivi.ru</b>: new, <i>serial_name</i> or genre/<i>genre</i><br/>')
+    http.send('<b>MinaevLive</b>: archive<br/>')
+    http.send('<b>arjlover.net</b>: multiki, film, filmiki<br/>')
     http.send('<b>Generic</b>: <i>m3u_url</i><hr>')
 
     http.send('<b>YouTube channels</b>: top_rated, top_favorites, most_viewed, most_recent, recently_featured.<hr>')
