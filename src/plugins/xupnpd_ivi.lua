@@ -54,7 +54,8 @@ function ivi_updatefeed(feed,friendly_name)
 
                 if feed_data then
                     if not scroll then
-                        for logo,name,urn in string.gmatch(feed_data,'<li>%s*<img src="(.-)"%s+alt="(.-)"%s*/>%s*<strong>%s*<a href="(.-)">') do
+--                        for logo,name,urn in string.gmatch(feed_data,'<li>%s*<img src="(.-)"%s+alt="(.-)"%s*/>%s*<strong>%s*<a href="(.-)">') do
+                        for logo,name,urn in string.gmatch(feed_data,'<li itemprop="episodes" itemscope itemtype="http://schema.org/TVEpisode">%s*<img src="(.-)"%s+alt="(.-)"%s*itemprop="image"%s*/>%s*<strong>%s*<a href="(.-)"%sitemprop="url">') do
                             dfd:write('#EXTINF:0 logo=',logo,' ,',name,'\n','http://www.ivi.ru',urn,'\n')
                         end
                     else
