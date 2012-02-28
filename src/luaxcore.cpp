@@ -39,6 +39,7 @@
 // TODO: RTP to builtin udpxy
 // http://www.gupnp.org
 // TODO: YouTube max-count>50
+// TODO: multicast with 2 devices over internal proxy?
 
 namespace core
 {

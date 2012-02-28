@@ -3,8 +3,12 @@
 -- https://tsdemuxer.googlecode.com/svn/trunk/xupnpd
 
 -- 18 - 360p  (MP4,h.264/AVC)
--- 22 - 720p  (MP4,h.264/AVC)
--- 37 - 1080p (MP4,h.264/AVC)
+-- 22 - 720p  (MP4,h.264/AVC) hd
+-- 37 - 1080p (MP4,h.264/AVC) hd
+-- 82 - 360p  (MP4,h.264/AVC)    stereo3d
+-- 83 - 480p  (MP4,h.264/AVC) hq stereo3d
+-- 84 - 720p  (MP4,h.264/AVC) hd stereo3d
+-- 85 - 1080p (MP4,h.264/AVC) hd stereo3d
 cfg.youtube_fmt=22
 cfg.youtube_region='*'
 
@@ -137,7 +141,8 @@ function youtube_get_video_url(youtube_url)
 
     local clip_page=plugin_download(youtube_url)
     if clip_page then
-        local stream_map=util.urldecode(string.match(clip_page,'url_encoded_fmt_stream_map=(.-)&amp;'))
+--        local stream_map=util.urldecode(string.match(clip_page,'url_encoded_fmt_stream_map=(.-)&amp;'))
+        local stream_map=util.urldecode(string.match(clip_page,'url_encoded_fmt_stream_map=(.-)\\u0026amp;'))
         clip_page=nil
 
         local fmt=string.match(youtube_url,'&fmt=(%w+)$')
@@ -151,7 +156,7 @@ function youtube_get_video_url(youtube_url)
                 for j in string.gmatch(i,'([^&]+)') do
                     local name,value=string.match(j,'(%w+)=(.+)')
                     if name then
---                        print(name,util.urldecode(value))
+                        --print(name,util.urldecode(value))
                         item[name]=util.urldecode(value)
                     end
                 end
@@ -161,6 +166,7 @@ function youtube_get_video_url(youtube_url)
                 elseif item['itag']=="18" then
                     url_18=item['url']
                 end
+                --print('\n')
             end
             if not url then url=url_18 end
         end
