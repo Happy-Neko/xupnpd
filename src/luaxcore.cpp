@@ -36,9 +36,9 @@
 // TODO: XBox 360
 // TODO: tvigle.ru, narkom.su, kinobaza.tv
 // TODO: RTSP/RTP, RTMP, MMS
-// TODO: RTP to builtin udpxy
+// !!! TODO: RTP to builtin udpxy
 // http://www.gupnp.org
-// TODO: YouTube max-count>50
+// !!! TODO: YouTube max-count>50
 // TODO: multicast with 2 devices over internal proxy?
 
 namespace core
