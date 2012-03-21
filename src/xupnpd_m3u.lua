@@ -60,7 +60,12 @@ function reload_playlists()
     add_playlists_from_dir(cfg.playlists_path,playlist,plist)
     if cfg.feeds_path~=cfg.playlists_path then add_playlists_from_dir(cfg.feeds_path,playlist,plist) end
 
-    local pls_folder=playlist_new_folder(playlist_data,'Playlists')
+    local pls_folder=playlist_data
+
+    if cfg.group==true then
+        pls_folder=playlist_new_folder(playlist_data,'Playlists')
+    end
+
     local folder=nil
 
     local groups={}
