@@ -18,6 +18,7 @@
 #include "luacompat.h"
 #include "mem.h"
 #include "md5.h"
+#include "compat.h"
 
 namespace util
 {

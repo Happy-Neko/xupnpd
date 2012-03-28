@@ -9,6 +9,13 @@ x86:
 	gcc $(CFLAGS) -DWITH_LIBUUID -o xupnpd $(SRC) md5.o -llua -ldl -lm -luuid
 	strip xupnpd
 
+x86_bsd:
+	make -C $(LUA) CC=gcc a
+	gcc -O2 -c -o md5.o md5c.c
+	gcc $(CFLAGS) -DINET -DWITH_LIBUUID -o xupnpd $(SRC) md5.o -llua -lm -luuid
+	strip xupnpd
+
+
 mipsel_ddwrt:
 	$(MAKE) embedded TARGET=mipsel-ddwrt SDK=/usr/local/toolchain-mipsel_gcc3.4.6/mipsel-linux/bin
 

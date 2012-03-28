@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "mem.h"
+#include "compat.h"
 
 namespace mcast
 {
