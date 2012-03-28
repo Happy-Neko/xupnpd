@@ -316,6 +316,11 @@ function http_handler(what,from,port,msg)
 
             http.send('ContentFeatures.DLNA.ORG: '..pls.dlna_extras..'\r\n')
 
+            if cfg.wdtv==true then
+                http.send('Content-Size: 65535\r\n')
+                http.send('Content-Length: 65535\r\n')
+            end
+
             if head==true then
                 http.send('\r\n')
                 http.flush()

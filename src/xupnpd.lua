@@ -44,6 +44,9 @@ cfg.dlna_extras=true
 -- XBox360 compatible mode
 cfg.xbox360=false
 
+-- WDTV Live compatible mode
+cfg.wdtv=false
+
 -- enables UPnP/DLNA notify when reload playlist
 cfg.dlna_notify=true
 
