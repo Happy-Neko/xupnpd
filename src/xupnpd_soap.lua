@@ -27,7 +27,6 @@ function playlist_item_to_xml(id,parent_id,pls)
                 artist=string.format('<upnp:artist>%s</upnp:artist>',util.xmlencode(pls.parent.name))
             end
         end
-
         if pls.path then
             local s='/stream?s='
 

@@ -596,13 +596,16 @@ static int lua_m3u_scan(lua_State* L)
     if(!path)
         path="";
 
-
     DIR* d=opendir(path);
     if(!d)
         return 0;
     else
     {
         lua_newtable(L);
+
+        lua_pushstring(L,"filesystem");
+        lua_pushboolean(L,1);
+        lua_rawset(L,-3);
 
         {
             const char* fname=strrchr(path,'/');
@@ -637,8 +640,19 @@ static int lua_m3u_scan(lua_State* L)
 
                 DIR* dd=opendir(track_url);
                 if(dd)
+                {
                     closedir(dd);
-                else
+
+                    lua_pushinteger(L,idx++);
+
+                    lua_getfield(L,LUA_GLOBALSINDEX,"m3u");
+                    lua_getfield(L,-1,"scan");
+                    lua_remove(L,-2);
+                    lua_pushstring(L,track_url);
+                    lua_call(L,1,1);
+
+                    lua_rawset(L,-3);       // element
+                }else
                 {
                     char* p=strrchr(track_url,'/');
                     if(p)
