@@ -235,10 +235,16 @@ int mcast::mcast_grp::init(const char* addr,const char* iface,int ttl,int loop)
     mcast_sin.sin_family=AF_INET;
     mcast_sin.sin_port=0;
     mcast_sin.sin_addr.s_addr=INADDR_ANY;
+#ifdef __FreeBSD__
+    mcast_sin.sin_len=sizeof(mcast_sin);
+#endif /* __FreeBSD__ */
 
     mcast_if_sin.sin_family=AF_INET;
     mcast_if_sin.sin_port=0;
     mcast_if_sin.sin_addr.s_addr=INADDR_ANY;
+#ifdef __FreeBSD__
+    mcast_if_sin.sin_len=sizeof(mcast_if_sin);
+#endif /* __FreeBSD__ */
 
     *interface=0;
 
@@ -305,6 +311,9 @@ int mcast::mcast_grp::join(void) const
         sin.sin_family=AF_INET;
         sin.sin_port=mcast_sin.sin_port;
         sin.sin_addr.s_addr=INADDR_ANY;
+#ifdef __FreeBSD__
+        sin.sin_len=sizeof(sin);
+#endif /* __FreeBSD__ */
 
         int reuse=1;
         setsockopt(sock,SOL_SOCKET,SO_REUSEADDR,&reuse,sizeof(reuse));
@@ -383,6 +392,9 @@ int mcast::mcast_grp::upstream(void) const
         sin.sin_family=AF_INET;
         sin.sin_addr.s_addr=mcast_if_sin.sin_addr.s_addr;
         sin.sin_port=0;
+#ifdef __FreeBSD__
+        sin.sin_len=sizeof(sin);
+#endif /* __FreeBSD__ */
         bind(sock,(sockaddr*)&sin,sizeof(sin));
 
         if(verb_fp)
@@ -425,6 +437,9 @@ int mcast::mcast_grp::send(int sock,const char* buf,int len,const char* to) cons
         sin.sin_family=AF_INET;
         sin.sin_addr.s_addr=inet_addr(tmp);
         sin.sin_port=htons(atoi(p));
+#ifdef __FreeBSD__
+        sin.sin_len=sizeof(sin);
+#endif /* __FreeBSD__ */
     }
 
     int n=sendto(sock,buf,len,0,(sockaddr*)(to?&sin:&mcast_sin),sizeof(sockaddr_in));
@@ -490,6 +505,9 @@ int mcast::create_tcp_listener(int port)
         sin.sin_family=AF_INET;
         sin.sin_addr.s_addr=INADDR_ANY;
         sin.sin_port=htons(port);
+#ifdef __FreeBSD__
+        sin.sin_len=sizeof(sin);
+#endif /* __FreeBSD__ */
 
         if(!bind(s,(sockaddr*)&sin,sizeof(sin)))
         {
