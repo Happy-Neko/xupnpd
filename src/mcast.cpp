@@ -9,9 +9,14 @@
 #include <arpa/inet.h>
 
 #ifdef WITH_LIBUUID
+#ifdef __FreeBSD__
+#include <uuid.h>
+#else
 #include <uuid/uuid.h>
-#endif
+#endif /* __FreeBSD__ */
+#endif /* WITH_LIBUUID */
 
+#include <netinet/in.h>
 #include <netdb.h>
 #include <sys/ioctl.h>
 #include <net/if.h>
@@ -19,6 +24,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <err.h>
+#include <errno.h>
 #include "mem.h"
 #include "compat.h"
 
@@ -36,11 +43,22 @@ void mcast::uuid_init(void)
 void mcast::uuid_gen(char* dst)
 {
 #ifdef WITH_LIBUUID
+#ifdef __FreeBSD__
+    uuid_t uuid;
+    char *p;
+
+    uuid_create(&uuid, NULL);
+    uuid_to_string(&uuid, &p, NULL);
+    snprintf(dst, 48, "%s", p);
+    free(p);
+#else
     uuid_t uuid;
     uuid_generate(uuid);
 
     uuid_unparse_lower(uuid,dst);
-#else
+#endif /* __FreeBSD__ */
+
+#else /* WITH_LIBUUID */
     u_int16_t t[8];
 
     int n=0;
@@ -76,7 +94,12 @@ int mcast::get_if_info(const char* if_name,if_info* ifi)
     if(s!=-1)
     {
         ifreq ifr;
+
+#ifdef __FreeBSD__
+        snprintf(ifr.ifr_name,IFNAMSIZ,"%s",if_name);
+#else
         snprintf(ifr.ifr_ifrn.ifrn_name,IFNAMSIZ,"%s",if_name);
+#endif /* __FreeBSD__ */
 
         snprintf(ifi->if_name,IF_NAME_LEN,"%s",if_name);
 
@@ -135,7 +158,13 @@ int mcast::get_if_list(if_info* ifi,int nifi)
                     n=nifi;
 
                 for(int i=0;i<n;i++)
+                {
+#ifdef __FreeBSD__
+                    get_if_info(ifr[i].ifr_name,ifi+i);
+#else
                     get_if_info(ifr[i].ifr_ifrn.ifrn_name,ifi+i);
+#endif /* __FreeBSD__ */
+                }
             }
 
             FREE(ifr);

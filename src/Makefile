@@ -12,7 +12,7 @@ x86:
 x86_bsd:
 	make -C $(LUA) CC=gcc a
 	gcc -O2 -c -o md5.o md5c.c
-	gcc $(CFLAGS) -DINET -DWITH_LIBUUID -o xupnpd $(SRC) md5.o -llua -lm -luuid
+	gcc $(CFLAGS) -DINET -DWITH_LIBUUID -o xupnpd $(SRC) md5.o -llua -lm
 	strip xupnpd
 
 
